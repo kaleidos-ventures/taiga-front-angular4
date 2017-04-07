@@ -1,0 +1,76 @@
+div.single-attachment(
+    [class.deprecated]="attachment.get('is_deprecated')",
+    *ngIf="attachment.get('id')",
+)
+
+    .attachment-name
+        tg-attachment-link([attachment]="attachment", (preview)="preview.emit($event)")
+            tg-svg(svg-icon="icon-attachment")
+            span {{attachment.get('name')}}
+
+    .attachment-comments(*ngIf="!editable && attachment.get('description')")
+        span.deprecated-file(*ngIf="attachment.get('is_deprecated')") {{'ATTACHMENT.DEPRECATED' | translate}}
+        span {{attachment.get('description')}}
+
+    .attachment-size
+        span {{attachment.get('size') | sizeFormat}}
+
+    form.editable-attachment(
+        *ngIf="editable",
+        (ngSubmit)="updateAttachment()",
+        [formGroup]="attachmentForm"
+    )
+        .editable.editable-attachment-comment
+            // tg-auto-select,
+            input(
+                type="text",
+                name="description",
+                maxlength="140",
+                formControlName="description",
+                [placeholder]="'ATTACHMENT.DESCRIPTION' | translate"
+            )
+
+        .editable.editable-attachment-deprecated
+            input(
+                type="checkbox",
+                name="is-deprecated",
+                formControlName="isDeprecated",
+                id="attach-{{attachment.get('id')}}-is-deprecated"
+            )
+            label.is_deprecated(
+                for="attach-{{attachment.get('id')}}-is-deprecated",
+                translate="ATTACHMENT.DEPRECATED_FILE"
+            )
+
+        .attachment-settings
+            // tg-loading="attachment.get('loading')"
+            div
+                a.editable-settings.e2e-save(
+                    [title]="'COMMON.SAVE' | translate",
+                    (click)="updateAttachment($event, description.value, isDeprecated.value)"
+                )
+                    tg-svg(svg-icon="icon-save")
+
+            div
+                a.editable-settings.e2e-cancel(
+                    [title]="'COMMON.CANCEL' | translate",
+                    (click)="editMode(false)"
+                )
+                    tg-svg(svg-icon="icon-close")
+
+    // tg-check-permission="modify_{{vm.type}}"
+    .attachment-settings(*ngIf="!editable")
+        a.settings.e2e-edit(
+            [title]="'COMMON.EDIT' | translate",
+            (click)="editMode(true)"
+        )
+            tg-svg.drag(svg-icon="icon-edit")
+
+        a.settings.e2e-delete(
+            [title]="'COMMON.DELETE' | translate",
+            (click)="delete.emit(attachment.get('id'))"
+        )
+            tg-svg.drag(svg-icon="icon-trash")
+
+        a.settings([title]="'COMMON.DRAG' | translate")
+            tg-svg.drag(svg-icon="icon-drag")

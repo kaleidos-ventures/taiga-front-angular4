@@ -1,0 +1,50 @@
+.create-project
+    ng-container(*ngIf="type === 'scrum'")
+        .create-project-title-wrapper
+            tg-svg(svg-icon="icon-scrum")
+            h1.create-project-title(translate="PROJECT.CREATE.TEMPLATE_SCRUM")
+        h3.create-project-description(
+            translate="PROJECT.CREATE.TEMPLATE_SCRUM_DESC"
+        )
+
+    ng-container(*ngIf="type === 'kanban'")
+        .create-project-title-wrapper
+            tg-svg(svg-icon="icon-kanban")
+            h1.create-project-title(translate="PROJECT.CREATE.TEMPLATE_KANBAN")
+        h3.create-project-description(
+            translate="PROJECT.CREATE.TEMPLATE_KANBAN_DESC"
+        )
+
+    ng-container(*ngIf="type === 'duplicate'")
+        .create-project-title-wrapper
+            tg-svg(svg-icon="icon-duplicate")
+            h1.create-project-title(translate="PROJECT.DUPLICATE.TITLE")
+        h3.create-project-description(
+            translate="PROJECT.DUPLICATE.DESCRIPTION"
+        )
+
+    form(*ngIf="!deleting", (ngSubmit)="onSubmit()", [formGroup]="projectForm", novalidate)
+        tg-create-project-form-base-project(
+            *ngIf="type === 'duplicate'",
+            [form]="projectForm.controls.project",
+            [projects]="projects | async",
+            (projectChange)="onProjectChange($event)"
+        )
+        tg-create-project-form-name([form]="projectForm.controls.name")
+        tg-create-project-form-description([form]="projectForm.controls.description")
+        tg-create-project-form-privacy([form]="projectForm.controls.privacy")
+
+        tg-invite-members(
+            *ngIf="type == 'duplicate'",
+            [members]="members | async",
+            [invitedMembers]="invitedMembers",
+            (onToggleInvitedMember)="toggleInvitedMember($event)"
+        )
+
+        tg-create-project-restrictions(
+            [isPrivate]="projectForm.controls.privacy.value",
+            canCreatePublicProjects="canCreatePublicProjects | async",
+            canCreatePrivateProjects="canCreatePrivateProjects | async"
+        )
+
+        tg-create-project-form-actions([form]="projectForm", (cancel)="cancelCreation()")

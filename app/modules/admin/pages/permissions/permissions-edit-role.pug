@@ -1,0 +1,29 @@
+div(*ngIf="role")
+    div(*ngIf="!role.get('external_user')")
+        .edit-role
+            input(type="text", [value]="role.get('name')")
+            a.save(href="", [title]="'COMMON.SAVE' | translate")
+                tg-svg(svg-icon="icon-save")
+        p.total
+            span.role-name([title]="'ADMIN.ROLES.COUNT_MEMBERS' | translate") {{ role.get('name') }}
+            a.edit-value(href="")
+                tg-svg(svg-icon="icon-edit")
+
+    div(*ngIf="role.get('external_user')")
+        p.total
+            span.role-name {{ role.get('name') }}
+
+    div.any-computable-role(*ngIf="noEstimableRoles", translate="ADMIN.ROLES.WARNING_NO_ROLE")
+
+    div.general-category.external-user(*ngIf="role.get('external_user')")
+        span([innerHTML]="'ADMIN.ROLES.NOTE_EXTERNAL_USERS' | translate")
+
+    div.general-category(*ngIf="!role.get('external_user')")
+        span(translate="ADMIN.ROLES.HELP_ROLE_ENABLED")
+        div.check
+            input(type="checkbox", [checked]="role.get('computable')", (change)="toggleComputable.emit()")
+            div
+            span.check-text.check-yes(translate="COMMON.YES")
+            span.check-text.check-no(translate="COMMON.NO")
+
+    tg-admin-edit-role-permissions([role]="role", [project]="project")

@@ -1,0 +1,53 @@
+.epics-table.e2e-epic-table(*ngIf="epics?.size")
+    .epics-table-header.e2e-epics-table-header
+        .vote(
+            translate="EPICS.TABLE.VOTES",
+            *ngIf="columns.votes"
+        )
+        .name(
+            translate="EPICS.TABLE.NAME"
+        )
+        .project(
+            translate="EPICS.TABLE.PROJECT",
+            *ngIf="columns.project"
+        )
+        .sprint(
+            translate="EPICS.TABLE.SPRINT",
+            *ngIf="columns.sprint"
+        )
+        .assigned(
+            translate="EPICS.TABLE.ASSIGNED_TO",
+            *ngIf="columns.assigned"
+        )
+        .status(
+            translate="EPICS.TABLE.STATUS",
+            *ngIf="columns.status"
+        )
+        .progress(
+            translate="EPICS.TABLE.PROGRESS",
+            *ngIf="columns.progress"
+        )
+        .epics-table-options-wrapper(
+            (mouseleave)="displayOptions = false"
+        )
+            button.epics-table-option-button.e2e-epics-column-button((click)="displayOptions = !displayOptions")
+                span(translate="EPICS.TABLE.VIEW_OPTIONS")
+                tg-svg(svg-icon="icon-arrow-down")
+            div.epics-table-dropdown.e2e-epics-column-dropdown(*ngIf="displayOptions")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.VOTES", id="switch-votes", [(value)]="columns.votes")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.PROJECT", id="switch-project", [(value)]="columns.project")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.SPRINT", id="switch-sprint", [(value)]="columns.sprint")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.ASSIGNED_TO", id="switch-assigned", [(value)]="columns.assigned")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.STATUS", id="switch-status", [(value)]="columns.status")
+                tg-epics-table-column-toggle(title="EPICS.TABLE.PROGRESS", id="switch-progress", [(value)]="columns.progress")
+
+    .epics-table-body(
+        tg-epics-sortable="vm.reorderEpic(epic, newIndex)",
+        infinite-scroll="vm.nextPage()",
+        infinite-scroll-disabled="vm.disabledEpicsPagination",
+        infinite-scroll-immediate-check="false"
+    )
+        .epics-table-body-row(*ngFor="let epic of epics")
+            tg-epic-row.e2e-epic([epic]="epic", [columns]="columns", [project]="project", [userStories]="userStories?.get(epic.get('id'))")
+
+        div(*tgLoading="loadingEpics")

@@ -1,0 +1,33 @@
+.attachments-header
+    h3.attachments-title #[span.attachments-num {{attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
+    .options
+        button.view-gallery(
+            [class.is-active]="mode == 'gallery'",
+            *ngIf="attachments.size",
+            (click)="changeMode.emit('gallery')",
+            [title]="'ATTACHMENT.GALLERY_VIEW_MODE' | translate"
+        )
+            tg-svg(svg-icon="icon-gallery")
+        button.view-list(
+            [class.is-active]="mode == 'list'",
+            *ngIf="attachments.size",
+            (click)="changeMode.emit('list')",
+            [title]="'ATTACHMENT.LIST_VIEW_MODE' | translate"
+        )
+            tg-svg(svg-icon="icon-list")
+
+        //tg-check-permission="modify_{{type}}"
+        .add-attach(
+            [title]="'ATTACHMENT.ADD' | translate"
+        )
+
+            label.add-attachment-button(for="add-attach")
+                tg-svg(svg-icon="icon-add")
+
+            input(
+                id="add-attach",
+                type="file",
+                multiple="multiple",
+                tg-file-change="addAttachments(files, true)"
+            )
+

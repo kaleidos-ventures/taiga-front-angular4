@@ -1,0 +1,105 @@
+ng-container(*ngIf="project")
+    .create-us-container(*tgLoading="'loading-editing-us';size:'big'")
+        h2.title(translate="LIGHTBOX.CREATE_EDIT_US.EDIT_US", *ngIf="us")
+        h2.title(translate="LIGHTBOX.CREATE_EDIT_US.NEW_US", *ngIf="!us")
+
+        form((ngSubmit)="onSubmit()", [formGroup]="createUsForm", novalidate)
+            .subject-container
+                .subject
+                    fieldset
+                        input.e2e-create-us-subject(
+                            type="text",
+                            name="subject",
+                            formControlName="subject"
+                            tg-auto-select,
+                            [placeholder]="'COMMON.FIELDS.SUBJECT' | translate"
+                        )
+                        tg-field-error([control]="createUsForm.controls.subject")
+
+            fieldset.ticket-estimation
+                tg-us-estimation-for-lightbox(
+                    [roles]="project.get('roles')",
+                    [points]="project.get('points')",
+                    formControlName="points"
+                )
+
+
+            fieldset
+                select.e2e-create-us-status(
+                    id="us-status",
+                    name="status",
+                    formControlName="status"
+                )
+                    option(
+                        *ngFor="let status of project.get('us_statuses')",
+                        [value]="status.get('id')"
+                    ) {{ status.get('name') }}
+
+            fieldset.tags-block
+                tg-tags-line(
+                    [canEdit]="true",
+                    formControlName="tags"
+                )
+            fieldset
+                textarea.e2e-create-us-description(
+                    formControlName="description",
+                    [placeholder]="'LIGHTBOX.CREATE_EDIT_US.PLACEHOLDER_DESCRIPTION' | translate"
+                )
+            fieldset
+                tg-attachments-simple(
+                    formControlName="attachments"
+                )
+            .settings
+                fieldset.team-requirement
+                    input(
+                        type="checkbox",
+                        name="team_requirement",
+                        id="team-requirement",
+                        formControlName="teamRequirement"
+                    )
+                    label.requirement.trans-button.e2e-create-us-team-requirement(
+                        for="team-requirement",
+                        translate="US.FIELDS.TEAM_REQUIREMENT"
+                    )
+                fieldset.client-requirement
+                    input(
+                        type="checkbox",
+                        name="client_requirement",
+                        id="client-requirement",
+                        formControlName="clientRequirement"
+                    )
+                    label.requirement.trans-button.e2e-create-us-client-requirement(
+                        for="client-requirement",
+                        translate="US.FIELDS.CLIENT_REQUIREMENT"
+                    )
+                fieldset
+                    input(
+                        type="checkbox",
+                        name="blocked",
+                        id="blocked",
+                        formControlName="blocked"
+                    )
+                    label.requirement.trans-button.blocked.e2e-create-us-blocked(
+                        for="blocked",
+                        translate="COMMON.BLOCKED"
+                    )
+            fieldset(*ngIf="createUsForm.controls.blocked.value")
+                input.e2e-create-us-blocked-note(
+                    type="text",
+                    name="blocked_note",
+                    maxlength="140",
+                    formControlName="blockedNote",
+                    [placeholder]="'COMMON.BLOCKED_NOTE' | translate"
+                )
+            fieldset
+                button.button-green.create-us-button.e2e-create-us-button(type="submit")
+                    span(
+                        *ngIf="!us",
+                        [title]="'COMMON.CREATE' | translate",
+                        translate="COMMON.CREATE",
+                    )
+                    span(
+                        *ngIf="us",
+                        [title]="'COMMON.EDIT' | translate",
+                        translate="COMMON.EDIT",
+                    )

@@ -18,7 +18,7 @@ textarea {
     margin: 0;
     padding: 8px;
     width: 100%;
-    &.checksley-error {
+    &.ng-invalid.ng-dirty {
         transition: border .3s linear;
     }
 }
@@ -34,7 +34,7 @@ textarea {
     min-height: 10rem;
     resize: vertical;
 }
-.checksley-error-list {
+.error-list {
     margin-bottom: 0;
     li {
         padding: .2rem;

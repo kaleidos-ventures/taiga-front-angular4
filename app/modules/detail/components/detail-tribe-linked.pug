@@ -1,0 +1,34 @@
+.tribe-linked.js-tribe-linked([class.is-active]="open", [class.is-inactive]="!open")
+    .tribe-linked-inner
+        .tribe-linked-header
+            img.tribe-logo(
+                (click)="show()",
+                [alt]="'US.TRIBE.PUBLISHED_AS_GIG' | translate",
+                [title]="'US.TRIBE.PUBLISHED_AS_GIG' | translate",
+                src="/" + _version + "/images/tribe-logo.png"
+            )
+            p.title(translate="US.TRIBE.PUBLISHED_AS_GIG")
+            a.close(
+                (click)="hide()",
+                href="",
+                [title]="'US.TRIBE.CLOSE' | translate"
+            )
+                tg-svg.icon-remove(svg-icon="icon-close")
+
+        a.gig-title(
+            [routerLink]="[tribeHost, 'gigs', item.getIn(['tribe_gig', 'id'])]",
+            [title]="item.getIn(['tribe_gig', 'title'])",
+            target="_blank"
+        ) {{item.getIn(['tribe_gig', 'title'])}}
+
+        a.delete-link(
+            [routerLink]="[tribeHost, 'gigs', item.getIn(['tribe_gig', 'id']), 'link-with-task-manager?from=taiga']",
+            [title]="'US.TRIBE.EDIT_LINK' | translate",
+            translate="US.TRIBE.EDIT_LINK"
+        )
+
+        a.synchronize-link.button-tribe(
+            [routerLink]="[tribeHost, 'gigs', 'sync', item.getIn(['tribe_gig', 'id']), '?from=taiga']",
+            [title]="'US.TRIBE.SINCHRONIZE_LINK' | translate",
+            translate="US.TRIBE.SINCHRONIZE_LINK"
+        )

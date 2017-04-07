@@ -28,7 +28,7 @@ helper.saveWebHook = async function(name, email, key) {
 };
 
 helper.getErrors = function() {
-    return $$('.checksley-error-list');
+    return $$('.checksley-error');
 };
 
 helper.currentWebHookIsPresent = function() {

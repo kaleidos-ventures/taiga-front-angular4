@@ -31,6 +31,7 @@ describe('attributes - tags', function() {
         await form.colorText().clear();
         await form.colorText().sendKeys('#000000');
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await form.save()
 
         await browser.waitForAngular();
 

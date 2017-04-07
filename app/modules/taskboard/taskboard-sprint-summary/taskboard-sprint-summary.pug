@@ -1,0 +1,46 @@
+div.summary.large-summary(*ngIf="stats")
+    div.large-summary-wrapper
+        .summary-progress-wrapper
+            tg-progress-bar([percentage]="stats.get('completedPercentage')")
+            div.data
+                span.number {{stats.get('completedPercentage')}}%
+
+        .stats-wrapper([class.show-role-points]="showRolePoints")
+            .main-summary-stats
+                span.summary-stats.toggle-points-per-role((click)="showRolePoints = true")
+                    tg-svg(svg-icon="icon-arrow-down")
+                    span.number {{stats.get('totalPointsSum', '--')}}
+                    span.description([innerHtml]="'BACKLOG.SPRINT_SUMMARY.TOTAL_POINTS' | translate")
+                div.summary-stats.summary-completed-points
+                    span.number {{stats.get('completedPointsSum', '--')}}
+                    span.description([innerHtml]="'BACKLOG.SPRINT_SUMMARY.COMPLETED_POINTS' | translate")
+
+                div.summary-stats.summary-open-tasks
+                    tg-svg(svg-icon="icon-bulk")
+                    span.number {{stats.get('remainingTasks', '--')}}
+                    span.description([innerHtml]="'BACKLOG.SPRINT_SUMMARY.OPEN_TASKS' | translate")
+                div.summary-stats.summary-closed-tasks
+                    span.number {{stats.get('completed_tasks', '--')}}
+                    span.description([innerHtml]="'BACKLOG.SPRINT_SUMMARY.CLOSED_TASKS' | translate")
+
+                div.summary-stats.summary-iocaine([title]="'COMMON.IOCAINE_TEXT' | translate")
+                    tg-svg(svg-icon="icon-iocaine")
+                    span.number {{stats.get('iocaine_doses', '--')}}
+                    span.description([innerHtml]="'BACKLOG.SPRINT_SUMMARY.IOCAINE_DOSES' | translate")
+
+            .points-per-role-stats.toggle-points-per-role((click)="showRolePoints = false")
+                span.points-per-role-stats-title
+                    tg-svg(svg-icon="icon-arrow-up")
+                    span([innerHtml]="'BACKLOG.SPRINT_SUMMARY.POINTS_PER_ROLE' | translate")
+
+                .points-per-role-stats-content
+                    .summary-stats(*ngFor="let rolePoint of pointsByRole")
+                        span.number {{rolePoint.get('points')}}
+                        span.role {{rolePoint.get('name')}}
+
+    div.stats.toggle-analytics-visibility(
+        [class.active]="showGraph",
+        (click)="showGraphChange.emit(!showGraph)",
+        [title]="'BACKLOG.SPRINT_SUMMARY.SHOW_STATISTICS_TITLE' | translate"
+    )
+        tg-svg(svg-icon="icon-graph")

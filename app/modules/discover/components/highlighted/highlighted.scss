@@ -98,11 +98,6 @@
     position: relative;
     .current-filter {
         padding: 1rem;
-        span {
-            margin-left: .2rem;
-            position: relative;
-            top: .2rem;
-        }
         &:hover {
             svg {
                 fill: currentColor;

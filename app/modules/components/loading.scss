@@ -1,0 +1,37 @@
+.loading-spinner {
+    animation: rotate 1.5s cubic-bezier(.00, .05, .87, 1.04) infinite alternate;
+    animation-timing-function: ease-in-out;
+    display: block;
+    margin: 0 auto;
+    max-height: 1rem;
+    max-width: 1rem;
+    transform-origin: 32 32;
+
+    &.big {
+        height: 4rem;
+        max-height: 4rem;
+        max-width: 4rem;
+        width: 4rem;
+    }
+
+    &.medium {
+        height: 2rem;
+        max-height: 2rem;
+        max-width: 2rem;
+        width: 2rem;
+    }
+
+    &.small {
+        height: 1.5rem;
+        max-height: 1.5rem;
+        max-width: 1.5rem;
+        width: 1.5rem;
+    }
+
+    &.tiny {
+        height: 1rem;
+        max-height: 1rem;
+        max-width: 1rem;
+        width: 1rem;
+    }
+}

@@ -1,0 +1,28 @@
+div.wrapper
+
+    sidebar.menu-secondary.sidebar.settings-nav
+        tg-user-settings-navigation(active="mail-notifications")
+
+    section.main.admin-common
+        header
+            tg-main-title([sectionName]="'USER_SETTINGS.NOTIFICATIONS.SECTION_NAME' | translate")
+
+        p.total(translate="NOTIFICATION.MAIL")
+
+        section.policy-table
+            div.policy-table-header
+                div.policy-table-row
+                    div.policy-table-project
+                        span(translate="USER_SETTINGS.NOTIFICATIONS.COLUMN_PROJECT")
+                    div.policy-table-all
+                        span(translate="USER_SETTINGS.NOTIFICATIONS.COLUMN_RECEIVE_ALL")
+                    div.policy-table-involved
+                        span(translate="USER_SETTINGS.NOTIFICATIONS.COLUMN_ONLY_INVOLVED")
+                    div.policy-table-none
+                        span(translate="USER_SETTINGS.NOTIFICATIONS.COLUMN_NO_NOTIFICATIONS")
+            div.policy-table-body
+                tg-mail-notification-policy(
+                    *ngFor="let policy of notifyPolicies|async",
+                    [policy]="policy",
+                    (changedLevel)="onPolicyChanged(policy, $event)"
+                )

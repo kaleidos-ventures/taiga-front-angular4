@@ -1,0 +1,3 @@
+div.single-project-tags.tags-container(*ngIf="project && project.get('tags') && project.get('tags').size")
+    span.tag(*ngFor="let tag of project.get('tags')")
+        span.tag-name {{tag}}

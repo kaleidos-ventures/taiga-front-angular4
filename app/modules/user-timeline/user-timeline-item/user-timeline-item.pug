@@ -1,0 +1,41 @@
+.activity-item
+    span.activity-date {{item.get('created') | momentFromNow}}
+
+    .activity-info(tg-user-timeline-title="timeline")
+
+    .activity-info
+        // profile image with url
+        .profile-contact-picture(*ngIf="item.getIn(['data', 'user', 'is_profile_visible'])")
+
+            a(
+                [routerLink]="['/profile/', item.getIn(['data', 'user', 'username'])]",
+                [title]="item.getIn(['data', 'user', 'name'])"
+            )
+                tg-avatar([user]="item.getIn(['data', 'user'])")
+
+        // profile image without url
+        .profile-contact-picture(*ngIf="!item.getIn(['data', 'user', 'is_profile_visible'])")
+            tg-avatar([user]="item.getIn(['data', 'user'])")
+
+        p([innerHTML]="item.get('title_html')")
+
+    blockquote.activity-comment-quote(*ngIf="item.get('description')")
+        | {{item.get('description').slice(0,300)}}
+
+    .activity-member-view(*ngIf="item.has('member')")
+        a.profile-member-picture(
+            [routerLink]="['/profile', item.getIn(['member', 'user', 'username'])]",
+            [title]="item.getIn(['member', 'user', 'name'])"
+        )
+            tg-avatar([user]="item.getIn(['member', 'user'])")
+
+        .activity-member-info
+            a(
+                [routerLink]="['/profile', item.getIn(['member', 'user', 'username'])]",
+                [title]="item.getIn(['member', 'user', 'name'])"
+            )
+                span {{item.getIn(['member','user', 'name'])}}
+            p {{item.getIn(['member','role', 'name'])}}
+
+    div(*ngFor="let attachment of item.get('attachments')")
+        tg-user-timeline-attachment([attachment]="attachment")

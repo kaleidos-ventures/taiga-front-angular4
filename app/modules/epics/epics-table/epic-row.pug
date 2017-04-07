@@ -1,0 +1,83 @@
+.epic-row.e2e-epic-row(
+    [class.is-blocked]="epic.get('is_blocked')",
+    [class.is-closed]="epic.get('is_closed')",
+    [class.unfold]="displayUserStories",
+    [class.not-empty]="epic.getIn(['user_stories_count', 'opened']) || epic.getIn(['user_stories_counts', 'closed'])",
+    (click)="toggleDisplayUserStories()"
+)
+    tg-svg.icon-drag(
+        svg-icon="icon-drag",
+        *ngIf="canEditEpics()"
+    )
+
+    .vote(
+        *ngIf="columns.votes",
+        [class.is-voter]="epic.get('is_voter')"
+    )
+        tg-svg(svg-icon='icon-upvote')
+        span {{epic.get('total_voters')}}
+
+    .name
+        a(
+            tg-nav="project-epics-detail:project=vm.project.slug,ref=vm.epic.get('ref')",
+            [title]="epic.get('subject')"
+        ) {{'#' + epic.get('ref')}} {{epic.get('subject')}}
+        span.epic-pill(
+            [style.background-color]="epic.get('color')",
+            translate="EPICS.EPIC"
+        )
+        tg-svg(
+            svg-icon="icon-arrow-down",
+            *ngIf="epic.getIn(['user_stories_counts', 'total'])"
+        )
+
+    .project(*ngIf="columns.project")
+
+    .sprint(*ngIf="columns.sprint")
+
+    .assigned.e2e-assigned-to(*ngIf="columns.assigned")
+        tg-assigned-item(
+            [member]="epic.get('assigned_to_extra_info')",
+            [photoOnly]="true",
+            (click)="$event.stopPropagation(); assignTo()",
+            *tgLoading="'patch-epic-assigned-to-'+epic.get('id')"
+        )
+
+    .status(
+        *ngIf="columns.status && !canEditEpics()",
+    )
+        span {{epic.getIn(['status_extra_info', 'name'])}}
+    .status(
+        *ngIf="columns.status && canEditEpics()",
+        (mouseleave)="displayStatusList = false",
+        tg-isolate-click
+    )
+        button(
+            (click)="$event.stopPropagation(); displayStatusList = !displayStatusList",
+            [style.color]="epic.getIn(['status_extra_info', 'color'])",
+            *tgLoading="'patch-epic-status-' + epic.get('id')"
+        )
+            span.e2e-epic-status {{epic.getIn(['status_extra_info', 'name'])}}
+            tg-svg(
+                svg-icon="icon-arrow-down"
+            )
+
+        ul.epic-statuses(*ngIf="displayStatusList")
+            li.e2e-edit-epic-status(
+                *ngFor="let status of project.get('epic_statuses')",
+                (click)="$event.stopPropagation(); updateStatus(status.get('id'))"
+            ) {{status.get('name')}}
+
+    .progress(*ngIf="columns.progress")
+        .progress-bar
+        .progress-status(
+            *ngIf="percentage()",
+            [style.width]="percentage()+'%'"
+        )
+
+.epic-stories-wrapper(*ngIf="displayUserStories && userStories")
+    .epic-story(*ngFor="let story of userStories")
+        tg-epics-story-row.e2e-story(
+            [story]="story",
+            [columns]="columns"
+        )

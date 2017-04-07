@@ -1,0 +1,19 @@
+div.row.table-main.visualization
+    tg-svg(svg-icon="icon-drag")
+    div.color-column
+        div.current-color([style.background]="value.get('color')")
+
+    div.status-name
+        span {{ value.get('name') }}
+
+    div.options-column
+        a.edit-value((click)="edit.emit(value.get('id'))")
+            tg-svg(
+                [title]="'ADMIN.COMMON.TITLE_ACTION_EDIT_VALUE' | translate",
+                svg-icon="icon-edit"
+            )
+        a.delete-value((click)="delete.emit(value.get('id'))")
+            tg-svg(
+                title="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+                svg-icon="icon-trash"
+            )

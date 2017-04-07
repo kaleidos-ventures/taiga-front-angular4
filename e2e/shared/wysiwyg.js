@@ -241,7 +241,7 @@ shared.wysiwygTestingComments = function(parentSelector, section) {
 
         let markdown = await getMarkdownText(editorWrapper);
 
-        expect(markdown).to.be.equal('[@user8](/profile/user8)');
+        expect(markdown).to.be.equal('@user8');
 
         await htmlMode(editorWrapper);
 
@@ -342,7 +342,7 @@ shared.wysiwygTestingComments = function(parentSelector, section) {
         await lb.save();
         await lb.waitClose();
 
-        let hasHightlighter = !!await editor.$$('.token').count();
+        let hasHightlighter = !!await editor.$$('.prism-token').count();
 
         expect(hasHightlighter).to.be.true;
 
@@ -483,7 +483,7 @@ shared.wysiwygTesting = function(parentSelector) {
 
         let markdown = await getMarkdownText(editorWrapper);
 
-        expect(markdown).to.be.equal('[@user5](/profile/user5)');
+        expect(markdown).to.be.equal('@user5');
 
         htmlMode(editorWrapper);
     });
@@ -541,7 +541,7 @@ shared.wysiwygTesting = function(parentSelector) {
 
         await saveEdition(editorWrapper);
 
-        let hasHightlighter = !!await editor.$$('.token').count();
+        let hasHightlighter = !!await editor.$$('.prism-token').count();
 
         expect(hasHightlighter).to.be.true;
     });

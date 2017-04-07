@@ -1,0 +1,19 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="roles")
+
+    tg-admin-roles-nav([project]="project|async", [active]="currentRole", (setRole)="currentRole = $event")
+
+    section.main.admin-roles.admin-common
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Permissions")
+            .action-buttons(*ngIf="!currentRole?.get('external_user')")
+                a.button-red.delete-role(
+                    [title]="'COMMON.DELETE' | translate",
+                    (click)="deleteRole(currentRole)"
+                )
+                    span(translate="COMMON.DELETE")
+
+        tg-admin-edit-role([role]="currentRole", [noEstimableRoles]="noEstimableRoles", [project]="project|async")

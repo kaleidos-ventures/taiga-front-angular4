@@ -1,0 +1,296 @@
+.backlog-table-header,
+.backlog-table-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    &.show-tags {
+        .tags-block {
+            display: block;
+        }
+    }
+    .row {
+        @include font-size(small);
+        align-items: center;
+        border-bottom: 1px solid $gray-light;
+        display: flex;
+        padding: .5rem 0 .5rem .5rem;
+        text-align: left;
+        width: 100%;
+    }
+    .backlog-table-title,
+    .row {
+        &:hover {
+            background: transparent;
+        }
+        .input {
+            flex-basis: 25px;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+        .user-stories {
+            // overflow: hidden;
+            width: 100%;
+        }
+        .status {
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+        .points {
+            flex-basis: 125px;
+            flex-grow: 0;
+        }
+    }
+    .votes {
+        color: $gray;
+        flex-basis: 65px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        text-align: center;
+        &.inactive {
+            color: $gray-light;
+            svg {
+                fill: $gray-light;
+            }
+        }
+        &.is-voted {
+            color: $primary-light;
+            fill: $primary-light;
+        }
+        svg {
+            fill: $gray;
+            height: .75rem;
+            margin-right: .25rem;
+            vertical-align: middle;
+            width: .75rem;
+        }
+    }
+    .status,
+    .points {
+        position: relative;
+        text-align: right;
+        .popover {
+            a {
+                text-align: left;
+                width: 100%;
+            }
+            .point {
+                text-align: center;
+            }
+        }
+        .icon {
+            @include svg-size(.75rem);
+            fill: currentColor;
+            margin-left: .2rem;
+        }
+    }
+    .pop-status {
+        @include popover(200px, 0, 65%, '', '');
+        padding-right: 1rem;
+        &.fix {
+            bottom: 0;
+            top: auto;
+        }
+    }
+    .pop-role {
+        @include popover(200px, 0, 65%, '', '');
+        a {
+            &.active {
+                background: $primary-light;
+                color: $white;
+            }
+        }
+    }
+    .pop-points {
+        @include popover(150px, '', 30px, 10px, '');
+        padding-right: 3rem;
+    }
+    .pop-points-open {
+        @include popover(200px, 0, 30px, '', '');
+        &.pop-bottom {
+            @include popover(200px, 'auto', 30px, 0, '');
+        }
+        li {
+            display: inline-block;
+            width: 23%;
+        }
+        a {
+            display: block;
+            text-align: center;
+            &:hover,
+            &.active {
+                background: $primary-light;
+                color: $white;
+            }
+        }
+    }
+}
+
+.backlog-table-header {
+    .backlog-table-title {
+        @include font-type(text);
+        @include font-size(medium);
+        border-bottom: 2px solid $gray-light;
+        flex-wrap: nowrap;
+        padding-right: 1rem;
+    }
+    .points {
+        cursor: pointer;
+    }
+    .header-points {
+        span {
+            color: $gray-light;
+        }
+    }
+}
+
+.backlog-table-body {
+    &.forecasted-stories {
+        border: .5rem solid $mass-white;
+        border-bottom: 0;
+    }
+    .row {
+        border-bottom: 1px solid darken($whitish, 4%);
+        cursor: move;
+        flex-wrap: nowrap;
+        position: relative;
+        &:hover {
+            background: lighten($primary, 60%);
+            transition: background .2s ease-in;
+            transition-delay: .2s;
+            .us-settings,
+            .icon-drag {
+                opacity: 1;
+                transition: all .2s ease-in;
+            }
+        }
+        &:last-child {
+            border-bottom: 0;
+        }
+        &.gu-mirror {
+            background: lighten($primary, 60%);
+            box-shadow: 1px 1px 10px rgba($black, .1);
+            opacity: .9;
+            transition: background .2s ease-in;
+        }
+        .points {
+            .not-clickable:hover {
+                color: $black;
+                cursor: text;
+            }
+        }
+        .icon-arrow-down {
+            fill: $gray-light;
+            height: .7rem;
+            width: .7rem;
+        }
+    }
+    .gu-transit {
+        background: $whitish;
+    }
+    .sortable-placeholder {
+        background: $mass-white;
+        height: 40px;
+        width: 100%;
+        * {
+            display: none;
+        }
+    }
+    .is-checked {
+        background: lighten($primary, 60%);
+        transition: background .2s ease-in;
+    }
+    input {
+        &:checked {
+            color: $primary-light;
+            transition: color .2s ease-in;
+        }
+    }
+    .user-story-name {
+        align-items: center;
+        display: flex;
+        flex-wrap: nowrap;
+        a {
+            @include font-type(light);
+            display: inline-block;
+            flex: 1;
+        }
+        span {
+            line-height: 1.5;
+        }
+    }
+    .tags-block {
+        display: none;
+        margin-bottom: .3rem;
+        .tag {
+            @include font-size(small);
+            margin-right: .5rem;
+            padding: .2rem .5rem;
+        }
+    }
+    .blocked {
+        background: $red-light;
+        border-bottom: 1px solid $white;
+        color: $white;
+        &:hover {
+            background: $red;
+            transition: background .2s ease-in;
+        }
+        a {
+            // scss-lint:disable ImportantRule
+            color: $white !important;
+            &:hover {
+                color: $white;
+            }
+        }
+        .icon {
+            color: $white;
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+    .us-settings {
+        flex-shrink: 0;
+        margin-left: 2rem;
+        opacity: 0;
+        svg {
+            fill: $gray-light;
+            margin-right: .5rem;
+            transition: fill .2s ease-in;
+            &:hover {
+                fill: $primary-light;
+            }
+        }
+    }
+    .icon-drag {
+        cursor: move;
+        fill: $gray-light;
+        opacity: 0;
+        padding: .1rem;
+    }
+    .readonly {
+        cursor: auto;
+        padding-right: 45px;
+    }
+    .us-status {
+        tg-svg {
+            display: inline-block;
+        }
+    }
+    .loading {
+        margin: 2% auto;
+        width: 3rem;
+        img {
+            @include loading-spinner;
+            max-height: 3rem;
+            max-width: 3rem;
+        }
+    }
+}
+
+// drag & drop
+.empty-large {
+    .row {
+        display: none;
+    }
+}

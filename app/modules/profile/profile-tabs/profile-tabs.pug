@@ -1,0 +1,63 @@
+div(*ngIf="user")
+    nav.profile-content-tabs
+        tg-profile-tab(
+            [title]="'USER.PROFILE.TABS.ACTIVITY_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="timeline",
+            icon="icon-timeline",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.ACTIVITY_TAB' | translate"
+        )
+
+        tg-profile-tab(
+            *ngIf="isCurrentUser",
+            [title]="'USER.PROFILE.TABS.PROJECTS_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="projects",
+            icon="icon-project",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.PROJECTS_TAB' | translate"
+        )
+
+        tg-profile-tab(
+            [title]="'USER.PROFILE.TABS.LIKES_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="likes",
+            icon="icon-like",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.LIKES_TAB' | translate"
+        )
+
+        tg-profile-tab(
+            [title]="'USER.PROFILE.TABS.VOTES_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="votes",
+            icon="icon-upvote",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.VOTES_TAB' | translate"
+        )
+
+        tg-profile-tab(
+            [title]="'USER.PROFILE.TABS.WATCHED_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="watched",
+            icon="icon-watch",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.WATCHED_TAB' | translate"
+        )
+
+        tg-profile-tab(
+            [title]="'USER.PROFILE.TABS.CONTACTS_TAB_TITLE' | translate",
+            (select)="activeTab = $event",
+            tabId="contacts",
+            icon="icon-team",
+            [activeTab]="activeTab",
+            [name]="'USER.PROFILE.TABS.CONTACTS_TAB' | translate"
+        )
+
+    tg-profile-timeline(*ngIf="activeTab == 'timeline'", [timeline]="timeline", [user]="user")
+    tg-profile-projects(*ngIf="activeTab == 'projects' && isCurrentUser", [user]="user", [projects]="projects", [contacts]="contacts")
+    tg-profile-favs(*ngIf="activeTab == 'likes'", [user]="user", [items]="items", type="likes")
+    tg-profile-favs(*ngIf="activeTab == 'votes'", [user]="user", [items]="items", type="votes")
+    tg-profile-favs(*ngIf="activeTab == 'watched'", [user]="user", [items]="items", type="watched")
+    tg-profile-contacts(*ngIf="activeTab == 'contacts'", [user]="user", [contacts]="contacts", [isCurrentUser]="isCurrentUser")

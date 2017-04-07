@@ -1,0 +1,27 @@
+.single-attachment(
+    [class.deprecated]="attachment.get('is_deprecated')",
+    *ngIf="attachment.get('id')"
+)
+    tg-attachment-link.attachment-image([attachment]="attachment", (preview)="preview.emit($event)")
+        img(
+            [alt]="attachment.get('name')",
+            [src]="attachment.get('thumbnail_card_url')",
+            *ngIf="attachment.get('thumbnail_card_url')"
+        )
+        img(
+            [alt]="attachment.get('name')",
+            src="/#{v}/images/attachment-gallery.png",
+            *ngIf="!attachment.get('thumbnail_card_url')"
+        )
+    .attachment-data
+        tg-attachment-link.attachment-name([attachment]="attachment")
+            span {{attachment.get('name')}}
+
+        // tg-check-permission="modify_{{vm.type}}"
+        a.icon-delete(
+            href="",
+            [title]="'COMMON.DELETE' | translate",
+            *ngIf="!editable",
+            (click)="delete.emit(attachment.get('id'))"
+        )
+            tg-svg(svg-icon="icon-trash")

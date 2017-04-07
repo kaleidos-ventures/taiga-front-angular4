@@ -1,0 +1,116 @@
+tg-lightbox(key="user-settings.email-changed")
+    tg-lightbox-close
+    tg-generic-success-lightbox([title]="'USER_PROFILE.CHANGE_EMAIL_SUCCESS'|translate")
+
+form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
+    .project-details-image
+        fieldset.image-container
+            tg-avatar.image([user]="user", type="big")
+            .loading-overlay.active(*ngIf="loadingAvatar")
+                img.loading-spinner(
+                    src="/" + _version + "/svg/spinner-circle.svg",
+                    [alt]="'COMMON.LOADING' | translate"
+                )
+            input.hidden(
+                type="file",
+                id="avatar-field",
+                (change)="photoChanged.emit($event.target.files[0])"
+            )
+
+        label.button-green.change-image(
+            for="avatar-field",
+            [title]="'USER_PROFILE.CHANGE_PHOTO' | translate"
+        ) {{'USER_PROFILE.CHANGE_PHOTO' | translate}}
+
+        a.use-default-image(
+            [title]=" 'USER_PROFILE.ACTION_USE_GRAVATAR' | translate",
+            (click)="photoChanged.emit(null)"
+        ) {{ 'USER_PROFILE.ACTION_USE_GRAVATAR' | translate }}
+
+    .project-details-form-data
+        fieldset
+            label(for="username", translate="USER_PROFILE.FIELD.USERNAME")
+            input(
+                formControlName="username",
+                type="text",
+                autocorrect="off",
+                autocapitalize="none",
+                name="username",
+                id="username",
+                data-regexp="^[\\w.-]+$",
+                [placeholder]="'USER_PROFILE.FIELD.USERNAME' | translate"
+            )
+            tg-field-error([control]="form.controls.username")
+
+        fieldset
+            label(for="email", translate="USER_PROFILE.FIELD.EMAIL")
+            input(
+                formControlName="email",
+                type="email",
+                name="email",
+                id="email",
+                [placeholder]="'USER_PROFILE.FIELD.EMAIL' | translate"
+            )
+            tg-field-error([control]="form.controls.email")
+
+        fieldset
+            label(for="full-name", translate="USER_PROFILE.FIELD.FULL_NAME")
+            input(
+                formControlName="full_name",
+                type="text",
+                name="full_name",
+                id="full-name",
+                [placeholder]="'USER_PROFILE.FIELD.PLACEHOLDER_FULL_NAME' | translate"
+            )
+            tg-field-error([control]="form.controls.full_name")
+
+        fieldset
+            label(for="lang", translate="USER_PROFILE.FIELD.LANGUAGE")
+            select(
+                name="lang",
+                id="lang",
+                formControlName="lang"
+            )
+                option(value="", translate="USER_PROFILE.FIELD.LANGUAGE_DEFAULT")
+                option(
+                    *ngFor="let lang of languages",
+                    [value]="lang.get('code')"
+                ) {{ lang.get('name') }}
+
+        fieldset
+            label(for="theme", translate="USER_PROFILE.FIELD.THEME")
+            select(
+                name="theme",
+                id="theme",
+                formControlName="theme"
+            )
+                option(value="", translate="USER_PROFILE.FIELD.THEME_DEFAULT")
+                option(
+                    *ngFor="let theme of availableThemes",
+                    [value]="theme"
+                ) {{ theme }}
+
+        fieldset
+            label(for="bio", translate="USER_PROFILE.FIELD.BIO")
+            textarea(
+                formControlName="bio",
+                name="bio",
+                id="bio",
+                [placeholder]="'USER_PROFILE.FIELD.PLACEHOLDER_BIO' | translate",
+                maxlength="210"
+            )
+            tg-field-error([control]="form.controls.bio")
+
+        fieldset.submit
+            button.button-green.submit-button(
+                type="submit",
+                [title]="'COMMON.SAVE' | translate",
+                translate="COMMON.SAVE"
+            )
+            a.delete-account(
+                [title]="'USER_PROFILE.ACTION_DELETE_ACCOUNT' | translate",
+                (click)="deleteAccount.emit(user.get('id'))",
+                translate="USER_PROFILE.ACTION_DELETE_ACCOUNT"
+            )
+
+

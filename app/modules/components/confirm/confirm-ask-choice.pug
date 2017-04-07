@@ -1,0 +1,19 @@
+form
+    h2.title {{ title }}
+    p.subtitle {{ subtitle }}
+    p.replacement {{ replacementMessage }}
+    select(#replacement)
+        option([value]="option.get('id')", *ngFor="let option of options") {{option.get('name')}}
+
+    div.options
+        a.button-green(
+            [title]="'COMMON.ACCEPT' | translate",
+            (click)="response.emit(replacement.value)"
+        )
+            span(translate="COMMON.ACCEPT")
+
+        a.button-red(
+            [title]="'COMMON.CANCEL' | translate",
+            (click)="response.emit(null)"
+        )
+            span(translate="COMMON.CANCEL")

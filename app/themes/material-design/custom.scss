@@ -85,13 +85,13 @@ textarea {
     @include placeholder {
         color: darken($gray-light, 10%);
     }
-    &.checksley-error {
+    &.ng-invalid.ng-dirty {
         border: 1px solid $red;
     }
 }
 
 // Input errors
-.checksley-error-list {
+.error-list {
     @include font-type(light);
     background: rgba($red, .7);
     color: $white;

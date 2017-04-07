@@ -202,8 +202,7 @@ describe('backlog', function() {
         let dragElementHandler = dragElement.$('.icon-drag');
         let draggedElementRef = await backlogHelper.getUsRef(dragElement);
 
-
-        await utils.common.drag(dragElementHandler, dragableElements.get(0));
+        await utils.common.drag(dragElementHandler, dragableElements.get(0), 3, 3);
         await browser.waitForAngular();
 
         let firstElementTextRef = await backlogHelper.getUsRef(dragableElements.get(0));
@@ -230,7 +229,7 @@ describe('backlog', function() {
         let ref2 = await backlogHelper.getUsRef(dragElement);
         draggedRefs.push(await backlogHelper.getUsRef(dragElement));
 
-        await utils.common.drag(dragElement.$('.icon-drag'), dragableElements.get(0));
+        await utils.common.drag(dragElement.$('.icon-drag'), dragableElements.get(0), 3, 3);
 
         let elementRef1 = await backlogHelper.getUsRef(dragableElements.get(0));
         let elementRef2 = await backlogHelper.getUsRef(dragableElements.get(1));
@@ -252,7 +251,7 @@ describe('backlog', function() {
         let dragElement = dragableElements.get(0);
         let dragElementHandler = dragElement.$('.icon-drag');
 
-        await utils.common.drag(dragElementHandler, sprint.$('.sprint-table'));
+        await utils.common.drag(dragElementHandler, sprint.$('.sprint-table'), 3, 3);
         await browser.waitForAngular();
 
         let ussSprintCount = await backlogHelper.getSprintUsertories(sprint).count();
@@ -271,7 +270,7 @@ describe('backlog', function() {
 
         let initUssSprintCount = await backlogHelper.getSprintUsertories(sprint).count();
 
-        await utils.common.drag(dragElementHandler, sprint);
+        await utils.common.drag(dragElementHandler, sprint, 3, 3);
         await browser.waitForAngular();
 
         let ussSprintCount = await backlogHelper.getSprintUsertories(sprint).count();
@@ -306,7 +305,7 @@ describe('backlog', function() {
         let dragElement = await dragableElements.get(3);
         let draggedElementRef = await backlogHelper.getUsRef(dragElement);
 
-        await utils.common.drag(dragElement, dragableElements.get(0));
+        await utils.common.drag(dragElement, dragableElements.get(0), 3, 3);
         await browser.waitForAngular();
 
         let firstElementRef = await backlogHelper.getUsRef(dragableElements.get(0));
@@ -322,7 +321,7 @@ describe('backlog', function() {
 
         let dragElement = backlogHelper.getSprintUsertories(sprint1).get(0);
 
-        await utils.common.drag(dragElement, sprint2.$('.sprint-table'));
+        await utils.common.drag(dragElement, sprint2.$('.sprint-table'), 3, 3);
         await browser.waitForAngular();
 
         let firstElement = backlogHelper.getSprintUsertories(sprint2).get(0);
@@ -528,7 +527,7 @@ describe('backlog', function() {
             let dragElementHandler = dragElement.$('.icon-drag');
 
             let sprint = backlogHelper.getClosedSprintTable();
-            await utils.common.drag(dragElementHandler, sprint);
+            await utils.common.drag(dragElementHandler, sprint, 3, 3);
 
             return browser.waitForAngular();
         }
@@ -566,7 +565,7 @@ describe('backlog', function() {
 
             await backlogHelper.toggleSprint(sprint);
 
-            await utils.common.drag(dragElementHandler, sprint.$('.sprint-table'));
+            await utils.common.drag(dragElementHandler, sprint.$('.sprint-table'), 3, 3);
             await browser.waitForAngular();
 
             let closedSprints = await $('.filter-closed-sprints').isPresent();

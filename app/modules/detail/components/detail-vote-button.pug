@@ -1,0 +1,22 @@
+//- Registered user button
+a.vote-inner(
+    [title]="'COMMON.VOTE_BUTTON.BUTTON_TITLE' | translate",
+    *ngIf="user",
+    (click)="toggleVote()",
+    [class.active]="item.get('is_voter')",
+    [class.is-hover]="item.get('is_voter') && isMouseOver",
+    (mouseover)="showTextWhenMouseIsOver()",
+    (mouseleave)="showTextWhenMouseIsLeave()"
+)
+    tg-svg(svg-icon="icon-upvote")
+    //*tgLoading="loading",
+    span(
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get('total_voters')||0}",
+    ) {{ item.get('total_voters') }}
+
+//- Anonymous user button
+span.vote-inner(*ngIf="!user")
+    tg-svg(svg-icon="icon-upvote")
+    span(
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:vm.item.total_voters||0}"
+    ) {{ item.get('total_voters') }}

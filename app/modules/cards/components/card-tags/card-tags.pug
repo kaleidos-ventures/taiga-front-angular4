@@ -1,0 +1,7 @@
+.card-tags
+    ng-container(*ngFor="let tag of tags")
+        span.card-tag(
+            *ngIf="tag.get(1)",
+            [style.background-color]="tag.get(1)",
+            [title]="tag.get(0)"
+        )

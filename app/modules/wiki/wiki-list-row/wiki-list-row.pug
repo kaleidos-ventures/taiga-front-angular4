@@ -1,0 +1,13 @@
+.title-field
+    a(
+        [routerLink]="['/project', project.get('slug'), 'wiki', page.get('slug')]"
+    ) {{page.get('slug')}}
+.editions-field {{page.get('editions')}}
+tg-user-display.creator-field(
+    [user]="project.getIn(['members_by_id', page.get('owner')])"
+)
+.created-field {{ page.get('created_date')|momentFormat:'DD MMM YYYY HH:mm' }}
+tg-user-display.last-modifier-field(
+    [user]="project.getIn(['members_by_id', page.get('last_modifier')])"
+)
+.modified-field {{ page.get('modified_date')|momentFormat:'DD MMM YYYY HH:mm' }}

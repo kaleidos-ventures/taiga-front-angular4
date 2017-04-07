@@ -1,0 +1,46 @@
+.row.single-related-task.js-related-task(
+    [class.closed]="task.get('is_closed')",
+    [class.blocked]="task.get('is_blocked')",
+    [class.iocaine]="task.get('is_iocaine')"
+)
+    .task-name
+        a.clickable(
+            [routerLink]="['/project/', project.slug, 'task', task.ref]"
+        )
+            span {{'#' + task.get('ref') }}
+            span {{ task.get('subject') }}
+
+    .task-settings
+        a.edit-task(
+            (click)="test()",
+            *tgIfPerm="'modify_task'",
+            [title]="'COMMON.EDIT' | translate"
+        )
+            tg-svg(svg-icon="icon-edit")
+
+        a.delete-task(
+            *tgIfPerm="'delete_task'",
+            [title]="'COMMON.DELETE' | translate",
+        )
+            tg-svg(svg-icon="icon-trash")
+
+    tg-related-task-status.status([task]="task")
+        a.task-status(
+            [title]="'TASK.TITLE_SELECT_STATUS' | translate",
+            [style.color]="task.getIn(['status_extra_info', 'color'])"
+        )
+            span.task-status-bind
+            tg-svg(
+                *tgIfPerm="'modify_task'",
+                svg-icon="icon-arrow-down",
+                [style.fill]="task.getIn(['status_extra_info', 'color'])"
+            )
+
+    tg-assigned-item.assigned-to([member]="task.get('assigned_to_extra_info')")
+    // tg-related-task-assigned-to-inline-edition.assigned-to([task]="task")
+    //     .task-assignedto(
+    //         [title]="'COMMON.FIELDS.ASSIGNED_TO' | translate",
+    //         class="<% if(perms.modify_task) { %>editable<% } %>"
+    //     )
+    //         figure.avatar
+    //         tg-svg(svg-icon="icon-arrow-down", *tgIfPerm="'modify_task'")

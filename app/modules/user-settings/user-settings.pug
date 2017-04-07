@@ -1,0 +1,22 @@
+div.wrapper()
+
+    sidebar.menu-secondary.sidebar.settings-nav
+        tg-user-settings-navigation(active="user-profile")
+
+    section.main.user-profile
+        header
+            tg-main-title([sectionName]="'USER_SETTINGS.MENU.SECTION_TITLE' | translate")
+
+        tg-user-settings-form(
+            [user]="user|async",
+            [languages]="languages|async",
+            [formErrors]="formErrors|async",
+            [loadingAvatar]="loadingAvatar|async",
+            (deleteAccount)="onDeleteAccount($event)",
+            (submitForm)="onSubmitForm($event)",
+            (photoChanged)="onPhotoChanged($event)"
+        )
+
+tg-lightbox(key="user-settings.delete-account")
+  tg-lightbox-close
+  tg-delete-account-lightbox((response)="onDeleteAccountConfirm($event)", [user]="user|async")

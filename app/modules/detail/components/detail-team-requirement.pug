@@ -1,0 +1,13 @@
+label.button-gray.team-requirement(
+    for="team-requirement",
+    [class.is-enabled]="canEdit",
+    [class.active]="item.get('team_requirement')",
+    [title]="'COMMON.TEAM_REQUIREMENT' | translate"
+)
+    tg-svg(svg-icon="icon-team-requirement")
+
+input(
+    type="checkbox",
+    id="team-requirement",
+    name="team-requirement"
+)

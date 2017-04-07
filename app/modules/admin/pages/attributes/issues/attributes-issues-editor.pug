@@ -1,0 +1,46 @@
+tg-lightbox([key]="'admin.delete-issues-' + type")
+    tg-lightbox-close
+    tg-confirm-ask-choice(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingItem?.get('name')",
+        [message]="'ADMIN.PROJECT_VALUES.REPLACEMENT' | translate",
+        [options]="otherItems(deletingItem)",
+        (response)="confirmDelete($event)"
+    )
+
+section.colors-table.admin-status-table
+    div.project-values-title
+        h2 {{ name }}
+        a.button.button-gray.show-add-new(
+            [title]="addLabel",
+            (click)="newStatusOpen = true"
+        )
+            span {{ addLabel }}
+
+    div.table-header
+        div.row
+            div.color-column(translate="COMMON.FIELDS.COLOR")
+            div.status-name(translate="COMMON.FIELDS.NAME")
+            div.options-column
+
+    div.table-main
+        div.sortable
+            div(*ngFor="let value of values")
+                tg-admin-attributes-issues-row(
+                    [value]="value",
+                    [type]="type",
+                    *ngIf="!editing[value.get('id')]",
+                    (edit)="editing[value.get('id')]=true",
+                    (delete)="deleteItem(value)"
+                )
+                tg-admin-attributes-issues-form(
+                    [value]="value",
+                    [visible]="editing[value.get('id')]",
+                    (cancel)="editing[$event]=false"
+                )
+
+        tg-admin-attributes-issues-form(
+            [value]="null",
+            [visible]="newStatusOpen",
+            (cancel)="newStatusOpen=false"
+        )

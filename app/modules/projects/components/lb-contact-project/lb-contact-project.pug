@@ -1,0 +1,18 @@
+form.lightbox-contact-project-container(*ngIf="project", (submit)="contactProject()", [formGroup]="contactForm")
+    tg-project-logo-big.lightbox-contact-project-logo([project]="project")
+
+    h2.lightbox-contact-project-title(translate="LIGHTBOX.CONTACT_PROJECT.TITLE")
+    h3.lightbox-contact-project-name {{project.get('name')}}
+    p(translate="LIGHTBOX.CONTACT_PROJECT.WARNING")
+    textarea.lightbox-contact-project-message.e2e-lightbox-contact-project-message(
+        formControlName="text",
+        [placeholder]="'LIGHTBOX.CONTACT_PROJECT.PLACEHOLDER' | translate"
+    )
+    button.button-green.lightbox-contact-project-button.e2e-lightbox-contact-project-button(
+        (click)="contactProject()",
+        [disabled]="!contactForm.valid"
+    )
+        span(
+            translate="LIGHTBOX.CONTACT_PROJECT.SEND",
+            *tgLoading="'contact-project'",
+        )

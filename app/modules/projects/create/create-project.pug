@@ -1,0 +1,65 @@
+.create-project
+    .create-project-wrapper
+        h1.create-project-title(translate="PROJECT.CREATE.TITLE")
+        h3.create-project-description(translate="PROJECT.CREATE.CHOOSE_TEMPLATE")
+        ul.create-project-selector.e2e-create-project-selector
+            li
+                a.e2e-create-project-scrum(
+                    [title]="'PROJECT.CREATE.TEMPLATE_SCRUM' | translate",
+                    routerLink="/project/new/scrum"
+                )
+                    .create-project-selector-icon
+                        tg-svg(svg-icon="icon-scrum")
+                    .create-project-selector-template-wrapper
+                        p.create-project-selector-template(translate="PROJECT.CREATE.TEMPLATE_SCRUM")
+                        p.create-project-selector-description(translate="PROJECT.CREATE.TEMPLATE_SCRUM_DESC")
+                        .create-project-selector-question
+                            tg-svg(
+                                svg-icon="icon-question",
+                                (click)="toggleScrumHelp($event)"
+                            )
+                        .create-project-selector-long-description([@display]="displayScrumDesc")
+                            p(translate="PROJECT.CREATE.TEMPLATE_SCRUM_LONGDESC")
+            li
+                a.e2e-create-project-kanban(
+                    [title]="'PROJECT.CREATE.TEMPLATE_KANBAN' | translate",
+                    routerLink="/project/new/kanban"
+                )
+                    .create-project-selector-icon
+                        tg-svg(svg-icon="icon-kanban")
+
+                    .create-project-selector-template-wrapper
+                        p.create-project-selector-template(translate="PROJECT.CREATE.TEMPLATE_KANBAN")
+                        p.create-project-selector-description(translate="PROJECT.CREATE.TEMPLATE_KANBAN_DESC")
+                        .create-project-selector-question
+                            tg-svg(
+                                svg-icon="icon-question",
+                                (click)="toggleKanbanHelp($event)"
+                            )
+                        .create-project-selector-long-description([@display]="displayKanbanDesc")
+                            p(translate="PROJECT.CREATE.TEMPLATE_KANBAN_LONGDESC")
+            li
+                a.e2e-duplicate-project(
+                    [title]="'PROJECT.CREATE.DUPLICATE' | translate",
+                    routerLink="/project/new/duplicate"
+                )
+                    .create-project-selector-icon
+                        tg-svg(svg-icon="icon-duplicate")
+                    .create-project-selector-template-wrapper
+                        p.create-project-selector-template(translate="PROJECT.CREATE.DUPLICATE")
+                        p.create-project-selector-description(translate="PROJECT.CREATE.DUPLICATE_DESC")
+
+            li
+                a(
+                    [title]="'PROJECT.CREATE.IMPORT' | translate",
+                    routerLink="/project/new/import"
+                )
+                    .create-project-selector-icon
+                        tg-svg(svg-icon="icon-upload")
+                    .create-project-selector-template-wrapper
+                        p.create-project-selector-template(
+                            href="#"
+                            [title]="'PROJECT.CREATE.IMPORT' | translate",
+                            translate="PROJECT.CREATE.IMPORT"
+                        )
+                        p.create-project-selector-description(translate="PROJECT.CREATE.IMPORT_DESC")

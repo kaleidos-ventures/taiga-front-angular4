@@ -1,0 +1,50 @@
+tg-lightbox([key]="'admin.delete-statuses-' + type")
+    tg-lightbox-close
+    tg-confirm-ask-choice(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingStatus?.get('name')",
+        [message]="'ADMIN.PROJECT_VALUES.REPLACEMENT' | translate",
+        [options]="otherStatuses(deletingStatus)",
+        (response)="confirmDelete($event)"
+    )
+
+section.colors-table.admin-status-table
+    div.project-values-title
+        h2 {{ name }}
+        a.button.button-gray.show-add-new(
+            [title]="'ADMIN.US_STATUS.ACTION_ADD_STATUS' | translate",
+            (click)="newStatusOpen = true"
+        )
+            span(translate="ADMIN.US_STATUS.ACTION_ADD_STATUS")
+
+    div.table-header
+        div.row
+            div.color-column(translate="COMMON.FIELDS.COLOR")
+            div.status-name(translate="COMMON.FIELDS.NAME")
+            div.status-slug(translate="COMMON.FIELDS.SLUG")
+            div.is-closed-column(translate="COMMON.FIELDS.IS_CLOSED")
+            div.is-archived-column(translate="ADMIN.US_STATUS.IS_ARCHIVED_COLUMN", *ngIf="type === 'userstory-statuses'")
+            div.status-wip-limit(translate="ADMIN.US_STATUS.WIP_LIMIT_COLUMN", *ngIf="type === 'userstory-statuses'")
+            div.options-column
+
+    div.table-main
+        div.sortable
+            div(*ngFor="let value of values")
+                tg-admin-attributes-status-row(
+                    [status]="value",
+                    [type]="type",
+                    *ngIf="!editing[value.get('id')]",
+                    (edit)="editing[value.get('id')]=true",
+                    (delete)="deleteStatus(value)"
+                )
+                tg-admin-attributes-status-form(
+                    [status]="value",
+                    [visible]="editing[value.get('id')]",
+                    (cancel)="editing[$event]=false"
+                )
+
+        tg-admin-attributes-status-form(
+            [status]="null",
+            [visible]="newStatusOpen",
+            (cancel)="newStatusOpen=false"
+        )

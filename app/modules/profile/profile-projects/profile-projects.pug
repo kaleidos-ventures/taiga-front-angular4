@@ -1,0 +1,64 @@
+section.profile-projects
+    div(*ngIf="projects === null")
+         div.spin
+            img(src="/" + _version + "/svg/spinner-circle.svg", alt="Loading...")
+
+    .empty-tab(*ngIf="projects && !projects.size")
+        tg-svg(svg-icon="icon-unwatch")
+
+        p(
+            translate="USER.PROFILE.PROJECTS_EMPTY"
+            translate-values="{username: vm.user.get('full_name_display')}"
+        )
+
+    .list-itemtype-project(
+        *ngFor="let project of projects",
+        [class.blocked-project]="project.get('blocked_code')"
+    )
+        .list-itemtype-project-left
+            .project-list-single-title-wrapper
+                a.list-itemtype-project-image(
+                    [routerLink]="['/project', project.get('slug')]",
+                    [title]="project.get('name')"
+                )
+                    tg-project-logo-small([project]="project")
+
+                .project-list-single-title
+                    h2
+                        a.project-title(
+                            [routerLink]="['/project', project.get('slug')]",
+                            [title]="project.get('name')"
+                        ) {{project.get('name')}}
+
+                        tg-svg(
+                            *ngIf="project.get('blocked_code')",
+                            svg-icon="icon-blocked-project"
+                            svg-title-translate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+                        )
+                    p.project-description {{ project.get('description').slice(0, 300) }}
+
+        .list-itemtype-project-right
+
+            .list-itemtype-track
+                span.list-itemtype-track-likers(
+                    [class.active]="project.get('is_fan')",
+                    [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_fans\")||0}"
+                )
+                    tg-svg(svg-icon="icon-like")
+                    span {{ project.get('total_fans') }}
+
+                span.list-itemtype-track-watchers(
+                    [class.active]="project.get('is_watcher')",
+                    [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_watchers\")||0}"
+                )
+                    tg-svg(svg-icon="icon-watch")
+                    span {{ project.get('total_watchers') }}
+
+            .list-itemtype-project-members
+                ng-container(*ngFor="let contact of contacts")
+                    a(
+                        *ngIf="project.get('members').contains(contact.get('id'))"
+                        [routerLink]="['/profile', contact.get('username')]",
+                        [title]="contact.get('full_name')"
+                    )
+                        tg-avatar([user]="contact")

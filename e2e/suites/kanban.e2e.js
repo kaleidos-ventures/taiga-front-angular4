@@ -245,7 +245,7 @@ describe('kanban', function() {
 
             await kanbanHelper.scrollRight();
 
-            await utils.common.drag(usOrigin, destination, 0, 10);
+            await utils.common.drag(usOrigin, destination, 5, 10);
 
             browser.waitForAngular();
 

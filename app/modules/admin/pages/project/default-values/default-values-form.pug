@@ -1,0 +1,48 @@
+form(*ngIf="project")
+    //- Epics
+    fieldset
+        label(for="default-value-epic", translate="ADMIN.DEFAULT_VALUES.LABEL_EPIC_STATUS")
+        select
+            option(*ngFor="let status of project.get('epic_statuses')") {{ status.get('name') }}
+
+    //- User stories
+    fieldset
+        label(for="default-value-us", translate="ADMIN.DEFAULT_VALUES.LABEL_US_STATUS")
+        select
+            option(*ngFor="let status of project.get('us_statuses')") {{ status.get('name') }}
+
+    fieldset
+        label(for="default-points", translate="ADMIN.DEFAULT_VALUES.LABEL_POINTS")
+        select
+            option(*ngFor="let status of project.get('points')") {{ status.get('name') }}
+
+    //- Tasks
+    fieldset
+        label(for="default-value-task", translate="ADMIN.DEFAULT_VALUES.LABEL_TASK_STATUS")
+        select
+            option(*ngFor="let status of project.get('task_statuses')") {{ status.get('name') }}
+
+    //- Issues
+    fieldset
+        label(for="default-value-issue-type", translate="ADMIN.DEFAULT_VALUES.LABEL_ISSUE_TYPE")
+        select
+            option(*ngFor="let status of project.get('issue_types')") {{ status.get('name') }}
+
+    fieldset
+        label(for="default-value-issue-status", translate="ADMIN.DEFAULT_VALUES.LABEL_ISSUE_STATUS")
+        select
+            option(*ngFor="let status of project.get('issue_statuses')") {{ status.get('name') }}
+
+    fieldset
+        label(for="default-value-priority", translate="ADMIN.DEFAULT_VALUES.LABEL_PRIORITY")
+        select
+            option(*ngFor="let status of project.get('priorities')") {{ status.get('name') }}
+
+    fieldset
+        label(for="default-value-severity", translate="ADMIN.DEFAULT_VALUES.LABEL_SEVERITY")
+        select
+            option(*ngFor="let status of project.get('severities')") {{ status.get('name') }}
+
+    fieldset
+        button.button-green.submit-button(type="submit", [title]="'COMMON.SAVE' | translate")
+            span(translate="COMMON.SAVE")

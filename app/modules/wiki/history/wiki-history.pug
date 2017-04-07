@@ -1,0 +1,11 @@
+nav.history-tabs(*ngIf="historyEntries.size > 0")
+    a.history-tab.active(
+        [title]="'ACTIVITY.TITLE' | translate",
+        translate="ACTIVITY.TITLE"
+    )
+
+section.wiki-history(*ngIf="historyEntries.size > 0")
+    tg-wiki-history-entry.wiki-history-entry(
+        *ngFor="let historyEntry of historyEntries",
+        [entry]="historyEntry"
+    )

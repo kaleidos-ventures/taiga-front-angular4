@@ -1,0 +1,21 @@
+fieldset.create-project-check
+    label(for="links")
+        span.title(
+            translate="PROJECT.IMPORT.LINKS"
+            [translateParams]="{platform: platformName}"
+        )
+        span.description(
+            translate="PROJECT.IMPORT.LINKS_DESCRIPTION"
+            [translateParams]="{platform: platformName}"
+        )
+
+    .check
+        input.activate-input(
+            [formControlName]="formControlName"
+            name="links"
+            type="checkbox"
+        )
+        div
+        span.check-text.check-yes(translate="COMMON.YES")
+        span.check-text.check-no(translate="COMMON.NO")
+        tg-field-error([control]="control")

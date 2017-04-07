@@ -1,0 +1,18 @@
+form
+    h2.title(translate="COMMON.NEW_BULK")
+    fieldset
+        textarea(
+            #textarea,
+            cols="200",
+            wrap="off",
+            required,
+            linewidth="200",
+            [placeholder]="'COMMON.ONE_ITEM_LINE' | translate"
+        )
+
+    button.button-green.submit-button(
+        type="submit",
+        [title]="'COMMON.SAVE' | translate",
+        translate="COMMON.SAVE",
+        (click)="onClick(textarea.value)"
+    )

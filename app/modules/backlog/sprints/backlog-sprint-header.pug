@@ -1,0 +1,31 @@
+header
+    .sprint-name
+        a.compact-sprint(
+            [title]="'BACKLOG.COMPACT_SPRINT' | translate",
+            [class.active]="!compactSprint",
+            (click)="compactSprintChange.emit(!compactSprint)"
+        )
+            tg-svg(svg-icon="icon-arrow-right")
+        // *tgIfPerm="'view_milestones'",
+        a(
+            [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
+            [title]="'BACKLOG.GO_TO_TASKBOARD' | translate:{'name': sprint.get('name')}"
+        )
+            span {{sprint.get('name')}}
+
+        a.edit-sprint(
+            *tgIfPerm="'modify_milestone'",
+            [title]="'BACKLOG.EDIT_SPRINT' | translate",
+            (click)="editSprint(sprint)",
+        )
+            tg-svg(svg-icon="icon-edit")
+
+    .sprint-summary
+        .sprint-date {{estimatedDateRange()}}
+        ul
+            li
+                span.number {{sprint.get('closed_points') || 0 | number}}
+                span.description(translate="BACKLOG.CLOSED_POINTS")
+            li
+                span.number {{sprint.get('total_points') || 0 | number}}
+                span.description(translate="BACKLOG.TOTAL_POINTS")

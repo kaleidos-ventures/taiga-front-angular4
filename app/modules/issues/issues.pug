@@ -1,0 +1,32 @@
+tg-lightbox(key="issues.assign-to")
+    tg-lightbox-close
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+
+// div.lightbox.lightbox-create-issue(tg-lb-create-issue)
+//     include ../includes/modules/lightbox-create-issue
+//
+// div.lightbox.lightbox-generic-bulk(tg-lb-create-bulk-issues)
+//     include ../includes/modules/lightbox-issue-bulk
+
+div.wrapper.issues.lightbox-generic-form
+    tg-project-menu([project]="project|async", active="issues")
+
+    .filters-bar
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="issues",
+            [appliedFilters]="appliedFilters|async",
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
+        )
+
+    section.main.issues-page
+        header
+            tg-main-title([project]="project | async", [sectionName]="Issues")
+
+        tg-issues-table([project]="project | async", [issues]="issues | async", [order]="order | async")
+
+        // Paginator is rendered using js.
+        div.paginator.issues-paginator

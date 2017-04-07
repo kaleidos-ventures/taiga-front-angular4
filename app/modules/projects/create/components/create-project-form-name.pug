@@ -1,0 +1,12 @@
+fieldset([formGroup]="form")
+    label(
+        translate="PROJECT.COMMON.DETAILS"
+        for="project-name"
+    )
+    input.e2e-create-project-title(
+        type="text",
+        formControlName="value",
+        [placeholder]="'PROJECT.COMMON.PROJECT_TITLE' | translate",
+        name="project-name",
+    )
+    tg-field-error([control]="form.controls.value")

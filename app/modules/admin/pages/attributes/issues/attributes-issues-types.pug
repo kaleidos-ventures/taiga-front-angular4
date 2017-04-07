@@ -1,0 +1,19 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-values")
+
+    tg-admin-attributes-nav([project]="project|async", active="types")
+
+    section.main.admin-common.admin-attributes
+        header
+            h1
+                tg-main-title([project]="project|async", [sectionName]="'ADMIN.PROJECT_VALUES_TYPES.TITLE' | translate")
+        p.admin-subtitle(translate="ADMIN.PROJECT_VALUES_TYPES.SUBTITLE")
+
+        tg-admin-attributes-issues-editor.admin-attributes-section(
+            type="types",
+            [name]="'ADMIN.PROJECT_VALUES_TYPES.ISSUE_TITLE' | translate",
+            [addLabel]="'ADMIN.PROJECT_VALUES_TYPES.ACTION_ADD' | translate",
+            [project]="project|async"
+        )

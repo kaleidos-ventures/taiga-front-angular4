@@ -1,0 +1,18 @@
+div(
+    [class]="'card-inner zoom-' + zoomLevel",
+    [class.card-blocked]="item.get('is_blocked')",
+    [class.archived]="archived",
+    [class.minimized]="minimized"
+)
+    tg-card-tags([tags]="item.get('tags')", *ngIf="zoom.visibility.tags && !minimized")
+    tg-card-owner([item]="item", [zoom]="zoom", [project]="project")
+    div(*ngIf='zoom.visibility.owner && !minimized')
+        tg-card-title([item]="item", [zoom]="zoom", [project]="project")
+    tg-card-data([item]="item", [zoom]="zoom", [type]="type", *ngIf="!minimized")
+    tg-card-completion([tasks]="item.get('tasks')", *ngIf="type === 'us' && isVisibleCompletion() && !minimized")
+    tg-card-tasks([project]="project", [tasks]="item.get('tasks')", *ngIf="type === 'us' && isVisibleTasks() && !minimized")
+    tg-card-slideshow(
+        *ngIf="isVisibleSlideshow() && !minimized",
+        [images]="item.get('images')"
+    )
+    tg-card-unfold(*ngIf="isVisibleFold() && !minimized", (fold)="toggleFold()")

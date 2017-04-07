@@ -1,0 +1,8 @@
+input.range-slider(
+    #input
+    type="range",
+    min="0",
+    [max]="levels - 1",
+    step="1",
+    (change)="onChangeZoom(input.value)"
+)

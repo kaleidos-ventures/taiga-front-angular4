@@ -1,0 +1,5 @@
+// tg-kanban-squish-column,
+// tg-kanban-sortable,
+div.kanban-table([class.zoom-0]="zoom.level == 0")
+    tg-kanban-table-header([nested]="nested", [statuses]="statuses", [(folds)]="folds", [(archivedWatched)]="archivedWatched")
+    tg-kanban-table-body([project]="project", [statuses]="statuses", [items]="items", [nested]="nested", [folds]="folds", [archivedWatched]="archivedWatched", [zoom]="zoom")

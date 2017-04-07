@@ -1,0 +1,72 @@
+div.register-form-container
+    form.register-form((ngSubmit)="onSubmit()", [formGroup]="registerForm", novalidate)
+        p.form-header(*ngIf="title") {{title}}
+        fieldset
+            // data-regexp="^[\\w.-]+$",
+            input(
+                id="username",
+                type="text",
+                autocorrect="off",
+                autocapitalize="none",
+                autofocus,
+                required,
+                formControlName="username",
+                [placeholder]="'REGISTER_FORM.PLACEHOLDER_NAME' | translate"
+            )
+            tg-field-error([control]="registerForm.controls.username")
+
+        fieldset
+            input(
+                id="full_name",
+                type="text",
+                required,
+                formControlName="full_name",
+                [placeholder]="'REGISTER_FORM.PLACEHOLDER_FULL_NAME' | translate"
+            )
+            tg-field-error([control]="registerForm.controls.full_name")
+
+        fieldset
+            input(
+                id="email",
+                type="email",
+                required,
+                formControlName="email",
+                [placeholder]="'REGISTER_FORM.PLACEHOLDER_EMAIL' | translate"
+            )
+            tg-field-error([control]="registerForm.controls.email")
+
+        fieldset
+            input(
+                id="password",
+                type="password",
+                formControlName="password",
+                tg-capslock,
+                required,
+                [placeholder]="'REGISTER_FORM.PLACEHOLDER_PASSWORD' | translate"
+            )
+            tg-field-error([control]="registerForm.controls.password")
+
+        fieldset
+            button.button-register.button-green.submit-button(
+                type="submit",
+                [title]="'REGISTER_FORM.ACTION_SIGN_UP' | translate",
+                translate="REGISTER_FORM.ACTION_SIGN_UP"
+            )
+
+        // .contrib-plugins-wrapper(ng-if="contribPlugins.length")
+        //     label(translate="LOGIN_COMMON.ALT_LOGIN")
+        //
+        //     fieldset(
+        //         ng-repeat="plugin in contribPlugins|filter:{type: 'auth'}"
+        //         ng-include="plugin.template"
+        //     )
+
+        //- Only displays terms notice when terms plugin is loaded.
+        tg-terms-of-service-and-privacy-policy-notice
+
+        a.register-text-top(
+            title="'REGISTER_FORM.TITLE_LINK_LOGIN' | translate",
+            routerLink="/login",
+            [queryParams]="queryParams",
+            translate="REGISTER_FORM.LINK_LOGIN"
+        )

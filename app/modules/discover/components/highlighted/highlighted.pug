@@ -1,0 +1,53 @@
+.highlighted-projects-container
+    // .loading-container(
+    //     tg-loading="loading"
+    //     ng-show="loading"
+    // )
+    // ng-template(*ngIf="!loading")
+    .highlighted-project(
+        *ngFor="let project of highlighted"
+    )
+        a.project-logo(
+            [routerLink]="['/project', project.get('slug')]",
+            [title]="project.get('name')"
+        )
+            tg-project-logo-small([project]='project')
+        .project-data-container
+            .single-project-header
+                h2.project-title
+                    a(
+                        [routerLink]="['/project', project.get('slug')]",
+                        [title]="project.get('name')"
+                    ) {{project.get('name')}}
+                    tg-svg.look-for-people(
+                        *ngIf="project.get('is_looking_for_people')",
+                        svg-icon="icon-recruit",
+                        [svg-title]="project.get('looking_for_people_note')"
+                    )
+                .project-statistics
+                    span.statistic(
+                        [class.active]="project.get('is_fan')",
+                        [title]="'PROJECT.FANS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_fans')||0}"
+                    )
+                        tg-svg(svg-icon="icon-like")
+                        span {{project.get('total_fans')}}
+                    span.statistic(
+                        [class.active]="project.get('is_watcher')",
+                        [title]="'PROJECT.WATCHERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_watchers')||0}"
+                    )
+                        tg-svg(svg-icon="icon-watch")
+                        span {{project.get('total_watchers')}}
+                    span.statistic(
+                        [class.active]="project.get('i_am_member')",
+                        [title]="'PROJECT.MEMBERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('members').size||0}"
+                    )
+                        tg-svg(svg-icon="icon-team")
+                        span.statistics-num {{ project.get('members').size }}
+            p.project-description {{ project.get('description').slice(0,150) }}{{ project.get('description').length < 150 ? '' : '...'}}
+
+    div(*ngIf="!loading")
+        a.view-more-projects.button-green(
+            *ngIf="highlighted",
+            routerLink="/discover/search",
+            [queryParams]="{'order_by': orderString(order)}"
+        ) {{ 'DISCOVER.VIEW_MORE' | translate }}

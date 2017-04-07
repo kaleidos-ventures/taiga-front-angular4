@@ -1,0 +1,79 @@
+.input(*tgIfPerm="'modify_us'")
+    input(
+        type="checkbox",
+        [checked]="checked",
+        (change)="selectUserstory(us, $event.target.checked)"
+    )
+
+.votes(
+    [class.inactive]="!us.get('total_voters')",
+    [class.is-voted]="us.get('is_voter')",
+    [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:us.total_voters||0}"
+)
+    tg-svg(svg-icon="icon-upvote")
+    span {{ us.get('total_voters') }}
+
+.user-stories
+    tg-backlog-colorize-tags.tags-block([tags]="us.get('tags')")
+    .user-story-name
+        a.clickable(
+            [routerLink]="['/project', project.get('slug'), 'us', us.get('ref')]",
+            [queryParams]="{'no-milestone': 1}",
+            title="#{{ us.get('ref') }} {{ us.get('subject') }}"
+        )
+            span {{'#' + us.get('ref')}}&nbsp;
+            span {{us.get('subject')}}
+            tg-belong-to-epics(
+                format="pill",
+                *ngIf="us.get('epics')",
+                [epics]="us.get('epics')"
+            )
+        .us-settings
+            a.e2e-edit.edit-story(
+                *tgIfPerm="'modify_us'",
+                (click)="editUserStory(us)",
+                [title]="'COMMON.EDIT' | translate"
+            )
+                tg-svg(svg-icon="icon-edit")
+
+            a.e2e-delete(
+                *tgIfPerm="'delete_us'",
+                (click)="deleteUserStory(us)",
+                [title]="'COMMON.DELETE' | translate"
+            )
+                tg-svg(svg-icon="icon-trash")
+
+.status(*tgIfPerm="'!modify_us'")
+    span {{us.getIn(['status_extra_info', 'name'])}}
+
+.status(
+    *tgIfPerm="'modify_us'",
+    (mouseleave)="displayStatusList = false",
+    tg-isolate-click
+)
+    button(
+        (click)="$event.stopPropagation(); displayStatusList = !displayStatusList",
+        [style.color]="us.getIn(['status_extra_info', 'color'])",
+        *tgLoading="'patch-us-status-' + us.get('id')"
+    )
+        span.e2e-us-status {{us.getIn(['status_extra_info', 'name'])}}
+        tg-svg(
+            svg-icon="icon-arrow-down"
+        )
+
+    ul.us-statuses(*ngIf="displayStatusList")
+        li.e2e-edit-us-status(
+            *ngFor="let status of project.get('us_statuses')",
+            (click)="$event.stopPropagation(); updateStatus(status.get('id'))"
+        ) {{status.get('name')}}
+
+div.points
+    tg-backlog-us-points(
+        [us]="us",
+        [roles]="project.get('roles')",
+        [points]="project.get('points')",
+        [showedRole]="showedRole"
+    )
+
+a.e2e-drag(*tgIfPerm="'modify_us'", href="", [title]="'COMMON.DRAG' | translate")
+    tg-svg(svg-icon="icon-drag")

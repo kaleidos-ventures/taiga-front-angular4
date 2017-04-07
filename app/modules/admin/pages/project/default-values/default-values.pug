@@ -1,0 +1,15 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-profile")
+
+    tg-admin-subnav-project([project]="project|async", active="default-values")
+
+    section.main.admin-common
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Admin")
+            p.admin-subtitle(translate="ADMIN.PROJECT_DEFAULT_VALUES.SUBTITLE")
+
+        section.default-values
+            tg-admin-default-values-form([project]="project|async")

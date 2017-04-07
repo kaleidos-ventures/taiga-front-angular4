@@ -1,0 +1,13 @@
+label.button-gray.client-requirement(
+    for="client-requirement",
+    [class.is-editable]="canEdit",
+    [class.active]="item.get('client_requirement')",
+    [title]="'COMMON.CLIENT_REQUIREMENT' | translate"
+)
+    tg-svg(svg-icon="icon-client-requirement")
+
+input(
+    type="checkbox",
+    id="client-requirement",
+    name="client-requirement"
+)

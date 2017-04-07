@@ -1,0 +1,63 @@
+.attachments-header {
+    align-content: center;
+    align-items: center;
+    background: $mass-white;
+    display: flex;
+    justify-content: space-between;
+    min-height: 36px;
+    .attachments-title {
+        @include font-type(bold);
+        @include font-size(medium);
+        color: $grayer;
+        line-height: 36px;
+        padding: 0 1rem;
+    }
+    .options {
+        display: flex;
+    }
+    label {
+        cursor: pointer;
+        margin-left: .25rem;
+        &.add-attachment-button {
+            background: $gray;
+            border: 0;
+            display: inline-block;
+            padding: .5rem;
+            transition: background .25s;
+            &:hover {
+                background: $primary-light;
+            }
+        }
+        svg {
+            fill: $white;
+            height: 1.2rem;
+            margin-bottom: -.2rem;
+            width: 1.2rem;
+        }
+    }
+    button {
+        background: none;
+        margin-right: .2rem;
+        &:hover,
+        &.is-active {
+            svg {
+                fill: $primary-light;
+            }
+        }
+        svg {
+            fill: $gray-light;
+            height: 1.6rem;
+            width: 1.6rem;
+        }
+    }
+    .size-info {
+        @include font-size(small);
+        @include font-type(light);
+        color: $gray;
+        padding-left: 1rem;
+    }
+    input {
+        display: none;
+    }
+}
+

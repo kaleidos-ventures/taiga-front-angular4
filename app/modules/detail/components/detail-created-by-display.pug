@@ -1,0 +1,15 @@
+.created-by
+    a.created-title(
+        [routerLink]="['/profile', user.get('username')]",
+        [title]="user.get('full_name_display')",
+        translate="COMMON.CREATED_BY",
+        [translateParams]="{ 'fullDisplayName': user.get('full_name_display')}",
+    )
+    .created-date {{date}}
+
+.user-avatar
+    a(
+        [routerLink]="['/profile', user.get('username')]",
+        [title]="user.get('full_name_display')"
+    )
+        tg-avatar([user]="user")

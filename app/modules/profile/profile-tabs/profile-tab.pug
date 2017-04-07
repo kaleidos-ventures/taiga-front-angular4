@@ -1,0 +1,8 @@
+a.tab(
+    [title]="title",
+    (click)="select.emit(tabId)",
+    [class.active]="activeTab === tabId"
+)
+    tg-svg([svg-icon]="icon")
+    span {{name}}
+

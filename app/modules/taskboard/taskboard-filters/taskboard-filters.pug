@@ -1,0 +1,31 @@
+form.search-in
+    fieldset
+        input(#q,
+            type="text",
+            [value]="query",
+            (keyup)="setQ(q.value)",
+            [placeholder]="'TEAM.PLACEHOLDER_INPUT_SEARCH' | translate"
+        )
+        .icon-search-wrapper
+            tg-svg(
+                svg-icon="icon-search",
+                [title]="'COMMON.FILTERS.TITLE_ACTION_FILTER_BUTTON' | translate"
+            )
+
+nav(*ngIf="project")
+    ul
+        li
+            a(
+                [class.active]="role === null",
+                (click)="setRole(null)"
+            )
+              span.title(translate="TEAM.SECTION_FILTER_ALL")
+              tg-svg(svg-icon="icon-arrow-right")
+
+        li(*ngFor="let item of project.get('roles')")
+            a(
+                [class.active]="item.get('id') == role",
+                (click)="setRole(item)"
+            )
+                span.title {{ item.get('name') }}
+                tg-svg(svg-icon="icon-arrow-right")

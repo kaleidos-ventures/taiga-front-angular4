@@ -1,0 +1,30 @@
+ng-container(*tgLoading="projects === null && !order;size:'big'")
+    .empty-large(*ngIf="projects && projects.size === 0 && !order")
+        img(
+            src="/" + _version + "/images/empty/empty_tex.png",
+            [alt]="'DISCOVER.EMPTY' | translate"
+        )
+        p.title(translate="DISCOVER.EMPTY")
+
+    .discover-results(*ngIf="(projects && projects.size !== 0) || order")
+        .discover-results-inner
+            tg-discover-search-list-header(
+                (orderChange)="orderChange.emit($event)",
+                [order]="order"
+            )
+
+            ng-container(*tgLoading="projects === null;size:'small'")
+                ul.project-list(*ngIf="projects.size")
+                    tg-discover-search-result(*ngFor="let project of projects", [project]="project")
+                .empty-large(*ngIf="!projects.size")
+                    img(
+                        src="/" + _version + "/images/empty/empty_tex.png",
+                        [alt]="'DISCOVER.EMPTY' | translate"
+                    )
+                    p.title(translate="DISCOVER.EMPTY")
+
+            a.button-green.more-results(
+                (click)="showMore()",
+                *ngIf="nextSearchPage",
+                translage="DISCOVER.VIEW_MORE"
+            )

@@ -1,0 +1,13 @@
+a.button-gray.item-block.is-active(
+    *ngIf="!item.get('is_blocked')",
+    [title]="'COMMON.BLOCK_TITLE' | translate",
+    [class.editable]="canEdit"
+)
+    tg-svg(svg-icon="icon-lock")
+
+a.button-red.item-unblock.is-active(
+    *ngIf="item.get('is_blocked')",
+    [title]="'COMMON.UNBLOCK_TITLE' | translate",
+    [class.editable]="canEdit"
+)
+    tg-svg(svg-icon="icon-unlock")

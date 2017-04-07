@@ -91,7 +91,7 @@ describe('attributes - points', function() {
         let rows = section.rows();
         let points = await adminAttributesHelper.getPointsNames(section.el);
 
-        await utils.common.drag(rows.get(0), rows.get(2));
+        await utils.common.drag(rows.get(0), rows.get(2), 3, 3);
 
         let newPoints = await adminAttributesHelper.getPointsNames(section.el);
 

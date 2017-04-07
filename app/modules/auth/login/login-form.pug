@@ -1,0 +1,53 @@
+.login-form-container
+    form.login-form((ngSubmit)="onSubmit()", [formGroup]="loginForm", novalidate)
+        p.form-header(*ngIf="title") {{title}}
+        fieldset
+            input(
+                id="username",
+                name="username",
+                type="text",
+                autocorrect="off",
+                autocapitalize="none",
+                autofocus,
+                required,
+                formControlName="username",
+                [placeholder]="'LOGIN_COMMON.PLACEHOLDER_AUTH_NAME' | translate"
+            )
+            tg-field-error([control]="loginForm.controls.username")
+
+        fieldset.login-password
+            input(
+                id="password",
+                type="password",
+                name="password",
+                required,
+                formControlName="password",
+                [placeholder]="'LOGIN_COMMON.PLACEHOLDER_AUTH_PASSWORD' | translate",
+            )
+            tg-field-error([control]="loginForm.controls.password")
+
+            a.forgot-pass(
+                routerLink="/forgot-password",
+                [queryParams]="queryParams",
+                [title]="'LOGIN_COMMON.TITLE_LINK_FORGOT_PASSWORD' | translate",
+                translate="LOGIN_COMMON.LINK_FORGOT_PASSWORD"
+            )
+
+            tg-capslock(*ngIf='loginForm.controls.password.dirty')
+
+        fieldset
+            button.button-green.submit-button(
+                type="submit",
+                [title]="'LOGIN_COMMON.ACTION_SIGN_IN' | translate",
+                translate="LOGIN_COMMON.ACTION_SIGN_IN"
+            )
+
+        // .contrib-plugins-wrapper(*ngIf="contribPlugins.length")
+        //     label(translate="LOGIN_COMMON.ALT_LOGIN")
+        //
+        //     fieldset(
+        //         *ngFor="let plugin in contribPlugins|filter:{type: 'auth'}"
+        //         ng-include="plugin.template"
+        //     )
+
+    tg-public-register-message

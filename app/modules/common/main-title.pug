@@ -1,0 +1,4 @@
+h1
+  span.project-name(*ngIf="project && project.get('name')") {{ project.get('name') }}
+  span.green {{ sectionName }}
+  span.date(*ngIf="subsectionName") {{ subsectionName }}

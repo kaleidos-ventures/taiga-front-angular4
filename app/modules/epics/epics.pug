@@ -1,0 +1,25 @@
+tg-lightbox(key="epics.assign-to")
+    tg-lightbox-close
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async", (assign)="assignEpic($event)")
+
+tg-lightbox.lightbox-create-epic(key="epics.add")
+    tg-lightbox-close
+    tg-create-epic-form([statuses]="statuses|async", (createEpic)="createNewEpic($event)")
+
+div.wrapper
+    tg-project-menu([project]="project|async", active="epics")
+
+    section.main.epics
+        header.header-with-actions
+            tg-main-title([project]="project | async", [sectionName]="section")
+
+            .action-buttons(ng-if="vm.epics.size && vm.canCreateEpics()")
+                button.button-green.e2e-create-epic(
+                    translate="EPICS.DASHBOARD.ADD",
+                    [title]="'EPICS.DASHBOARD.ADD' | translate",
+                    (click)="onAddEpicClicked()"
+                )
+
+        tg-epics-table([epics]="epics|async", [project]="project|async", [userStories]="userStories|async")
+
+        tg-epics-empty([epics]="epics|async")

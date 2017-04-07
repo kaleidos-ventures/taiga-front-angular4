@@ -1,0 +1,59 @@
+tg-lightbox(key="kanban.assign-to")
+    tg-lightbox-close
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+
+tg-lightbox(key="kanban.edit")
+    tg-lightbox-close
+    tg-kanban-us-edit-lightbox([us]="itemToEdit|async", [project]="project|async")
+
+tg-lightbox(key="kanban.bulk-create")
+    tg-lightbox-close
+    tg-bulk-create-lightbox((create)="onBulkCreate($event)")
+
+div.wrapper
+    tg-project-menu([project]="project|async", active="kanban")
+
+    section.main.kanban
+        // q="ctrl.filterQ"
+        // filters="ctrl.filters"
+        // custom-filters="ctrl.customFilters"
+        // selected-filters="ctrl.selectedFilters"
+        // customFilters="ctl.customFilters"
+        // on-save-custom-filter="ctrl.saveCustomFilter(name)"
+        // on-add-filter="ctrl.addFilter(filter)"
+        // on-select-custom-filter="ctrl.selectCustomFilter(filter)"
+        // on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
+        // on-remove-filter="ctrl.removeFilter(filter)"
+        // on-change-q="ctrl.changeQ(q)"
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="kanban",
+            [appliedFilters]="appliedFilters|async",
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
+        )
+
+        .kanban-header
+            tg-main-title([project]="project | async", [sectionName]="section")
+            .taskboard-actions
+                .zoom-loading(*tgLoading="zoomLoading")
+                tg-kanban-board-zoom([value]="(zoom | async).level")
+
+                button.button-filter.e2e-open-filter(
+                    (click)="toggleFiltersOpen()",
+                    [title]="selectedFiltersCount + ('COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate)"
+                )
+                    span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
+                    tg-svg(svg-icon="icon-filters")
+
+        tg-kanban-table(
+            [project]="project | async",
+            [items]="userstoriesByState | async",
+            [nested]="false",
+            [zoom]="zoom | async",
+            (sorted)="onSorted($event)",
+            [statuses]="statuses | async",
+            tg-kanban-sortable
+        )

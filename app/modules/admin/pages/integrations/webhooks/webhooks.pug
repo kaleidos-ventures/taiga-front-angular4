@@ -1,0 +1,18 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="integrations")
+
+    tg-admin-integrations-nav([project]="project|async", active="webhooks")
+
+    section.main.admin-webhooks.admin-common
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Webhooks")
+            .action-buttons
+                a.button-green.hidden.add-webhook(
+                    [title]="'ADMIN.WEBHOOKS.ADD_NEW' | translate",
+                    translate="ADMIN.WEBHOOKS.ADD_NEW"
+                )
+
+        tg-admin-integrations-webhooks-editor([webhooks]="webhooks|async")

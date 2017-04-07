@@ -1,0 +1,7 @@
+p.login-text(*ngIf="publicRegisterEnabled")
+    span(translate="AUTH.NOT_REGISTERED_YET")
+    | &nbsp;
+    a(routerLink='/register',
+      [queryParams]='queryParams',
+      [title]='"AUTH.REGISTER" | translate',
+      translate="AUTH.CREATE_ACCOUNT")

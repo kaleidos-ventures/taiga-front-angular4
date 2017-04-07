@@ -1,0 +1,61 @@
+tg-lightbox.lightbox-generic-form.lb-create-edit-userstory(key="backlog.new-us")
+    tg-lightbox-close
+    tg-create-us-form([project]="project|async", (createUs)="createNewUs($event)", [us]="editingUs|async")
+
+tg-lightbox.lightbox-generic-form(key="backlog.new-us-bulk")
+    tg-lightbox-close
+    tg-bulk-create-lightbox((create)="createUsBulk($event)")
+
+tg-lightbox.lightbox-sprint-add-edit(key="backlog.sprint-add-edit")
+    tg-lightbox-close
+    tg-sprint-add-edit-lightbox(
+        [project]="project|async",
+        [editingSprint]="editingSprint|async",
+    )
+
+div.wrapper(
+    tg-sortable,
+    item-selector="tg-backlog-row",
+    container-selector=".backlog-table-body",
+    item-data-field="us-id",
+)
+    tg-project-menu([project]="project|async", active="backlog")
+
+    sidebar.backlog-filter([class.active]="showFilters")
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="backlog",
+            [appliedFilters]="appliedFilters|async",
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
+        )
+    section.main.backlog
+        tg-main-title([project]="project | async", sectionName="backlog")
+
+        tg-backlog-summary([project]="project | async", [stats]="stats | async")
+
+        tg-backlog-menu(
+            [userstories]="userstories | async",
+            [stats]="stats | async",
+            [(showFilters)]="showFilters",
+            [(showTags)]="showTags",
+            [selectedUserstories]="selectedUserstories | async",
+            [currentSprint]="currentSprint | async",
+            [latestSprint]="latestSprint | async"
+        )
+
+        ng-container(*tgLoading="'loading-userstories';size:'big'")
+            tg-backlog-table(
+                [userstories]="userstories | async",
+                [showTags]="showTags",
+                [project]="project |async",
+                [selectedUserstories]="selectedUserstories | async",
+                [doomlinePosition]="doomlinePosition | async"
+            )
+
+    tg-backlog-sprints.menu-secondary.sidebar(
+        [sprints]="sprints | async",
+        [project]="project | async",
+    )

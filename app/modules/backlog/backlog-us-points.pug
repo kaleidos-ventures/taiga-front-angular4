@@ -1,0 +1,27 @@
+a.us-points([title]="us.get('total_points')", *tgIfPerm="'!modify_us'")
+    span(*ngIf="!showedRole") {{us.get("total_points")}}
+    span(*ngIf="showedRole") {{getRolePoints(showedRole)}}/{{us.get("total_points")}}
+
+ng-container(*tgIfPerm="'modify_us'")
+    a.us-points([title]="us.get('total_points')", *tgLoading="'patch-us-points-' + us.get('id')")
+        span((click)="state='roles-list'", *ngIf="!showedRole") {{us.get("total_points")}}
+        span(
+            *ngIf="showedRole",
+            (click)="state='role-points'; selectedRole=showedRole",
+        ) {{getRolePoints(showedRole)}}/{{us.get("total_points")}}
+        tg-svg(svg-icon="icon-arrow-down")
+
+        ul.popover.pop-role(*ngIf="state === 'roles-list'")
+            li(*ngFor="let role of computableRoles()")
+                a.role(
+                    [title]="role.get('name')",
+                    (click)="selectedRole = role; state = 'role-points'"
+                ) {{role.get('name')}} ({{getRolePoints(role)}})
+
+        ul.popover.pop-points-open.fix(*ngIf="state === 'role-points'")
+            li(*ngFor="let point of points")
+                a.point(
+                    [title]="point.get('name')",
+                    [class.active]="getRolePoints(selectedRole) === point.get('name')",
+                    (click)="updatePoints(selectedRole, point)"
+                ) {{ point.get('name') }}

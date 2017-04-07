@@ -1,0 +1,39 @@
+form.row
+    fieldset.webhook-service
+        input(
+            type="text",
+            name="name",
+            data-required="true",
+            [value]="webhook?.get('name')",
+            [placeholder]="'ADMIN.WEBHOOKS.TYPE_NAME' | translate"
+        )
+    .webhook-url
+        .webhook-url-inputs
+            fieldset
+                input(
+                    type="text",
+                    name="url",
+                    data-type="url",
+                    [placeholder]="'ADMIN.WEBHOOKS.TYPE_PAYLOAD_URL' | translate",
+                    data-required="true",
+                    [value]="webhook?.get('url')"
+                )
+            fieldset
+                input(
+                    type="text",
+                    name="key",
+                    [placeholder]="'ADMIN.WEBHOOKS.TYPE_SERVICE_SECRET' | translate",
+                    data-required="true",
+                    [value]="webhook?.get('key')"
+                )
+    .webhook-options
+        a.edit-existing(
+            href="",
+            [title]="'ADMIN.WEBHOOKS.SAVE' | translate"
+        )
+            tg-svg(svg-icon="icon-save")
+        a.cancel-existing(
+            href="",
+            [title]="'ADMIN.WEBHOOKS.CANCEL' | translate"
+        )
+            tg-svg(svg-icon="icon-close")

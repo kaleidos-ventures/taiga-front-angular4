@@ -1,0 +1,8 @@
+.filters-applied
+    .single-filter.ng-animate-disabled(*ngFor="let filter of filters")
+        span.name([style.border-left]="filter.get('color') ? '3px solid ' + filter.get('color') : ''") {{filter.get('name')}}
+        a.remove-filter.e2e-remove-filter(
+           (click)="removeFilter.emit(filter)"
+       )
+            tg-svg(svg-icon="icon-close")
+

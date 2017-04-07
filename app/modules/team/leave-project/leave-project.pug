@@ -1,0 +1,11 @@
+a.leave-project((click)="onLeaveClicked()")
+    tg-svg(svg-icon="icon-close")
+    span(translate='TEAM.ACTION_LEAVE_PROJECT')
+
+tg-lightbox(key="team.leave-project")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'TEAM.ACTION_LEAVE_PROJECT' | translate",
+        [subtitle]="'TEAM.CONFIRM_LEAVE_PROJECT' | translate",
+        (response)="onResponse($event, project.get('id'))"
+    )

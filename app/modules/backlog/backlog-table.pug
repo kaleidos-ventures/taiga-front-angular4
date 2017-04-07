@@ -1,0 +1,90 @@
+section.backlog-table([class.hidden]="!userstories || !userstories.size")
+    div.backlog-table-header
+        div.row.backlog-table-title
+            div.input(*tgIfPerm="'modify_us'")
+                input(
+                    type="checkbox",
+                    [checked]="userstories && userstories.size === selectedUserstories.size",
+                    (change)="selectAllChange($event.target.checked)"
+                )
+            div.votes(translate="COMMON.FIELDS.VOTES")
+            div.user-stories(translate="BACKLOG.TABLE.COLUMN_US")
+            div.status(translate="COMMON.FIELDS.STATUS")
+            div.points(
+                [title]="'BACKLOG.TABLE.TITLE_COLUMN_POINTS' | translate",
+                (mouseleave)="showedRolePopup = false"
+            )
+                span.header-points(
+                    translate="COMMON.FIELDS.POINTS",
+                    *ngIf="!showedRole",
+                    (click)="showedRolePopup = true"
+                )
+                span.header-points(
+                    *ngIf="showedRole",
+                    translate="BACKLOG.TABLE.ROLE_TOTAL",
+                    [translateParams]="{role: showedRole.get('name')}",
+                    (click)="showedRolePopup = true"
+                )
+                tg-svg(svg-icon="icon-arrow-down")
+                ul.popover.pop-role(*ngIf="showedRolePopup")
+                    a.clear-selection(
+                        [title]="'COMMON.ROLES.ALL' | translate",
+                        translate="COMMON.ROLES.ALL",
+                        (click)="showedRole = null"
+                    )
+                    ng-container(*ngFor="let role of project.get('roles')")
+                        a.role(
+                            *ngIf="role.get('computable')",
+                            [title]="role.get('name')",
+                            (click)="showedRole = role"
+                        ) {{role.get('name')}}
+
+    div.backlog-table-body(
+        [class.show-tags]="showTags",
+        [class.active-filters]="activeFilters",
+        [class.forecasted-stories]="displayVelocity",
+        infinite-scroll="loadUserstories()",
+        infinite-scroll-disabled="disablePagination || !firstLoadComplete",
+        infinite-scroll-immediate-check='false',
+    )
+        ng-container(*ngFor="let us of userstories; let idx = index")
+          .doom-line(*ngIf="doomlinePosition !== null && idx === doomlinePosition")
+            span(translate="BACKLOG.DOOMLINE")
+          tg-backlog-row(
+              [class.is-checked]="selectedUserstories.get(us.get('id'))",
+              [us]="us",
+              [project]="project",
+              [canEdit]="canEdit",
+              [data-us-id]="us.get('id')",
+              [class.blocked]="us.get('is_blocked')",
+              [showedRole]="showedRole",
+              [checked]="selectedUserstories.get(us.get('id'))",
+          )
+
+        div(*tgLoading="'loading-userstories-more'")
+
+.forecasting-add-sprint.e2e-velocity-forecasting-add(*ngIf="displayVelocity")
+    tg-svg(svg-icon="icon-add")
+    span(
+        *ngIf="!currentSprint"
+        translate="BACKLOG.FORECASTING.NEW_SPRINT"
+    )
+    span(
+        *ngIf="currentSprint"
+        translate="BACKLOG.FORECASTING.CURRENT_SPRINT"
+    )
+
+.empty-large.js-empty-backlog(
+    [class.hidden]="userstories && userstories.size"
+)
+    img(
+        src="/" + _version + "/images/empty/empty_mex.png",
+        [alt]="'BACKLOG.EMPTY' | translate"
+    )
+    p.title(translate="BACKLOG.EMPTY")
+    a(
+        *tgIfPerm="'add_us'",
+        [title]="'BACKLOG.CREATE_NEW_US' | translate",
+        (click)="addNewUs('standard')",
+        translate="BACKLOG.CREATE_NEW_US_EMPTY_HELP"
+    )

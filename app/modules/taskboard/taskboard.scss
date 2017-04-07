@@ -1,0 +1,98 @@
+.table-taskboard {
+    .row {
+        padding: .5rem;
+    }
+    .username {
+        flex-basis: 220px;
+        min-width: 25%;
+    }
+    .member-stats {
+        align-content: center;
+        align-items: center;
+        display: flex;
+        flex: 6;
+        justify-content: flex-end;
+    }
+    .attribute {
+        @include font-type(light);
+        flex: 1;
+        position: relative;
+        text-align: center;
+        .icon {
+            @include svg-size(1.75rem);
+            fill: $gray;
+        }
+        .points {
+            @include font-size(larger);
+            @include font-type(light);
+            color: $grayer;
+        }
+        .top {
+            fill: $primary-light;
+            opacity: 1;
+        }
+        &:hover {
+            .popover {
+                display: block;
+            }
+        }
+    }
+    .taskboard-header {
+        @include font-type(text);
+        @include font-type(bold);
+        border-bottom: 0;
+        .popover {
+            display: none;
+            &:hover {
+                display: block;
+            }
+        }
+    }
+    .hero {
+        width: 100%;
+        .row {
+            border-bottom: 1px solid $whitish;
+            border-top: 1px solid $whitish;
+            margin: 1rem 0;
+            padding: 1.5rem 1rem;
+        }
+    }
+    .avatar {
+        align-items: center;
+        display: flex;
+        img {
+            flex-basis: 66px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 66px;
+        }
+        .avatar-data {
+            margin-left: 1rem;
+            span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 100%;
+            }
+        }
+        .name,
+        .position {
+            display: block;
+            width: 100%;
+        }
+        .name {
+            @include font-type(bold);
+        }
+        .position {
+            @include font-type(light);
+            color: $gray-light;
+        }
+    }
+    .popover {
+        @include popover(100%, '', 0, 30px, '', 15px, '', 50%, -5px);
+    }
+    .icon-badge {
+        position: relative;
+        top: .15rem;
+    }
+}

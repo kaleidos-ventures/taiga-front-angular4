@@ -1,0 +1,10 @@
+section.profile-timeline
+    div(infiniteScroll,
+        (scrolled)="needMore.emit(true)",
+        [infiniteScrollDisabled]="scrollDisabled"
+    )
+        tg-user-timeline-item(*ngFor="let item of timelineList", [item]="item")
+
+    div.spinner
+        div(*tgLoading="'timeline';size:'big'")
+

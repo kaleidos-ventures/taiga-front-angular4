@@ -1,9 +1,0 @@
-<% _.each(tags, function(tag) { %>
-span(
-    class="tag"
-    style!="<%- tag.style %>"
-)
-    span.tag-name <%- tag.name %>
-    a.remove-tag(href="", title="{{'COMMON.TAGS.DELETE' | translate}}")
-        tg-svg(svg-icon="icon-close")
-<% }); %>

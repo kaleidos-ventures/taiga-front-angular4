@@ -1,0 +1,8 @@
+fieldset.create-project-invite
+    .create-project-invite-avatars
+        tg-single-member(
+            *ngFor="let member of members",
+            [disabled]="isDisabled(member.get('user'))",
+            [user]="member",
+            (click)="onToggleInvitedMember.emit(member.get('user'))"
+        )

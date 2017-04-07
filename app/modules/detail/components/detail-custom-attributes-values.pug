@@ -1,0 +1,19 @@
+section.duty-custom-fields(*ngIf="attrs && attrs.size")
+    .custom-fields-header
+        span(translate="COMMON.CUSTOM_ATTRIBUTES.CUSTOM_FIELDS")
+        a.collapse(
+            [class.open]="!collapsed",
+            (click)="toggleCollapse()"
+        )
+            tg-svg(svg-icon="icon-arrow-down")
+
+    .custom-fields-body(
+        *ngIf="!collapsed",
+        [class.collapse-fields]="attrs.size > 6"
+    )
+        tg-detail-custom-attributes-value.custom-attribute(
+            *ngFor="let attr of attrs",
+            [attr]="attr",
+            [value]="values?.get(attr.get('id').toString())",
+            [canEdit]="canEdit"
+        )

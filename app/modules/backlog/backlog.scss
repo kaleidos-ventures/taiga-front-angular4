@@ -1,0 +1,85 @@
+.backlog-filter {
+    align-items: stretch;
+    display: flex;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+    transition: all .2s linear;
+    width: 0;
+    tg-filter {
+        transform: translateX(-260px);
+        transition: all .2s linear;
+    }
+    &.active {
+        opacity: 1;
+        transition: all .2s linear;
+        width: 260px;
+        tg-filter {
+            transform: translateX(0);
+        }
+    }
+}
+.backlog-menu {
+    background: $mass-white;
+    color: $blackish;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    @include breakpoint(laptop) {
+        flex-direction: column;
+    }
+    .menu-button {
+        .icon-move {
+            margin-right: .25rem;
+        }
+    }
+    .button-bulk {
+        margin-left: .2rem;
+    }
+}
+
+.backlog-us-mirror {
+    background: $white;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px $gray;
+    min-height: calc(40px + 1rem);
+    opacity: .9;
+    padding: 1rem;
+    .tags-block,
+    .votes,
+    .us-settings,
+    .status,
+    .points,
+    .icon-drag,
+    input {
+        display: none;
+    }
+    &.is-checked,
+    &:hover {
+        background: $white;
+    }
+}
+
+.forecasting-add-sprint {
+    @include font-size(small);
+    background: $mass-white;
+    cursor: pointer;
+    padding: .5rem 0;
+    text-align: center;
+    &:hover {
+        background: darken($mass-white, 3%);
+        transition: background .2s;
+    }
+    .icon-add {
+        @include svg-size(1.75rem);
+        background: $primary-light;
+        fill: $white;
+        margin-right: 1rem;
+        padding: .25rem;
+        vertical-align: middle;
+    }
+}
+
+tg-backlog-sprint {
+    display: block;
+}

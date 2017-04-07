@@ -1,0 +1,19 @@
+section.empty-epics.empty-large(*ngIf="!epics?.size")
+    img(
+        src="/" + _version + "/images/empty/empty_des.png",
+        [title]="'EPICS.EMPTY.HELP' | translate"
+    )
+    h1.title(translate="EPICS.EMPTY.TITLE")
+    p([innerHTML]="'EPICS.EMPTY.EXPLANATION' | translate")
+    a(
+        translate="EPICS.EMPTY.HELP",
+        href="https://tree.taiga.io/support/epics/what-is-an-epic/",
+        target="_blank",
+        [title]="'EPICS.EMPTY.HELP' | translate"
+    )
+    button.create-epic.button-green(
+        ng-if="vm.canCreateEpics()",
+        translate="EPICS.DASHBOARD.ADD",
+        [title]="'EPICS.DASHBOARD.ADD_TITLE' | translate",
+        ng-click="vm.onCreateEpic()"
+    )

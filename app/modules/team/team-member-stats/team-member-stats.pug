@@ -1,0 +1,37 @@
+.attribute(*ngIf="project?.get('is_issues_activated')")
+    tg-svg(
+        svg-icon="icon-briefcase",
+        [style.opacity]="stats?.getIn(['closed_bugs', userId.toString()])",
+        [class.top]="stats?.getIn(['closed_bugs', userId.toString()]) === 1"
+    )
+
+.attribute(*ngIf="project?.get('is_backlog_activated')")
+    tg-svg(
+        svg-icon="icon-iocaine",
+        [style.opacity]="stats?.getIn(['iocaine_tasks', userId.toString()])",
+        [class.top]="stats?.getIn(['iocaine_tasks', userId.toString()]) === 1"
+    )
+
+.attribute(*ngIf="project?.get('is_wiki_activated')")
+    tg-svg(
+        svg-icon="icon-edit",
+        [style.opacity]="stats?.getIn(['wiki_changes', userId.toString()])",
+        [class.top]="stats?.getIn(['wiki_changes', userId.toString()]) === 1"
+    )
+
+.attribute(*ngIf="project?.get('is_issues_activated')")
+    tg-svg(
+        svg-icon="icon-bug",
+        [style.opacity]="stats?.getIn(['created_bugs', userId.toString()])",
+        [class.top]="stats?.getIn(['created_bugs', userId.toString()]) === 1"
+    )
+
+.attribute(*ngIf="project?.get('is_backlog_activated')")
+    tg-svg(
+        svg-icon="icon-task",
+        [style.opacity]="stats?.getIn(['closed_tasks', userId.toString()])",
+        [class.top]="stats?.getIn(['closed_tasks', userId.toString()]) === 1"
+    )
+
+.attribute
+    span.points {{stats?.getIn(['totals', userId.toString()])}}

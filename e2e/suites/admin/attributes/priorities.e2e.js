@@ -89,7 +89,7 @@ describe('attributes - priorities', function() {
         let rows = section.rows();
         let priorities = await adminAttributesHelper.getGenericNames(section.el);
 
-        await utils.common.drag(rows.get(0), rows.get(2));
+        await utils.common.drag(rows.get(0), rows.get(2), 3, 3);
 
         let newPriorities = await adminAttributesHelper.getGenericNames(section.el);
 

@@ -1,0 +1,20 @@
+tg-avatar.assigned-to.e2e-assigned-to-image(
+    [user]="vm.assignedTo"
+    ng-if="vm.assignedTo && vm.has_permissions"
+    ng-click="vm.onSelectAssignedTo(vm.assignedTo, vm.project)"
+)
+tg-avatar.assigned-to.e2e-assigned-to-image(
+    [user]="vm.assignedTo"
+    ng-if="vm.assignedTo && !vm.has_permissions"
+)
+img.assigned-to.e2e-assigned-to-image(
+    ng-if="!vm.assignedTo && vm.has_permissions",
+    src="/#{v}/images/unnamed.png",
+    [alt]="'EPICS.DASHBOARD.UNASSIGNED' | translate",
+    ng-click="vm.onSelectAssignedTo(vm.assignedTo, vm.project)"
+)
+img.assigned-to.e2e-assigned-to-image(
+    ng-if="!vm.assignedTo && !vm.has_permissions",
+    src="/#{v}/images/unnamed.png",
+    [alt]="'EPICS.DASHBOARD.UNASSIGNED' | translate"
+)

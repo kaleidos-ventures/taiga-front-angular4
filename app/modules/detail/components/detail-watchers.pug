@@ -1,0 +1,43 @@
+.ticket-watch-title(
+    *ngIf="item",
+    [title]="'COMMON.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get('watchers').size||0}",
+) {{ item.get('watchers').size }} {{'COMMON.WATCHERS.WATCHERS' | translate}}
+
+div.ticket-watch-inner(*ngIf="item")
+    a.ticket-watch-button(
+        *ngIf="logged",
+        [title]="'COMMON.WATCH_BUTTON.BUTTON_TITLE' | translate",
+        (click)="toggleWatch()",
+        [class.active]="item.get('is_watcher')",
+        [class.is-hover]="item.get('is_watcher') && isMouseOver",
+        (mouseover)="isMouseOver = true",
+        (mouseleave)="isMouseOver = false"
+    )
+        span(*ngIf="!item.get('is_watcher')")
+            tg-svg(svg-icon="icon-watch")
+            span(translate='COMMON.WATCH_BUTTON.WATCH')
+        span(*ngIf="item.get('is_watcher') && !isMouseOver")
+            tg-svg(svg-icon="icon-watch")
+            span(translate='COMMON.WATCH_BUTTON.WATCHING')
+        span(*ngIf="item.get('is_watcher') && isMouseOver")
+            tg-svg(svg-icon="icon-unwatch")
+            span(translate='COMMON.WATCH_BUTTON.UNWATCH')
+
+    a.add-watcher(
+        [title]="'COMMON.WATCHERS.TITLE_ADD' | translate",
+        (click)="vm.openWatchers()",
+        *ngIf="canEdit"
+    )
+        span + {{'COMMON.WATCHERS.ADD' | translate}}
+
+.user-list-single(*ngFor="let watcher of watchers")
+    .user-list-avatar
+        tg-avatar([user]="watcher")
+    .user-list-name
+        span {{watcher.get('full_name_display')}}
+
+        tg-svg.delete-watcher(
+            *ngIf="canEdit",
+            svg-icon="icon-trash",
+            svg-title-translate="COMMON.WATCHERS.DELETE",
+        )

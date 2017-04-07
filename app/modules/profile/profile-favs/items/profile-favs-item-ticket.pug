@@ -1,0 +1,79 @@
+.list-itemtype-ticket([class.blocked-project]="item.get('project_blocked_code')")
+    a.list-itemtype-avatar(
+        *ngIf="item.get('assigned_to')",
+        [routerLink]="['/profile', item.get('assigned_to_username')]",
+        [title]="item.getIn(['assigned_to_extra_info', 'full_name_display'])"
+    )
+        tg-avatar([user]="item.get('assigned_to_extra_info')")
+
+    a.list-itemtype-avatar(
+        *ngIf="!item.get('assigned_to')",
+        [title]="'COMMON.ASSIGNED_TO.NOT_ASSIGNED'|translate"
+    )
+        img(
+            src="/"+ _version + "/images/unnamed.png",
+            [alt]="'COMMON.ASSIGNED_TO.NOT_ASSIGNED'|translate"
+        )
+
+    .list-itemtype-ticket-data
+        p
+            span.ticket-project {{ item.get('project_name') }}
+            span.ticket-type(
+                *ngIf="item.get('type') === 'epic'",
+                translate="COMMON.EPIC"
+            )
+            span.ticket-type(
+                *ngIf="item.get('type') === 'userstory'",
+                translate="COMMON.USER_STORY"
+            )
+            span.ticket-type(
+                *ngIf="item.get('type') === 'task'",
+                translate="COMMON.TASK"
+            )
+            span.ticket-type(
+                *ngIf="item.get('type') === 'issue'",
+                translate="COMMON.ISSUE"
+            )
+            span.ticket-status([style.color]="item.get('status_color')") {{ item.get('status') }}
+            tg-svg(
+                *ngIf="item.get('project_blocked_code')",
+                svg-icon="icon-blocked-project",
+                svgTitleTranslate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+            )
+        h2
+            span.ticket-id {{'#' + item.get('ref')}}
+            a.ticket-title(
+                *ngIf="item.get('type') === 'epic'",
+                [routerLink]="['/project', item.get('project_slug'), 'epic', item.get('ref')]",
+                [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
+            ) {{ item.get('subject') }}
+            a.ticket-title(
+                *ngIf="item.get('type') === 'userstory'",
+                [routerLink]="['/project', item.get('project_slug'), 'us', item.get('ref')]",
+                [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
+            ) {{ item.get('subject') }}
+            a.ticket-title(
+                *ngIf="item.get('type') === 'task'",
+                [routerLink]="['/project', item.get('project_slug'), 'task', item.get('ref')]",
+                [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
+            ) {{ item.get('subject') }}
+            a.ticket-title(
+                *ngIf="item.get('type') === 'issue'",
+                [routerLink]="['/project', item.get('project_slug'), 'issue', item.get('ref')]",
+                [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
+            ) {{ item.get('subject') }}
+
+    div.list-itemtype-track
+        span.list-itemtype-track-likers(
+            [class.active]="item.get('is_voter')",
+            [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_voters\")||0}"
+        )
+            tg-svg(svg-icon="icon-upvote")
+            span {{ item.get('total_voters') }}
+
+        span.list-itemtype-track-watchers(
+            [class.active]="item.get('is_watcher')",
+            [title]="'COMMON.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_watchers\")||0}"
+        )
+            tg-svg(svg-icon="icon-watch")
+            span {{ item.get('total_watchers') }}

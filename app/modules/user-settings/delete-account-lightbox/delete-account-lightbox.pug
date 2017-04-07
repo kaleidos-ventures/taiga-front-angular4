@@ -1,0 +1,23 @@
+div.wrapper.cancel-account
+    div.auth
+        div.auth-container
+            div.logo-svg
+                include ../../../assets/svg/logo-color.svg
+            h1.logo Taiga
+            h2.tagline(translate="COMMON.TAG_LINE")
+
+            form
+                h2.title(translate="LIGHTBOX.DELETE_ACCOUNT.CONFIRM")
+
+                p([innerHTML]="'LIGHTBOX.DELETE_ACCOUNT.BLOCK_PROJECT' | translate")
+                div.options
+                    a.button-green(
+                        [title]="'LIGHTBOX.DELETE_ACCOUNT.CANCEL' | translate",
+                        (click)="response.emit(null)"
+                    )
+                        span(translate="LIGHTBOX.DELETE_ACCOUNT.CANCEL")
+                    a.button-red(
+                        [title]="'LIGHTBOX.DELETE_ACCOUNT.ACCEPT' | translate",
+                        (click)="response.emit(user.get('id'))"
+                    )
+                        span(translate="LIGHTBOX.DELETE_ACCOUNT.ACCEPT")

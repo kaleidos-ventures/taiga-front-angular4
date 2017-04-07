@@ -1,0 +1,22 @@
+aside.profile-sidebar
+    div(*ngIf="isCurrentUser")
+        h4(translate="USER.PROFILE_SIDEBAR.TITLE")
+        p(translate="USER.PROFILE_SIDEBAR.DESCRIPTION")
+        a.button-gray([routerLink]="['/user-settings', 'user-profile']")
+            span(translate="USER.PROFILE_SIDEBAR.ADD_INFO")
+
+    div
+        h4
+            tg-svg(svg-icon="icon-question")
+            span(translate="HINTS.SECTION_NAME")
+
+        p {{hint.title|translate}}
+        p {{hint.text|translate}}
+            | &nbsp;
+            a(
+                *ngIf="hint.url",
+                target="_blank",
+                [href]="hint.url",
+                [title]="'HINTS.LINK_TITLE' | translate",
+                [translate]="hint.linkText"
+            )

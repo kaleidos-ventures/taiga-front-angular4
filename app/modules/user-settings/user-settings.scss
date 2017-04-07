@@ -1,0 +1,19 @@
+@import '../../styles/dependencies/mixins/profile-form';
+
+.user-profile {
+    @include profile-form;
+    max-width: 780px;
+    tg-avatar {
+        img {
+            width: 100%;
+        }
+    }
+    .submit-button {
+        width: 100%;
+    }
+    .delete-account {
+        @include font-size(small);
+        display: block;
+        margin-top: 1rem;
+    }
+}

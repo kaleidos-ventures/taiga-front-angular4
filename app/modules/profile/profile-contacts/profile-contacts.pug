@@ -1,0 +1,30 @@
+section.profile-contacts
+    div(*ngIf="!contacts")
+        div.spin
+            img(src="/" + _version +"/svg/spinner-circle.svg", alt="Loading...")
+
+    div.empty-small(*ngIf="contacts && !contacts.size")
+        img(
+            src="/" + _version + "/images/empty/empty_contact.png",
+            [alt]="'USER.PROFILE.CONTACTS_EMPTY' | translate"
+        )
+
+        div(*ngIf="!isCurrentUser")
+            p(translate="USER.PROFILE.CONTACTS_EMPTY", translate-values="{username: vm.user.get('full_name_display')}")
+        div(*ngIf="isCurrentUser")
+            p(translate="USER.PROFILE.CURRENT_USER_CONTACTS_EMPTY")
+            p(translate="USER.PROFILE.CURRENT_USER_CONTACTS_EMPTY_EXPLAIN")
+
+    div.list-itemtype-user(*ngFor="let contact of contacts")
+        a.list-itemtype-avatar([routerLink]="['/profile', contact.get('username')]", [title]="contact.get('name')")
+            tg-avatar([user]="contact")
+
+        div.list-itemtype-user-data
+            h2
+                a(
+                    [routerLink]="['/profile', contact.get('username')]",
+                    [title]="contact.get('full_name_display')"
+                ) {{contact.get('full_name_display')}}
+
+            p {{contact.get('roles').join(", ")}}
+            p.extra-info(*ngIf="contact.get('bio')") {{contact.get('bio')}}

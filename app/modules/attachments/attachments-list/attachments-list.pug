@@ -1,0 +1,40 @@
+// tg-attachments-sortable="reorderAttachment(attachment, index)"
+.attachment-list.sortable
+    div
+      div(*ngFor="let attachment of attachments")
+        tg-attachment(
+            *ngIf="isDeprecatedVisible || !attachment.get('is_deprecated') ",
+            [attachment]="attachment",
+            (delete)="delete.emit($event)",
+            (update)="update.emit($event)",
+            (preview)="preview.emit($event)",
+            type="type"
+        )
+
+      .single-attachment(*ngFor="let file of uploadingAttachments")
+          .attachment-name
+              tg-svg(svg-icon="icon-attachment")
+              span {{file.name}}
+          .attachment-size
+              span {{file.size | sizeFormat}}
+          .attachment-comments
+              span {{file.progressMessage}}
+              .percentage([style.width]="file.progressPercent")
+
+    a.more-attachments(
+      [title]="'ATTACHMENT.SHOW_DEPRECATED' | translate",
+      *ngIf="deprecateds.size > 0",
+      (click)="toggleDeprecatedsVisible()"
+    )
+        span.text(
+          *ngIf="!isDeprecatedVisible",
+          translate="ATTACHMENT.SHOW_DEPRECATED"
+        )
+        span.text(
+          *ngIf="isDeprecatedVisible",
+          translate="ATTACHMENT.HIDE_DEPRECATED"
+        )
+        span.more-attachments-num(
+          translate="ATTACHMENT.COUNT_DEPRECATED",
+          [translateParams]="{counter: deprecateds.size}"
+        )

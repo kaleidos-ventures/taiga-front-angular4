@@ -1,0 +1,27 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-profile")
+
+    tg-admin-subnav-project([project]="project|async", active="reports")
+
+    section.main.admin-functionalities
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Reports")
+            p.admin-subtitle(translate="ADMIN.REPORTS.SUBTITLE")
+
+        p(translate="ADMIN.REPORTS.DESCRIPTION")
+
+        tg-admin-reports-item.admin-attributes-section([project]="project|async", field="epics_csv_uuid", [section]="'ADMIN.CSV.SECTION_TITLE_EPIC' | translate")
+        tg-admin-reports-item.admin-attributes-section([project]="project|async", field="userstories_csv_uuid", [section]="'ADMIN.CSV.SECTION_TITLE_US' | translate")
+        tg-admin-reports-item.admin-attributes-section([project]="project|async", field="tasks_csv_uuid", [section]="'ADMIN.CSV.SECTION_TITLE_TASK' | translate")
+        tg-admin-reports-item.admin-attributes-section([project]="project|async", field="issues_csv_uuid", [section]="'ADMIN.CSV.SECTION_TITLE_ISSUE' | translate")
+
+        div
+            a.help-button(
+                href="https://tree.taiga.io/support/admin/csv-reports/",
+                target="_blank"
+            )
+                tg-svg(svg-icon="icon-question")
+                span(translate="ADMIN.REPORTS.HELP")

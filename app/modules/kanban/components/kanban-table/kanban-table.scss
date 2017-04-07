@@ -1,0 +1,262 @@
+//Table basic shared vars
+
+$column-width: 296px;
+$column-folded-width: 30px;
+$column-flex: 0;
+$column-shrink: 0;
+$column-margin: 0 5px 0 0;
+$column-padding: .5rem 1rem;
+
+@mixin fold {
+    .card {
+        align-self: flex-start;
+        margin-top: .5rem;
+        tg-card-slideshow,
+        .card-unfold,
+        .card-tag,
+        .card-title,
+        .card-owner-actions,
+        .card-data,
+        .card-statistics,
+        .card-owner-name {
+            display: none;
+        }
+        .card-owner {
+            img {
+                height: 1.3rem;
+                margin-right: 0;
+                width: 1.3rem;
+            }
+        }
+    }
+    &.task-column,
+    .task-column {
+        align-content: flex-start;
+        display: flex;
+        flex-direction: column;
+        flex-flow: row wrap;
+    }
+    .avatar-task-link {
+        display: block;
+    }
+    .avatar-assigned-to {
+        display: none;
+    }
+}
+
+tg-kanban-table {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    .kanban-table {
+        height: 100%;
+        width: 100%;
+        &.zoom-0 {
+            .task-column,
+            .task-colum-name {
+                max-width: $column-width / 2;
+            }
+            .task-colum-name span {
+                padding-right: 1rem;
+            }
+        }
+    }
+    .vfold {
+        tg-card {
+            display: none;
+        }
+        &.task-colum-name {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            opacity: .8;
+            padding: .5rem 0;
+            transition: opacity .3s linear;
+            .option:not(.hunfold),
+            span {
+                display: none;
+            }
+            .hunfold {
+                margin: 0;
+            }
+        }
+        &.task-colum-name,
+        &.task-column {
+            flex-flow: 1;
+            max-width: $column-folded-width;
+            min-height: 2.5rem;
+            min-width: $column-folded-width;
+            width: $column-folded-width;
+        }
+        .kanban-column-intro {
+            display: none;
+        }
+    }
+    .readonly {
+        cursor: auto;
+    }
+
+}
+
+.kanban-table-header {
+    flex-basis: 2.4rem;
+    min-height: 2.4rem;
+    position: relative;
+    .kanban-table-inner {
+        display: flex;
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+    }
+    .options {
+        display: flex;
+    }
+    .task-colum-name {
+        @include font-size(medium);
+        align-items: center;
+        background: $mass-white;
+        border-top: 3px solid $gray-light;
+        color: $gray;
+        display: flex;
+        flex-basis: $column-width;
+        flex-grow: $column-flex;
+        flex-shrink: $column-shrink;
+        justify-content: space-between;
+        margin: $column-margin;
+        max-width: $column-width;
+        padding: $column-padding;
+        position: relative;
+        text-transform: uppercase;
+        &:last-child {
+            margin-right: 0;
+        }
+        span {
+            @include ellipsis(65%);
+        }
+        .option {
+            margin-right: .3rem;
+        }
+        .icon {
+            fill: $gray-light;
+            height: 1rem;
+            transition: color .2s linear;
+            width: 1rem;
+            &:hover {
+                fill: $primary;
+            }
+        }
+    }
+}
+
+.kanban-table-body {
+    @include font-size(medium);
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+    width: 100%;
+    &.kanban-table-nested {
+        display: block;
+        overflow-y: auto;
+        .kanban-table-inner {
+            margin-bottom: .25rem;
+        }
+    }
+    .row-fold {
+        @include fold;
+    }
+    .column-fold {
+        @include fold;
+    }
+    .task-column {
+        flex-basis: $column-width;
+        flex-grow: $column-flex;
+        flex-shrink: $column-shrink;
+        margin: $column-margin;
+        max-width: $column-width;
+        overflow-y: auto;
+        widows: $column-width;
+        width: $column-width;
+        &:last-child {
+            margin-right: 0;
+        }
+        &.nested-main {
+            background: $mass-white;
+        }
+        .kanban-column-intro {
+            @include font-type(bold);
+            @include font-size(small);
+            color: $gray-light;
+            margin: 1rem 2rem;
+            &.active {
+                color: $blackish;
+            }
+        }
+        .kanban-wip-limit {
+            background: $red;
+            border-radius: 2px;
+            height: 4px;
+            margin: .5rem 0;
+            padding: 0;
+        }
+    }
+    .kanban-uss-box {
+        background: $white;
+        padding: .5rem .5rem .5rem 1.5rem;
+        .us-title {
+            font-family: 'OpenSans-Regular', Arial, Helvetica, sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0;
+            margin-right: 3rem;
+        }
+        .points-value {
+            color: $gray-light;
+            font-size: .9rem;
+        }
+    }
+    .task-row {
+        display: flex;
+        margin-bottom: .25rem;
+        min-height: 10rem;
+        width: 100%;
+        &.blocked {
+            .taskboard-userstory-box {
+                background: rgba($red, .6);
+
+            }
+            .taskboard-userstory-box svg,
+            .taskboard-userstory-box svg:hover,
+            .points-value,
+            .points-value:hover {
+                color: $white;
+                fill: $white;
+                transition: color .3s linear;
+            }
+            .taskboard-tasks-box {
+                background: rgba($red, .1);
+            }
+        }
+        &.row-fold {
+            min-height: 0;
+            .us-title {
+                @include ellipsis(100%);
+            }
+            .points-value,
+            .icon-add,
+            .icon-bulk {
+                display: none;
+            }
+        }
+    }
+    .taskboard-userstory-box {
+        padding: .5rem .5rem .5rem 1.5rem;
+    }
+
+}
+
+.kanban-table-inner {
+    display: flex;
+    flex-wrap: nowrap;
+}

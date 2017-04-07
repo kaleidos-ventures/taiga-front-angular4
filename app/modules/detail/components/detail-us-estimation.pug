@@ -1,0 +1,35 @@
+// TODO: Allow to use it in the backlog
+// a.us-points([title]="title", [class.not-clickable]="!canEdit")
+//     span.points-value {{ text }}
+//     tg-svg(
+//         *ngIf="canEdit",
+//         svg-icon="icon-arrow-down"
+//     )
+
+ul.points-per-role
+    li.ticket-role-points.total(
+        *ngFor="let role of computableRoles()",
+        [class.clickable]="canEdit",
+        [title]="role.get('name')",
+        (click)="toggleRole(role.get('id'))"
+    )
+        span.points
+            | {{ rolePoints(role) }}
+            tg-svg(svg-icon="icon-arrow-down")
+        span.role {{ role.get('name') }}
+
+        ul.popover.pop-points-open(
+            [class.horizontal]="horizontal",
+            *ngIf="open === role.get('id')"
+        )
+            li(*ngFor="let point of points")
+                a(
+                    class="point",
+                    [class.active]="point.get('selected')",
+                    [title]="point.get('name')"
+                ) {{ point.get('name') }}
+
+
+    li.ticket-role-points.total
+        span.points {{ totalPoints() }}
+        span.role(translate="US.TOTAL_POINTS")

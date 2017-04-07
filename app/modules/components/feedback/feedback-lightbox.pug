@@ -1,0 +1,15 @@
+form([formGroup]="form", novalidate, (ngSubmit)="onSubmit($event)")
+    h2.title(translate="LIGHTBOX.FEEDBACK.TITLE")
+    fieldset
+        textarea(
+            formControlName="comment",
+            [placeholder]="'LIGHTBOX.FEEDBACK.COMMENT' | translate"
+        )
+        tg-field-error([control]="form.controls.comment")
+
+    fieldset
+        button.button-green.submit-button(
+            type="submit",
+            [title]="'LIGHTBOX.FEEDBACK.ACTION_SEND' | translate",
+            translate="LIGHTBOX.FEEDBACK.ACTION_SEND"
+        )

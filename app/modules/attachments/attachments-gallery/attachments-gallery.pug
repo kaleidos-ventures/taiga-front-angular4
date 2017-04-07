@@ -1,0 +1,16 @@
+.attachment-gallery
+    tg-attachment-gallery(
+        *ngFor="let attachment of visibleAttachments",
+        [attachment]="attachment",
+        (delete)="delete.emit($event)",
+        (preview)="preview.emit($event)",
+        type="type"
+    )
+
+    // .single-attachment(ng-repeat="file in uploadingAttachments")
+    //     .loading-container
+    //         img.loading-spinner(
+    //             src="/#{v}/svg/spinner-circle.svg",
+    //             [alt]="'COMMON.LOADING' | translate"
+    //         )
+    //     .attachment-data {{file.progressMessage}}

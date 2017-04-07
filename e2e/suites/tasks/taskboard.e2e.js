@@ -237,7 +237,7 @@ describe('taskboard', function() {
             let taskOrigin = taskboardHelper.getBoxTasks(0, 0).first();
             let destination = taskboardHelper.getBox(0, 1);
 
-            await utils.common.drag(taskOrigin, destination, 0, 10);
+            await utils.common.drag(taskOrigin, destination, 3, 3);
 
             await browser.waitForAngular();
 
@@ -255,7 +255,7 @@ describe('taskboard', function() {
             let taskOrigin = taskboardHelper.getBoxTasks(0, 0).first();
             let destination = taskboardHelper.getBox(1, 0);
 
-            await utils.common.drag(taskOrigin, destination, 0, 10);
+            await utils.common.drag(taskOrigin, destination, 3, 3);
 
             await browser.waitForAngular();
 

@@ -1,0 +1,81 @@
+section.home-project-list(*ngIf="projects.size")
+    .home-project(
+        *ngFor="let project of projects.slice(0, 6)",
+        [class.blocked-project]="project.get('blocked_code')"
+    )
+        .project-card-inner(
+            [routerLink]="['/project', project.get('slug')]"
+        )
+            .project-card-header
+                a.project-card-logo(
+                    [title]="project.get('name')",
+                    [routerLink]="['/project', project.get('slug')]"
+                )
+                    tg-project-logo-small([project]="project")
+                h3.project-card-name
+                    a.project-title(
+                        [title]="project.get('name')",
+                        [routerLink]="['/project', project.get('slug')]"
+                    ) {{project.get('name')}}
+
+                    tg-svg.look-for-people(
+                        *ngIf="project.get('is_looking_for_people')",
+                        svg-icon="icon-recruit",
+                        [svg-title]="project.get('looking_for_people_note')"
+                    )
+
+                    tg-svg.owner-badge(
+                        *ngIf="project.get('i_am_owner')",
+                        svg-icon="icon-badge",
+                        svg-title="COMMON.OWNER"
+                    )
+
+                    tg-svg(
+                        *ngIf="project.get('blocked_code')",
+                        svg-icon="icon-blocked-project",
+                        svg-title-translate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+                    )
+
+            p.project-card-description {{ project.get('description').slice(0,100) }}
+                span(*ngIf="project.get('description').length > 100") ...
+
+            .project-card-statistics
+                span.statistic(
+                    [class.active]="project.get('is_fan')",
+                    [title]="'PROJECT.FANS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_fans')||0}"
+                )
+                    tg-svg(svg-icon="icon-like")
+                    span {{project.get('total_fans')}}
+                span.statistic(
+                    [class.active]="project.get('is_watcher')",
+                    [title]="'PROJECT.WATCHERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_watchers')||0}"
+                )
+                    tg-svg(svg-icon="icon-watch")
+                    span {{project.get('total_watchers')}}
+                span.statistic(
+                    [class.active]="project.get('is_am_member')",
+                    [title]="'PROJECT.MEMBERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('members').size||0}"
+                )
+                    tg-svg(svg-icon="icon-team")
+                    span.statistics-num {{ project.get('members').size }}
+                span.statistic(
+                    *ngIf="project.get('is_private')"
+                    [title]="'PROJECT.PRIVATE' | translate"
+                )
+                    tg-svg(svg-icon="icon-lock")
+
+    a.see-more-projects-btn.button-gray(
+        *ngIf="projects.size",
+        routerLink="/projects",
+        href="#",
+        [title]="'PROJECT.NAVIGATION.MANAGE_PROJECTS' | translate",
+        translate="PROJECT.NAVIGATION.MANAGE_PROJECTS"
+    )
+
+section.projects-empty(*ngIf="!projects.size")
+    tg-svg(svg-icon="icon-project")
+    p(translate="HOME.EMPTY_PROJECT_LIST")
+    a.create-project-button.button-green(
+        routerLink="/project/new",
+        [title]="'PROJECT.NAVIGATION.TITLE_CREATE_PROJECT' | translate",
+        translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT")

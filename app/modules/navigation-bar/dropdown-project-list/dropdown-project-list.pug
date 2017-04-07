@@ -1,0 +1,30 @@
+a(
+    routerLink="/projects",
+    title="Projects"
+)
+    tg-svg(svg-icon="icon-project")
+
+div.navbar-dropdown.dropdown-project-list
+    ul
+      li(*ngFor="let project of projects.take(8)")
+        a(
+            [routerLink]='["/project", project.get("slug")]',
+            [class.blocked-project]="project.get('blocked_code')"
+        )
+            span {{project.get("name")}}
+            tg-svg(
+                *ngIf="project.get('blocked_code')",
+                svg-icon="icon-blocked-project",
+                svg-title="PROJECT.BLOCKED_PROJECT.BLOCKED"
+            )
+
+    a.see-more-projects-btn.button-gray(
+        routerLink="/projects",
+        [title]="'PROJECT.NAVIGATION.MANAGE_PROJECTS' | translate",
+        translate="PROJECT.NAVIGATION.MANAGE_PROJECTS")
+
+    div.create-options
+        a.create-project-btn.button-green(
+            routerLink="/project/new",
+            [title]="'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate",
+            translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT")

@@ -1,0 +1,41 @@
+div.row.single-custom-field
+    tg-svg(svg-icon="icon-drag")
+    div.custom-name
+        span {{ value.get('name') }}
+
+    div.custom-description
+        span {{ value.get('description') }}
+
+    div.custom-field-type([ngSwitch]="value.get('type')")
+        span(
+            *ngSwitchCase="'richtext'",
+            translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT"
+        )
+        span(
+            *ngSwitchCase="'multiline'",
+            translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI"
+        )
+        span(
+            *ngSwitchCase="'date'",
+            translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE"
+        )
+        span(
+            *ngSwitchCase="'url'",
+            translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL"
+        )
+        span(
+            *ngSwitchDefault,
+            translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT"
+        )
+
+    div.custom-options
+        a.edit-value((click)="edit.emit(value.get('id'))")
+            tg-svg(
+                [title]="'ADMIN.CUSTOM_ATTRIBUTES.EDIT' | translate",
+                svg-icon="icon-edit"
+            )
+        a.delete-value((click)="delete.emit(value.get('id'))")
+            tg-svg(
+                [title]="'ADMIN.CUSTOM_ATTRIBUTES.DELETE' | translate",
+                svg-icon="icon-trash"
+            )

@@ -1,0 +1,72 @@
+.visualization-mode
+    .row
+        .webhook-service {{ webhook.get('name') }}
+        .webhook-url
+            span {{ webhook.get('url') }}
+            a.show-history.toggle-history(
+                href="",
+                [title]="'ADMIN.WEBHOOKS.SHOW_HISTORY_TITLE' | translate",
+                *ngIf="webhook.logs_counter",
+                translate="ADMIN.WEBHOOKS.SHOW_HISTORY"
+            )
+
+        .webhook-options
+            .webhook-options-wrapper
+                a.test-webhook(
+                    href="",
+                    [title]="'ADMIN.WEBHOOKS.TEST' | translate"
+                )
+                    tg-svg(svg-icon="icon-check-empty")
+                a.edit-webhook(
+                    href="",
+                    [title]="'ADMIN.WEBHOOKS.EDIT' | translate"
+                )
+                    tg-svg(svg-icon="icon-edit")
+                a.delete-webhook(
+                    href="",
+                    [title]="'ADMIN.WEBHOOKS.DELETE' | translate"
+                )
+                    tg-svg(svg-icon="icon-trash")
+
+    .webhooks-history
+        .history-single-wrapper(*ngFor="let log of webhook.get('logs')")
+            .history-single
+                div
+                    span.history-response-icon(
+                        [class.history-success]="log.get('validStatus')",
+                        [class.history-error]="!log.get('validStatus')",
+                        [title]="log.get('status')"
+                    )
+                    span.history-date {{ log.get('prettyDate') }}
+                a.toggle-log(href="")
+                    tg-svg(svg-icon="icon-arrow-down")
+
+            .history-single-response
+                .history-single-request-header
+                    span(translate="ADMIN.WEBHOOKS.REQUEST")
+                    a.resend-request(
+                        href="",
+                        [title]="'ADMIN.WEBHOOKS.RESEND_REQUEST' | translate"
+                    )
+                        tg-svg(svg-icon="icon-reload")
+                        span(translate="ADMIN.WEBHOOKS.RESEND_REQUEST")
+                .history-single-request-body
+                    .response-container
+                        span.response-title(translate="ADMIN.WEBHOOKS.HEADERS")
+                        textarea(
+                            name="headers"
+                        ) {{ log.get('prettySentHeaders') }}
+
+                    .response-container
+                        span.response-title(translate="ADMIN.WEBHOOKS.PAYLOAD")
+                        textarea(
+                            name="payload"
+                        ) {{ log.get('prettySentData') }}
+
+                .history-single-response-header
+                    span(translate="ADMIN.WEBHOOKS.RESPONSE")
+                .history-single-response-body
+                    .response-container
+                        textarea(
+                            name="response-data"
+                        ) {{ log.get('response_data') }}

@@ -67,14 +67,13 @@ textarea {
     @include placeholder {
         color: lighten($gray-light, 10%);
     }
-    &.checksley-error {
+    &.ng-invalid.ng-dirty {
         border: 1px solid $red;
     }
 }
 
-
 // Input errors
-.checksley-error-list {
+.error-list {
     @include font-type(light);
     background: rgba($red, .7);
     color: $white;
@@ -109,14 +108,14 @@ cite {
 .navbar {
     background: rgba($black, .5);
     &::after {
-        background: url('../images/menu-vert.png') repeat top left;
+        background: url('../../assets/images/menu-vert.png') repeat top left;
     }
 }
 
 //In project left navigation bar
 tg-project-menu {
     background-color: $primary-dark;
-    background-image: url('../images/menu.png');
+    background-image: url('../../assets/images/menu.png');
 }
 
 .main-nav {

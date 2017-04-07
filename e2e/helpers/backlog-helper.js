@@ -94,7 +94,7 @@ helper.getCreateEditMilestone = function() {
             return utils.lightbox.close(el);
         },
         name: function() {
-            return el.element(by.model('sprint.name'));
+            return el.$('input[name="name"]');
         },
         submit: function() {
             el.$('button[type="submit"]').click();

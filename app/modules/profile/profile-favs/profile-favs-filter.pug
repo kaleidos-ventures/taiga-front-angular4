@@ -1,0 +1,53 @@
+div.profile-filter
+    div.searchbox
+        tg-svg(svg-icon="icon-search")
+        input(
+            type="text",
+            [value]="q",
+            (input)="qChange.emit($event.target.value)",
+            [placeholder]="'USER.PROFILE_FAVS.FILTER_INPUT_PLACEHOLDER'|translate"
+        )
+
+    div.filters
+        a(
+            *ngIf="type == 'votes' || type == 'watched'",
+            (click)="filterChange.emit(null)",
+            [class.active]="filter === null",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_ALL_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_ALL"
+        )
+        a(
+            *ngIf="type == 'watched'",
+            (click)="filterChange.emit('project')",
+            [class.active]="filter === 'project'",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_PROJECTS_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_PROJECTS"
+        )
+        a(
+            *ngIf="type == 'votes' || type == 'watched'",
+            (click)="filterChange.emit('epic')",
+            [class.active]="filter === 'epic'",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_EPICS_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_EPICS"
+        )
+        a(
+            *ngIf="type == 'votes' || type == 'watched'",
+            (click)="filterChange.emit('userstory')",
+            [class.active]="filter === 'userstory'",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_USER_STORIES_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_USER_STORIES"
+        )
+        a(
+            *ngIf="type == 'votes' || type == 'watched'",
+            (click)="filterChange.emit('task')",
+            [class.active]="filter === 'task'",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_TASKS_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_TASKS"
+        )
+        a(
+            *ngIf="type == 'votes' || type == 'watched'",
+            (click)="filterChange.emit('issue')",
+            [class.active]="filter === 'issue'",
+            [title]="'USER.PROFILE_FAVS.FILTER_TYPE_ISSUES_TITLE'|translate",
+            translate="USER.PROFILE_FAVS.FILTER_TYPE_ISSUES"
+        )

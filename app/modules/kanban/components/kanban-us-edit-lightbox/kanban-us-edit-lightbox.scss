@@ -1,0 +1,24 @@
+tg-kanban-us-edit-lightbox {
+    .ticket-estimation {
+        .points-per-role {
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        .ticket-role-points {
+            margin: .1rem;
+            min-width: 20%;
+            &:first-child {
+                margin-left: 0;
+            }
+            &:nth-child(4n + 4) {
+                margin-right: 0;
+            }
+            &:last-child {
+                flex-basis: 100%;
+                margin: .1rem 0;
+                min-width: 100%;
+            }
+        }
+    }
+}

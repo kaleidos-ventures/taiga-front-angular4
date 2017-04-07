@@ -1,0 +1,39 @@
+div.row.table-main.visualization
+    tg-svg(svg-icon="icon-drag")
+    div.color-column
+        div.current-color([style.background]="status.get('color')")
+
+    div.status-name
+        span {{ status.get('name') }}
+
+    div.status-slug
+        span {{ status.get('slug') }}
+
+    div.is-closed-column
+        tg-svg(
+            *ngIf="status.get('is_closed')",
+            svg-icon="icon-check"
+        )
+
+    div.is-archived-column(*ngIf="type === 'userstory-statuses'")
+        tg-svg(
+            *ngIf="status.get('is_archived')",
+            svg-icon="icon-check"
+        )
+
+    div.status-wip-limit(*ngIf="type === 'userstory-statuses'")
+        span(*ngIf="!status.get('is_archived')") {{ status.get('wip_limit') }}
+
+    div.options-column
+        a.edit-value((click)="edit.emit(status.get('id'))")
+            tg-svg(
+                [title]="'ADMIN.COMMON.TITLE_ACTION_EDIT_VALUE' | translate",
+                svg-icon="icon-edit"
+            )
+        a.delete-value((click)="delete.emit(status)")
+            tg-svg(
+                title="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+                svg-icon="icon-trash"
+            )
+
+

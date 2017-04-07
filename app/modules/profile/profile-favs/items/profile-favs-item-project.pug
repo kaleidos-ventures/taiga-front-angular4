@@ -1,0 +1,43 @@
+.list-itemtype-project([class.blocked-project]="item.get('project_blocked_code')")
+    .list-itemtype-project-left
+        .list-itemtype-project-data-wrapper
+            a.list-itemtype-project-image(
+                [routerLink]="['/project', item.get('slug')]",
+                [title]="item.get('name')"
+            )
+                tg-project-logo-small([project]="item")
+
+            .list-itemtype-project-data
+                h2
+                    a.list-itemtype-project-name(
+                        [routerLink]="['/project', item.get('slug')]",
+                        [title]="item.get('name')"
+                    ) {{ item.get('name') }}
+
+                    tg-svg(
+                        *ngIf="item.get('is_private')",
+                        svg-icon="icon-lock",
+                        svg-title-translate="PROJECT.PRIVATE"
+                    )
+
+                    tg-svg(
+                        *ngIf="item.get('blocked_code')",
+                        svg-icon="icon-blocked-project",
+                        svg-title-translate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+                    )
+                p.list-itemtype-project-description {{ item.get('description') }}
+
+    .list-itemtype-track
+        span.list-itemtype-track-likers(
+            [class.active]="item.get('is_fan')"
+            [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_fans\")||0}"
+         )
+            tg-svg(svg-icon="icon-like")
+            span {{ item.get('total_fans') }}
+
+        span.list-itemtype-track-watchers(
+            [class.active]="item.get('is_watcher')"
+            [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_watchers\")||0}"
+        )
+            tg-svg(svg-icon="icon-watch")
+            span {{ item.get('total_watchers') }}

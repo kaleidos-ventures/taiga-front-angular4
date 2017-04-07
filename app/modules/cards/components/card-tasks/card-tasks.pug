@@ -1,0 +1,7 @@
+ul.card-tasks
+    li.card-task(*ngFor="let task of tasks")
+        a(
+            [routerLink]="['/project', project.get('slug'), 'tasks', task.get('ref')]",
+            [class.closed-task]="task.get('is_closed')",
+            [class.blocked-task]="task.get('is_blocked')"
+        ) {{"#" + task.get('ref')}} {{task.get('subject')}}

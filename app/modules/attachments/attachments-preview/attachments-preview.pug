@@ -1,0 +1,19 @@
+.attachment-preview-container(*ngIf="current")
+    a.previous(
+        (click)="previous()",
+        *ngIf="images.size > 1"
+    )
+        tg-svg(svg-icon="icon-arrow-left")
+
+    a([href]="current.get('url')",
+      [title]="current.get('description')",
+      [download]="current.get('name')",
+      target="_blank")
+        tg-preload-image([src]="current.get('preview_url') || current.get('url')")
+            img([src]="current.get('preview_url') || current.get('url')")
+
+    a.next(
+        (click)="next()",
+        *ngIf="images.size > 1"
+    )
+        tg-svg(svg-icon="icon-arrow-right")

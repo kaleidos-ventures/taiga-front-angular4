@@ -126,7 +126,7 @@
     .profile-quote {
         @include font-type(light);
         @include font-size(large);
-        background: url('../images/quote.png') no-repeat top left;
+        background: url('../../assets/images/quote.png') no-repeat top left;
         line-height: 1.4;
         padding: .5rem;
     }

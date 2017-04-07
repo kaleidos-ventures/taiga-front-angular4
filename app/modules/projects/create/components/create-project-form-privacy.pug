@@ -1,0 +1,25 @@
+.create-project-privacity([formGroup]="form")
+    fieldset
+        input(
+            type="radio",
+            name="value",
+            id="template-public",
+            [value]="false",
+            aria-hidden="true",
+            formControlName="value"
+        )
+        label(for="template-public")
+            tg-svg(svg-icon="icon-discover")
+            span(translate="PROJECT.CREATE.PUBLIC_PROJECT")
+    fieldset
+        input(
+            type="radio",
+            name="value",
+            id="template-private",
+            [value]="true",
+            aria-hidden="true",
+            formControlName="value"
+        )
+        label(for="template-private")
+            tg-svg(svg-icon="icon-lock")
+            span(translate="PROJECT.CREATE.PRIVATE_PROJECT")

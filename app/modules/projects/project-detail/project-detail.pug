@@ -1,0 +1,15 @@
+tg-lightbox(key="project.contact")
+  tg-lightbox-close
+  tg-project-contact-lightbox([project]="project | async")
+
+div.wrapper
+    tg-project-menu([project]="project | async", active="project-timeline")
+    div.single-project.centered
+        tg-project-info([project]="project | async", [user]="user|async")
+        tg-project-tags([project]="project | async")
+        tg-project-data(
+            [project]="project | async",
+            [timeline]="timeline|async",
+            (nextTimelineNeeded)="nextTimelinePage($event)",
+            (contact)="contactProject()"
+        )

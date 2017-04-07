@@ -1,0 +1,57 @@
+tg-lightbox(key="admin.delete-tag")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingItem?.get('name')",
+        (response)="confirmDelete($event)"
+    )
+
+section.colors-table.tags-table
+    div.project-values-title
+        h2 {{ name }}
+        a.button.button-gray.show-add-new(
+            [title]="'ADMIN.PROJECT_VALUES_TAGS.NEW_TAG'|translate",
+            (click)="newStatusOpen = true"
+        )
+            span(translate="ADMIN.PROJECT_VALUES_TAGS.NEW_TAG")
+
+    div.table-header
+        div.row
+            .color-column(translate="COMMON.FIELDS.COLOR")
+            .status-name(translate="COMMON.FIELDS.NAME")
+            .color-filter
+                input.e2e-tags-filter(
+                    id="filter-tags-input",
+                    type="text",
+                    name="name",
+                    #filterInput,
+                    (keyup)="filter = filterInput.value"
+                )
+                label(for="filter-tags-input")
+                    tg-svg(svg-icon="icon-search")
+
+    div.table-main
+        div.sortable
+            div(*ngFor="let value of filteredValues()")
+                tg-admin-attributes-tags-row(
+                    [value]="value",
+                    [type]="type",
+                    [merging]="merging",
+                    *ngIf="!editing[value.get('id')] || merging?.to",
+                    (edit)="editing[value.get('id')]=true",
+                    (startMerging)="merging = {to: $event, from: {}}",
+                    (merge)="merging.from[$event] = !merging.from[$event]",
+                    (cancelMerge)="merging = {to: null, from: {}}",
+                    (delete)="deleteItem(value)"
+                )
+                tg-admin-attributes-tags-form(
+                    [value]="value",
+                    [visible]="editing[value.get('id')] && !merging?.to",
+                    (cancel)="editing[$event]=false"
+                )
+
+        tg-admin-attributes-tags-form(
+            [value]="null",
+            [visible]="newStatusOpen",
+            (cancel)="newStatusOpen=false"
+        )

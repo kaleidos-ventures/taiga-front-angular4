@@ -1,0 +1,29 @@
+// tg-attachments-drop="addAttachments(files, false)"
+// ng-show="showAttachments()"
+section.attachments
+    tg-attachments-header([attachments]="attachments",
+                          [mode]="mode",
+                          (changeMode)="setMode($event)")
+
+    .attachments-empty(*ngIf="!attachments.size && !uploadingAttachments.size")
+        div(translate='ATTACHMENT.DROP')
+
+    tg-attachments-list(
+        *ngIf="mode == 'list'",
+        (preview)="previewAttachment($event)",
+        [attachments]="attachments",
+        [uploadingAttachments]="uploadingAttachments",
+        [isDeprecatedVisible]="isDeprecatedVisible",
+        (showDeprecateds)="isDeprecatedVisible = $event")
+
+    tg-attachments-gallery(
+        *ngIf="mode == 'gallery'",
+        (preview)="previewAttachment($event)",
+        [attachments]="attachments",
+        [isDeprecatedVisible]="isDeprecatedVisible",
+        [uploadingAttachments]="uploadingAttachments")
+
+
+tg-lightbox(key="attachments.preview")
+  tg-lightbox-close
+  tg-attachments-preview-lightbox([attachments]="attachments", [initial]="attachmentPreview")

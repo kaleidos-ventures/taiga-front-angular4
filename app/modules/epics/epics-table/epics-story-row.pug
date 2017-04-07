@@ -1,0 +1,42 @@
+.story-row(
+    [class.is-blocked]="story.get('is_blocked')",
+    [class.is-closed]="story.get('is_closed')"
+)
+    .vote(
+        *ngIf="columns.votes",
+        [class.is-voter]="story.get('is_voter')"
+    )
+        tg-svg(svg-icon='icon-upvote')
+        span {{story.get('total_voters')}}
+
+    .name
+        // tg-nav="project-userstories-detail:project=story.getIn(['project_extra_info', 'slug']),ref=story.get('ref')"
+        a(
+            [title]="story.get('subject')"
+        ) {{'#' + story.get('ref')}} {{story.get('subject')}}
+        tg-belong-to-epics(
+            *ngIf="story.get('epics')",
+            format="pill",
+            [epics]="story.get('epics')"
+        )
+    // tg-nav="project:project=story.getIn(['project_extra_info', 'slug'])"
+    a.project(
+        *ngIf="columns.project",
+        [routerLink]="['/project', story.getIn(['project_extra_info', 'slug'])]"
+    )
+        tg-project-logo-small([project]="story.get('project_extra_info')")
+    .sprint(*ngIf="columns.sprint") {{story.get('milestone_name')}}
+    .assigned(*ngIf="columns.assigned && story.get('assigned_to')")
+        tg-avatar([user]="story.get('assigned_to_extra_info')")
+    .assigned(*ngIf="columns.assigned && !story.get('assigned_to')")
+        img(
+            src="/"+_version+"/images/unnamed.png",
+            [alt]="'EPICS.DASHBOARD.UNASSIGNED' | translate"
+        )
+    .status(*ngIf="columns.status") {{story.getIn(['status_extra_info', 'name'])}}
+    .progress(*ngIf="columns.progress")
+        .progress-bar
+        .progress-status(
+            *ngIf="percentage()",
+            [style.width]="percentage() + '%'"
+        )

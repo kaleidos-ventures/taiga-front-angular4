@@ -1,0 +1,60 @@
+form.custom-field-single(
+    [class.editable]="editing || !value",
+)
+    .custom-field-data
+        span.custom-field-name {{ attr.get('name') }}
+        span.custom-field-description(*ngIf="attr.get('description')") {{ attr.get('description') }}
+
+    ng-container([ngSwitch]="attr.get('type')", *ngIf="!editing && value")
+        .custom-field-value(*ngSwitchCase="'url'", (click)="editing = true")
+            span
+                a([href]="value") {{ value }}
+
+        .custom-field-value(*ngSwitchCase="'richtext'", (click)="editing = true")
+            div([innerHtml]="attr.get('html')")
+
+        .custom-field-value(*ngSwitchCase="'date'", (click)="editing = true")
+            span {{ value|momentFormat:prettyDate }}
+
+        .custom-field-value(*ngSwitchDefault, (click)="editing = true")
+            span {{ value }}
+
+    .custom-field-options(*ngIf="canEdit && !editing && value", (click)="editing = true")
+        a(
+            [title]="'COMMON.CUSTOM_ATTRIBUTES.EDIT' | translate"
+        )
+            tg-svg(svg-icon="icon-edit")
+
+    div.custom-field-value([ngSwitch]="attr.get('type')", *ngIf="editing || !value")
+        //- See TYPE_CHOICES in app/coffee/modules/common/custom-field-values.coffee
+        input#custom-field-value(
+            *ngSwitchCase="'text'"
+            type="text",
+            [value]="value || ''"
+        )
+        textarea#custom-field-value(
+            *ngSwitchCase="'multiline'"
+        ) {{ value  || ''}}
+        tg-custom-field-edit-wysiwyg(
+            *ngSwitchCase="'richtext'"
+        )
+        input#custom-field-value(
+            *ngSwitchCase="'date'",
+            type="text",
+            data-pikaday,
+            [value]="value || ''"
+        )
+        input#custom-field-value(
+            *ngSwitchCase="'url'",
+            type="url",
+            [value]="value || ''"
+        )
+        input#custom-field-value(
+            *ngSwitchDefault,
+            type="text",
+            [value]="value || ''"
+        )
+
+    div.custom-field-options(*ngIf="attr.get('type') != 'richtext' && (editing || !value)")
+        a.js-save-description(href="", [title]="'COMMON.CUSTOM_ATTRIBUTES.SAVE' | translate")
+            tg-svg(svg-icon="icon-save")

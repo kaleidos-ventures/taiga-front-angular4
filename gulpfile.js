@@ -1,39 +1,38 @@
 var gulp = require("gulp"),
     fs = require('fs'),
     imagemin = require("gulp-imagemin"),
-    jade = require("gulp-jade"),
-    coffee = require("gulp-coffee"),
+    pug = require("gulp-pug"),
+    ts = require('gulp-typescript'),
     concat = require("gulp-concat"),
     uglify = require("gulp-uglify"),
     plumber = require("gulp-plumber"),
-    wrap = require("gulp-wrap"),
     rename = require("gulp-rename"),
-    flatten = require("gulp-flatten"),
     gulpif = require("gulp-if"),
-    replace = require("gulp-replace"),
     sass = require("gulp-sass"),
     csslint = require("gulp-csslint"),
     minifyCSS = require("gulp-minify-css"),
     scsslint = require("gulp-scss-lint"),
     cache = require("gulp-cache"),
     cached = require("gulp-cached"),
-    jadeInheritance = require("gulp-jade-inheritance"),
     sourcemaps = require("gulp-sourcemaps"),
     insert = require("gulp-insert"),
     autoprefixer = require("gulp-autoprefixer"),
-    templateCache = require("gulp-angular-templatecache"),
     runSequence = require("run-sequence"),
     order = require("gulp-order"),
-    print = require('gulp-print'),
     del = require("del"),
     livereload = require('gulp-livereload'),
-    gulpFilter = require('gulp-filter'),
     mergeStream = require('merge-stream'),
     path = require('path'),
     addsrc = require('gulp-add-src'),
     jsonminify = require('gulp-jsonminify'),
-    classPrefix = require('gulp-class-prefix'),
-    coffeelint = require('gulp-coffeelint');
+    classPrefix = require('gulp-class-prefix');
+    browserify = require("browserify"),
+    uglifyify = require('uglifyify'),
+    source = require('vinyl-source-stream'),
+    watchify = require("watchify"),
+    tsify = require("tsify"),
+    pugify = require("pugify"),
+    gutil = require("gulp-util");
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -44,7 +43,6 @@ var themes = utils.themes.sequence();
 if (argv.theme) {
     themes.set(argv.theme);
 }
-
 var version = "v-" + Date.now();
 
 var paths = {};
@@ -54,17 +52,6 @@ paths.distVersion = paths.dist + version + "/";
 paths.tmp = "tmp/";
 paths.extras = "extras/";
 paths.modules = "node_modules/";
-
-paths.jade = [
-    paths.app + "**/*.jade"
-];
-
-paths.htmlPartials = [
-    paths.tmp + "partials/**/*.html",
-    paths.tmp + "modules/**/*.html",
-    "!" + paths.tmp + "partials/includes/**/*.html",
-    "!" + paths.tmp + "/modules/**/includes/**/*.html"
-];
 
 paths.images = paths.app + "images/**/*";
 paths.svg = paths.app + "svg/**/*";
@@ -118,96 +105,58 @@ paths.css_order = [
     paths.tmp + "custom.css"
 ];
 
-paths.coffee = [
-    paths.app + "**/*.coffee",
-    "!" + paths.app + "**/*.spec.coffee",
-];
-
-paths.coffee_order = [
-    paths.app + "modules/compile-modules/**/*.module.coffee",
-    paths.app + "modules/compile-modules/**/*.coffee",
-    paths.app + "coffee/app.coffee",
-    paths.app + "coffee/*.coffee",
-    paths.app + "coffee/modules/controllerMixins.coffee",
-    paths.app + "coffee/modules/*.coffee",
-    paths.app + "coffee/modules/common/*.coffee",
-    paths.app + "coffee/modules/backlog/*.coffee",
-    paths.app + "coffee/modules/taskboard/*.coffee",
-    paths.app + "coffee/modules/kanban/*.coffee",
-    paths.app + "coffee/modules/epics/*.coffee",
-    paths.app + "coffee/modules/issues/*.coffee",
-    paths.app + "coffee/modules/userstories/*.coffee",
-    paths.app + "coffee/modules/tasks/*.coffee",
-    paths.app + "coffee/modules/team/*.coffee",
-    paths.app + "coffee/modules/wiki/*.coffee",
-    paths.app + "coffee/modules/admin/*.coffee",
-    paths.app + "coffee/modules/projects/*.coffee",
-    paths.app + "coffee/modules/locales/*.coffee",
-    paths.app + "coffee/modules/profile/*.js",
-    paths.app + "coffee/modules/base/*.coffee",
-    paths.app + "coffee/modules/resources/*.coffee",
-    paths.app + "coffee/modules/user-settings/*.coffee",
-    paths.app + "coffee/modules/integrations/*.coffee",
-    paths.app + "modules/**/*.module.coffee",
-    paths.app + "modules/**/*.coffee"
-];
-
-paths.libs = [
-    paths.modules + "bluebird/js/browser/bluebird.js",
-    paths.modules + "jquery/dist/jquery.js",
-    paths.modules + "lodash/lodash.js",
-    paths.modules + "messageformat/messageformat.js",
-    paths.modules + "angular/angular.js",
-    paths.modules + "angular-route/angular-route.js",
-    paths.modules + "angular-sanitize/angular-sanitize.js",
-    paths.modules + "angular-animate/angular-animate.js",
-    paths.modules + "angular-aria/angular-aria.js",
-    paths.modules + "angular-translate/dist/angular-translate.js",
-    paths.modules + "angular-translate-loader-partial/angular-translate-loader-partial.js",
-    paths.modules + "angular-translate-loader-static-files/angular-translate-loader-static-files.js",
-    paths.modules + "angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js",
-    paths.modules + "moment/moment.js",
-    paths.modules + "checksley/checksley.js",
-    paths.modules + "pikaday/pikaday.js",
-    paths.modules + "Flot/jquery.flot.js",
-    paths.modules + "Flot/jquery.flot.pie.js",
-    paths.modules + "Flot/jquery.flot.time.js",
-    paths.modules + "flot-axislabels/jquery.flot.axislabels.js",
-    paths.modules + "jquery.flot.tooltip/js/jquery.flot.tooltip.js",
-    paths.modules + "raven-js/dist/raven.js",
-    paths.modules + "l.js/l.js",
-    paths.modules + "ng-infinite-scroll/build/ng-infinite-scroll.js",
-    paths.modules + "immutable/dist/immutable.js",
-    paths.modules + "intro.js/intro.js",
-    paths.modules + "dragula/dist/dragula.js",
-    paths.modules + "awesomplete/awesomplete.js",
-    paths.modules + "medium-editor/dist/js/medium-editor.js",
-    paths.modules + "to-markdown/dist/to-markdown.js",
-    paths.modules + "markdown-it/dist/markdown-it.js",
-    paths.modules + "prismjs/prism.js",
-    paths.modules + "prismjs/plugins/custom-class/prism-custom-class.js",
-    paths.modules + "medium-editor-autolist/dist/autolist.js",
-    paths.modules + "autolinker/dist/Autolinker.js",
-    paths.app + "js/dom-autoscroller.js",
-    paths.app + "js/dragula-drag-multiple.js",
-    paths.app + "js/tg-repeat.js",
-    paths.app + "js/sha1-custom.js",
-    paths.app + "js/murmurhash3_gc.js",
-    paths.app + "js/medium-mention.js",
-    paths.app + "js/markdown-it-lazy-headers.js"
-];
-
-paths.libs.forEach(function(file) {
-    try {
-        // Query the entry
-        stats = fs.lstatSync(file);
-    }
-    catch (e) {
-        console.log(file);
-    }
-});
-
 var isDeploy = argv["_"].indexOf("deploy") !== -1;
+
+var BrowserifyApp = browserify({
+    basedir: '.',
+    debug: true,
+    entries: ['app/main.ts'],
+    cache: {},
+    packageCache: {}
+}).transform(pugify.pug({
+    compileDebug: false,
+    doctype: 'html',
+})).plugin(tsify);
+
+var DeployBrowserifyApp = browserify({
+    basedir: '.',
+    debug: false,
+    entries: ['app/main.ts'],
+    cache: {},
+    packageCache: {}
+}).transform(pugify.pug({
+    compileDebug: false,
+    doctype: 'html',
+})).plugin(tsify);
+
+var watchedBrowserifyApp = watchify(BrowserifyApp);
+watchedBrowserifyApp.on("update", function() { gutil.log("Change detected") });
+watchedBrowserifyApp.on("update", bundleApp);
+watchedBrowserifyApp.on("log", gutil.log);
+
+function bundleApp() {
+    return BrowserifyApp
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion));
+}
+
+function watchBundleApp() {
+    return watchedBrowserifyApp
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion))
+        .pipe(livereload());
+}
+
+function deployBundleApp() {
+    return DeployBrowserifyApp
+        .transform({global: true }, 'uglifyify')
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion));
+}
+
 
 /*
 ############################################################################
@@ -215,22 +164,10 @@ var isDeploy = argv["_"].indexOf("deploy") !== -1;
 ##############################################################################
 */
 
-var jadeIncludes = paths.app +'partials/includes/**/*';
-
-gulp.task("jade", function() {
-    return gulp.src(paths.jade)
+gulp.task("pug", function() {
+    return gulp.src(paths.app + "index.pug")
         .pipe(plumber())
-        .pipe(cached("jade"))
-        .pipe(jade({pretty: true, locals:{v:version}}))
-        .pipe(gulp.dest(paths.tmp));
-});
-
-gulp.task("jade-inheritance", function() {
-    return gulp.src(paths.jade)
-        .pipe(plumber())
-        .pipe(cached("jade"))
-        .pipe(jadeInheritance({basedir: "./app/"}))
-        .pipe(jade({pretty: true, locals:{v: version}}))
+        .pipe(pug({pretty: true, locals:{v:version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -239,21 +176,17 @@ gulp.task("copy-index", function() {
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task("template-cache", function() {
-    return gulp.src(paths.htmlPartials)
-        .pipe(gulpif(isDeploy, replace(/e2e-([a-z\-]+)/g, '')))
-        .pipe(templateCache({standalone: true}))
-        .pipe(gulpif(isDeploy, uglify()))
-        .pipe(gulp.dest(paths.distVersion + "js/"))
-        .pipe(gulpif(!isDeploy, livereload()));
+gulp.task("copy-jquery", function() {
+    return gulp.src(paths.modules + "jquery/dist/jquery.min.js")
+        .pipe(gulp.dest(paths.distVersion + "js/"));
 });
 
-gulp.task("jade-deploy", function(cb) {
-    return runSequence("jade", "copy-index", "template-cache", cb);
+gulp.task("pug-deploy", function(cb) {
+    return runSequence("pug", "copy-index", cb);
 });
 
-gulp.task("jade-watch", function(cb) {
-    return runSequence("jade-inheritance", "copy-index", "template-cache", cb);
+gulp.task("pug-watch", function(cb) {
+    return runSequence("pug", "copy-index", cb);
 });
 
 /*
@@ -486,14 +419,6 @@ gulp.task("conf", function() {
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task("app-loader", function() {
-    return gulp.src("app-loader/app-loader.coffee")
-        .pipe(replace("___VERSION___", version))
-        .pipe(coffee())
-        .pipe(gulpif(isDeploy, uglify()))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
 gulp.task("locales", function() {
     var plugins = gulp.src(paths.app + "modules/**/locales/*.json")
         .pipe(rename(function (localeFile) {
@@ -513,44 +438,9 @@ gulp.task("locales", function() {
             .pipe(gulp.dest(paths.distVersion + "locales"));
 });
 
-gulp.task("coffee-lint", function () {
-    gulp.src([
-        paths.app + "modules/**/*.coffee",
-        "!" + paths.app + "modules/**/*.spec.coffee"
-    ])
-        .pipe(gulpif(!isDeploy, cache(coffeelint(), {
-            key: function(lintFile) {
-                return "coffee-lint" + lintFile.contents.toString('utf8');
-            },
-            success: function(lintFile) {
-                return lintFile.coffeelint.success;
-            },
-            value: function(lintFile) {
-                return {
-                    coffeelint: lintFile.coffeelint
-                };
-            }
-        })))
-        .pipe(coffeelint.reporter());
-});
-
-gulp.task("coffee", function() {
-    var filter = gulpFilter(['*', '!*.map']);
-
-    return gulp.src(paths.coffee)
-        .pipe(order(paths.coffee_order, {base: '.'}))
-        .pipe(sourcemaps.init())
-        .pipe(cache(coffee()))
-        .on("error", function(err) {
-            console.log(err.toString());
-            this.emit("end");
-        })
-        .pipe(concat("app.js"))
-        .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest(paths.distVersion + "js/"))
-        .pipe(filter)
-        .pipe(livereload());
-});
+gulp.task("typescript", bundleApp);
+gulp.task("typescript-deploy", deployBundleApp);
+gulp.task("typescript-watch", watchBundleApp);
 
 gulp.task("moment-locales", function() {
     return gulp.src(paths.modules + "moment/locale/*")
@@ -558,26 +448,7 @@ gulp.task("moment-locales", function() {
         .pipe(gulp.dest(paths.distVersion + "locales/moment-locales/"));
 });
 
-gulp.task("jslibs-watch", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(concat("libs.js"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-gulp.task("jslibs-deploy", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(sourcemaps.init())
-        .pipe(concat("libs.js"))
-        .pipe(uglify())
-        .pipe(sourcemaps.write("./maps"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-gulp.task("app-watch", ["coffee", "conf", "locales", "moment-locales", "app-loader"]);
-
-gulp.task("app-deploy", ["coffee", "conf", "locales", "moment-locales", "app-loader"], function() {
+gulp.task("app-deploy", ["typescript-deploy", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
             .pipe(uglify())
@@ -596,7 +467,7 @@ gulp.task("clear", ["clear-sass-cache"], function(done) {
 
 //SVG
 gulp.task("copy-svg", function() {
-    return gulp.src(paths.app + "/svg/**/*")
+    return gulp.src(paths.app + "/assets/svg/**/*")
         .pipe(gulp.dest(paths.distVersion + "/svg/"));
 });
 
@@ -606,7 +477,7 @@ gulp.task("copy-theme-svg", function() {
 });
 
 gulp.task("copy-fonts", function() {
-    return gulp.src(paths.app + "/fonts/*")
+    return gulp.src(paths.app + "/assets/fonts/*")
         .pipe(gulp.dest(paths.distVersion + "/fonts/"));
 });
 
@@ -616,13 +487,13 @@ gulp.task("copy-theme-fonts", function() {
 });
 
 gulp.task("copy-images", function() {
-    return gulp.src([paths.app + "/images/**/*", paths.app + '/modules/compile-modules/**/images/*'])
+    return gulp.src([paths.app + "/assets/images/**/*", paths.app + '/modules/compile-modules/**/images/*'])
         .pipe(gulpif(isDeploy, imagemin({progressive: true})))
         .pipe(gulp.dest(paths.distVersion + "/images/"));
 });
 
 gulp.task("copy-emojis", function() {
-    return gulp.src([__dirname + "/emojis/*"])
+    return gulp.src([__dirname + "/assets/emojis/*"])
         .pipe(gulp.dest(paths.distVersion + "/emojis/"));
 });
 
@@ -714,12 +585,9 @@ gulp.task("express", function() {
 gulp.task("watch", function() {
     livereload.listen();
 
-    gulp.watch(paths.jade, ["jade-watch"]);
     gulp.watch(paths.sass_watch, ["styles-lint"]);
     gulp.watch(paths.styles_dependencies, ["styles-dependencies"]);
     gulp.watch(paths.svg, ["copy-svg"]);
-    gulp.watch(paths.coffee, ["app-watch"]);
-    gulp.watch(paths.libs, ["jslibs-watch"]);
     gulp.watch([paths.locales, paths.modulesLocales], ["locales"]);
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
@@ -728,9 +596,12 @@ gulp.task("watch", function() {
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [
         "copy",
-        "jade-deploy",
+        "conf",
+        "locales",
+        "moment-locales",
+        "pug-deploy",
         "app-deploy",
-        "jslibs-deploy",
+        "copy-jquery",
         "compile-themes"
     ], cb);
 });
@@ -739,9 +610,13 @@ gulp.task("default", function(cb) {
     runSequence("delete-old-version", "delete-tmp", [
         "copy",
         "styles",
-        "app-watch",
-        "jslibs-watch",
-        "jade-deploy",
+        "typescript-watch",
+        "conf",
+        "locales",
+        "moment-locales",
+        "copy-jquery",
+        "pug-deploy",
+        "copy-index",
         "express",
         "watch"
     ], cb);

@@ -1,0 +1,29 @@
+tg-lightbox(key="feedback")
+    tg-lightbox-close
+    tg-feedback-lightbox((feedback)="onFeedbackFilled($event)")
+
+tg-lightbox(key="search")
+    tg-lightbox-close
+    tg-search-lightbox([project]="currentProject")
+
+tg-loader-full
+tg-joy-ride
+tg-notification-messages
+tg-navigation-bar(
+    *ngIf="isNavigationBarEnabled",
+    [user]="user | async",
+    [projects]="projects | async",
+    (login)="onLogin()",
+    (logout)="onLogout()",
+    (feedback)="onFeedback()"
+)
+
+div(*ngIf="!errorHandling.showingError")
+    <router-outlet></router-outlet>
+
+div(*ngIf="errorHandling.notfound", ng-include="'error/not-found.html'")
+div(*ngIf="errorHandling.error", ng-include="'error/error.html'")
+div(*ngIf="errorHandling.permissionDenied", ng-include="'error/permission-denied.html'")
+div(*ngIf="errorHandling.blocked", ng-include="'projects/project/blocked-project.html'")
+
+// tg-live-announcement

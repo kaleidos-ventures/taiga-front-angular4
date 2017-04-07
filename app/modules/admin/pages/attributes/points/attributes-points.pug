@@ -1,0 +1,18 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-values")
+
+    tg-admin-attributes-nav([project]="project|async", active="points")
+
+    section.main.admin-common.admin-attributes
+        header
+            h1
+                tg-main-title([project]="project|async", [sectionName]="'ADMIN.PROJECT_VALUES_POINTS.TITLE' | translate")
+        p.admin-subtitle(translate="ADMIN.PROJECT_VALUES_POINTS.SUBTITLE")
+
+        tg-admin-attributes-points-editor.admin-attributes-section(
+            [name]="'ADMIN.PROJECT_VALUES_POINTS.US_TITLE' | translate",
+            [addLabel]="'ADMIN.PROJECT_VALUES_POINTS.ACTION_ADD' | translate",
+            [project]="project|async"
+        )

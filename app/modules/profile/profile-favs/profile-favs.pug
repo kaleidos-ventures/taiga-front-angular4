@@ -1,0 +1,41 @@
+section.profile-favs
+    tg-profile-favs-filter(
+        [type]="type",
+        [q]="q",
+        (qChange)="setQ($event)",
+        [filter]="filter",
+        (filterChange)="setFilter($event)"
+    )
+
+    div(
+        infinite-scroll="loadItems()"
+        infinite-scroll-disabled="scrollDisabled"
+    )
+        div(*ngFor="let item of items")
+            tg-profile-favs-item-project(*ngIf="item.get('type') === 'project'", [item]="item")
+            tg-profile-favs-item-ticket(*ngIf="item.get('type') !== 'project'", [item]="item")
+
+    div(*ngIf="items === null")
+        div.spin
+            img(
+                src="/" + _version + "/svg/spinner-circle.svg",
+                [alt]="'COMMON.LOADING'|translate"
+            )
+
+    .empty-small(*ngIf="items && !items.size")
+        img(
+            *ngIf="type === 'likes'",
+            src="/" + _version + "/images/empty/empty_like.png",
+            [alt]="'USER.PROFILE_FAVS.EMPTY_TITLE' | translate"
+        )
+        img(
+            *ngIf="type === 'votes'",
+            src="/" + _version + "/images/empty/empty_upvote.png",
+            [alt]="'USER.PROFILE_FAVS.EMPTY_TITLE' | translate"
+        )
+        img(
+            *ngIf="type === 'watched'",
+            src="/" + _version + "/images/empty/empty_watch.png",
+            [alt]="'USER.PROFILE_FAVS.EMPTY_TITLE' | translate"
+        )
+        p.title(translate="USER.PROFILE_FAVS.EMPTY_TITLE")

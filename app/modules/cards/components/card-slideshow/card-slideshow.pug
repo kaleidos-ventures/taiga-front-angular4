@@ -1,0 +1,17 @@
+.card-slideshow
+    tg-svg.slideshow-icon.slideshow-left(
+        (click)="previous()",
+        *ngIf="images.size > 1",
+        svg-icon="icon-arrow-left"
+    )
+    tg-svg.slideshow-icon.slideshow-right(
+        (click)="next()",
+        *ngIf="images.size > 1",
+        svg-icon="icon-arrow-right"
+    )
+
+    ng-container(*ngFor="let image of images; let i = $index")
+        .card-slideshow-wrapper(*ngIf="i == index")
+            // TODO
+            // tg-preload-image([preload-src]="image.get('thumbnail_card_url')")
+            img([src]="image.get('thumbnail_card_url')")

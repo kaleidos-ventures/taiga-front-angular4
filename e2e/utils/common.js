@@ -108,7 +108,7 @@ common.link = async function(el) {
 };
 
 common.waitLoader = function () {
-    let el = $(".loader");
+    let el = $("tg-loader-full .loader");
 
    return browser.wait(async function() {
         let active = await common.hasClass(el, 'active');
@@ -166,13 +166,16 @@ common.login = function(username, password) {
 };
 
 common.logout = async function() {
-    let dropdown = $('div[tg-dropdown-user]');
+    let dropdown = $('tg-dropdown-user');
 
     await browser.actions()
         .mouseMove(dropdown)
         .perform();
 
-    await common.waitTransitionTime(dropdown);
+    // TODO: Fix this
+    // await common.waitTransitionTime($$('tg-dropdown-user .navbar-dropdown'));
+    // await common.waitTransitionTime($$("tg-dropdown-user:hover .navbar-dropdown"));
+    return browser.sleep(300);
 
     $$('.navbar-dropdown li a').last().click();
 
@@ -315,6 +318,7 @@ common.waitTransitionTime = async function(el) {
         el = $(el);
     }
 
+    console.log(await el.getCssValue('transition'));
     let transition = await el.getCssValue('transition-duration');
     let transitionDelay = await el.getCssValue('transition-delay');
 
@@ -391,9 +395,9 @@ common.goHome = async function() {
 };
 
 common.goToFirstProject = async function() {
-    await browser.actions().mouseMove($('div[tg-dropdown-project-list]')).perform();
+    await browser.actions().mouseMove($('tg-dropdown-project-list')).perform();
 
-    let project = $$('div[tg-dropdown-project-list] li a').first();
+    let project = $$('tg-dropdown-project-list li a').first();
 
     await common.link(project);
 
@@ -427,7 +431,7 @@ common.uploadFile = async function(inputFile, filePath) {
 };
 
 common.getMenu = function() {
-    return $('div[tg-dropdown-user]');
+    return $('tg-dropdown-user');
 };
 
 common.topMenuOption = async function(option) {
@@ -484,7 +488,7 @@ common.uploadImagePath = function() {
 };
 
 common.closeJoyride = async function() {
-    await browser.waitForAngular();
+    // await browser.waitForAngular();
 
     let present = await $('.introjs-skipbutton').isPresent();
 

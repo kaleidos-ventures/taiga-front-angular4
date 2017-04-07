@@ -1,0 +1,22 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="wiki")
+
+    tg-wiki-nav([project]="project|async", [links]="links|async", *ngIf="linksVisible")
+
+    section.main
+        header
+            tg-main-title(
+                [project]="project|async",
+                [sectionName]="'PROJECT.SECTION.WIKI' | translate",
+                [subsectionName]="'WIKI.SECTION_PAGES_LIST' | translate")
+
+        section.wiki-pages-table.basic-table
+            .row.title
+                .title-field(translate="WIKI.PAGES_LIST_COLUMNS.TITLE")
+                .editions-field(translate="WIKI.PAGES_LIST_COLUMNS.EDITIONS")
+                .creator-field(translate="WIKI.PAGES_LIST_COLUMNS.CREATOR")
+                .created-field(translate="WIKI.PAGES_LIST_COLUMNS.CREATED")
+                .last-modifier-field(translate="WIKI.PAGES_LIST_COLUMNS.LAST_MODIFIER")
+                .modified-field(translate="WIKI.PAGES_LIST_COLUMNS.MODIFIED")
+
+            tg-wiki-list-row([page]="page", [project]="project|async", *ngFor="let page of pages|async")

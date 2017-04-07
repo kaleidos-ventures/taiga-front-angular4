@@ -1,0 +1,31 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="search")
+
+    sidebar.menu-secondary.sidebar
+        section.search-in
+            header
+                fieldset
+                    input(
+                        type="text",
+                        [placeholder]="'SEARCH.PLACEHOLDER_SEARCH' | translate",
+                        [(ngModel)]="text",
+                        (ngModelChange)="onChangeTerm($event)"
+                    )
+                    .icon-search-wrapper(*tgLoading="loading")
+                        tg-svg(svg-icon="icon-search", [title]="'SEARCH.TITLE_ACTION_SEARCH' | translate")
+
+
+    section.main.search-result
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Search")
+        tg-search-filter(
+            [(activeTab)]="activeTab",
+            [results]="searchResults|async",
+        )
+
+        tg-search-results-table(
+            [activeTab]="activeTab",
+            [results]="searchResults|async",
+            [project]="project|async",
+        )

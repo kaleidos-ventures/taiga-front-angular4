@@ -1,0 +1,79 @@
+div.kanban-table-body(*ngIf="items", [class.kanban-table-nested]="nested")
+    div.kanban-table-inner(*ngFor="let block of (nested? items : [items])")
+        // tg-kanban-wip-limit="s",
+        // tg-kanban-column-height-fixer,
+        div.kanban-uss-box.task-column.nested-main.task-row(*ngIf="nested", [class.row-fold]="blockFolded[block.get('id')]")
+            tg-svg.vfold.fold-action(
+                svg-icon="icon-fold-row",
+                (click)='foldBlock(block)',
+                [title]="'TASKBOARD.TABLE.TITLE_ACTION_FOLD_ROW' | translate",
+                [class.hidden]="blockFolded[block.get('id')]"
+            )
+
+            tg-svg.vunfold.fold-action(
+                svg-icon="icon-unfold-row",
+                (click)='unfoldBlock(block)',
+                [title]="'TASKBOARD.TABLE.TITLE_ACTION_UNFOLD_ROW' | translate",
+                [class.hidden]="!blockFolded[block.get('id')]"
+            )
+
+            h3.us-title
+                a(
+                    href="",
+                    [routerLink]="['/project', project.get('slug'), 'us', block.get('ref')]",
+                    [queryParams]="{'no-milestone': block.get('milestone')}",
+                    title="#{{ block.get('ref') }} {{ block.get('subject') }}"
+                )
+                      span.us-ref {{'#' + block.get('ref')}}&nbsp;
+                      span {{block.get('subject')}}
+                      tg-belong-to-epics(
+                          format="pill",
+                          *ngIf="block.get('epics')",
+                          [epics]="block.get('epics')"
+                      )
+            p.points-value
+                span {{block.get('total_points')}}
+                span(translate="TASKBOARD.TABLE.FIELD_POINTS")
+
+            tg-svg.add-action(
+                *tgIfPerm="'add_task'",
+                [title]="'TASKBOARD.TITLE_ACTION_ADD' | translate",
+                (click)="addNewTask('standard', block)",
+                svg-icon="icon-add"
+            )
+
+            tg-svg.bulk-action(
+                *tgIfPerm="'add_task'",
+                [title]="'TASKBOARD.TITLE_ACTION_ADD_BULK' | translate",
+                (click)="addNewTask('bulk', block)",
+                svg-icon="icon-bulk"
+            )
+
+
+        div.kanban-uses-box.task-column(
+            *ngFor="let status of statuses; let i = index; trackBy: trackStatusFn",
+            [class.vfold]="folds[status.get('id')]",
+            [attr.data-status-id]="status.get('id')",
+        )
+            .card-placeholder(*ngIf="!nested && !items.size && i == 0")
+            .card-placeholder(*ngIf="nested && !items.size && i == 0")
+
+            // [class.kanban-task-maximized]="isMaximized(s.id)",
+            // [class.kanban-task-minimized]="isMinimized(s.id)",
+            // tg-class-permission="{'readonly': '!modify_task'}"
+            // on-toggle-fold="ctrl.toggleFold(id)"
+            // on-click-edit="ctrl.editUs(id)"
+            // on-click-assigned-to="ctrl.changeUsAssignedTo(id)"
+            // archived="ctrl.isUsInArchivedHiddenStatus(us.get('id'))"
+
+            tg-card.card.ng-animate-disabled(
+                *ngFor="let item of (nested? block.get('items') : items).get(status.get('id').toString()); trackBy:trackItemFn",
+                [item]="item",
+                [zoom]="zoom",
+                [project]="project",
+                [attr.data-us-id]="item.get('id')",
+                [minimized]="blockFolded[block.get('id')] || folds[status.get('id')]"
+            )
+
+            // TODO: fill correctly the Has stories to show input
+            tg-kanban-archived-status-intro([status]="status", [hasStoriesToShow]="false")

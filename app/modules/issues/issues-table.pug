@@ -1,0 +1,133 @@
+section.issues-options(*tgIfPerm="'add_issue'")
+    div.new-issue
+        a.button-green((click)="addNewIssue.emit(true)")
+            span.text(translate="ISSUES.ACTION_NEW_ISSUE")
+        a.button-bulk((click)="addIssuesInBulk.emit(true)")
+            tg-svg(svg-icon="icon-bulk")
+
+section.issues-table.basic-table([class.empty]="!issues?.size", *tgLoading="'loading-issues';size:'big'")
+    div.row.title
+        div.level-field(
+            (click)="sort('type')"
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.TYPE")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'type'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-type'")
+        div.level-field(
+            (click)="sort('severity')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.SEVERITY")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'severity'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-severity'")
+        div.level-field(
+            (click)="sort('priority')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.PRIORITY")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'priority'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-priority'")
+        div.votes(
+            (click)="sort('total_voters')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.VOTES")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'total_voters'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-total_voters'")
+        div.subject(
+            (click)="sort('subject')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.SUBJECT")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'subject'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-subject'")
+        div.issue-field(
+            (click)="sort('status')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.STATUS")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'status'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-status'")
+        div.created-field(
+            (click)="sort('created_date')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.CREATED")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'created_date'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-created_date'")
+        div.assigned-field(
+            (click)="sort('assigned_to')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'assigned_to'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-assigned_to'")
+
+    div.row.table-main(
+        *ngFor="let issue of issues",
+        [class.is-blocked]="issue.get('is_blocked')"
+    )
+        tg-issues-bullet.level-field([types]="project.get('issue_types')", [typeId]="issue.get('type')")
+        tg-issues-bullet.level-field([types]="project.get('severities')", [typeId]="issue.get('severity')")
+        tg-issues-bullet.level-field([types]="project.get('priorities')", [typeId]="issue.get('priority')")
+
+        div.votes.ng-animate-disabled(
+            [class.inactive]="!issue.get('total_voters')",
+            *ngIf="!issue.get('is_voter')",
+            [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:issue.get('total_voters')||0}:'messageformat'",
+            (click)="upVoteIssue(issue.get('id'))",
+            tg-loading="voting == issue.get('id')"
+        )
+            tg-svg(svg-icon="icon-upvote")
+            span {{ issue.get('total_voters') }}
+
+        div.votes.ng-animate-disabled(
+            [class.is-voted]="issue.get('is_voter')",
+            *ngIf="issue.get('is_voter')",
+            [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:issue.get('total_voters')||0}:'messageformat'",
+            (click)="downVoteIssue(issue.get('id'))",
+            tg-loading="ctrl.voting == issue.get('id')"
+        )
+            tg-svg(svg-icon="icon-upvote")
+            span {{ issue.get('total_voters') }}
+
+        div.subject
+            a(
+                tg-nav="project-issues-detail:project=project.slug,ref=issue.ref",
+                [title]="'#' + issue.get('ref') + ' ' + issue.get('subject')"
+            )
+                span {{ '#' + issue.get('ref') }}
+                span.blocked-text(
+                    *ngIf="issue.get('is_blocked')",
+                    [title]="issue.get('blocked_note')",
+                    translate="ISSUES.TABLE.BLOCKED"
+                )
+                span {{ issue.get('subject') }}
+
+
+        tg-issues-status-inline-edition(
+            [statuses]="project.get('issue_statuses')",
+            [statusId]="issue.get('status')"
+        )
+
+        div.created-field(
+            [title]="issue.get('created_date')|momentFormat:'DD MMM YYYY HH:mm'"
+        ) {{ issue.get('created_date')|momentFormat:'DD MMM YYYY' }}
+
+        div.assigned-field
+            div.issue-assignedto([title]="'ISSUES.TABLE.TITLE_ACTION_ASSIGNED_TO' | translate")
+                tg-assigned-item(
+                    [member]="project?.getIn(['members_by_id', issue.get('assigned_to')])",
+                    (click)="openAssignedTo(issues.get('assigned_to'))"
+                )
+                tg-svg(
+                    *tgIfPerm="'modify_issue'",
+                    (click)="openAssignedTo(issues.get('assigned_to'))",
+                    svg-icon="icon-arrow-down"
+                )
+
+section.empty-large(*ngIf="!issues?.size")
+    img(
+        src="/" + _version + "/images/empty/empty_moon.png",
+        [alt]="'ISSUES.TABLE.EMPTY.TITLE' | translate"
+    )
+    p.title(translate="ISSUES.TABLE.EMPTY.TITLE")
+    a(
+        (click)="addNewIssue()",
+        *tgIfPerm="'add_issue'",
+        [title]="'ISSUES.ACTION_NEW_ISSUE' | translate",
+        translate="ISSUES.TABLE.EMPTY.SUBTITLE"
+    )

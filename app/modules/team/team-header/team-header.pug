@@ -1,0 +1,28 @@
+header.row.team-header
+    div.username
+    div.member-stats
+        div.attribute.attribute-name(*ngIf="project?.get('is_issues_activated')")
+            span(translate="TEAM.COLUMN_MR_WOLF")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_MR_WOLF")
+        div.attribute(*ngIf="project?.get('is_backlog_activated')")
+            span(translate="TEAM.COLUMN_IOCAINE")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_IOCAINE")
+        div.attribute(*ngIf="project?.get('is_wiki_activated')")
+            span(translate="TEAM.COLUMN_CERVANTES")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_CERVANTES")
+        div.attribute(*ngIf="project?.get('is_issues_activated')")
+            span(translate="TEAM.COLUMN_BUG_HUNTER")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_BUG_HUNTER")
+        div.attribute(*ngIf="project?.get('is_backlog_activated')")
+            span(translate="TEAM.COLUMN_NIGHT_SHIFT")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_NIGHT_SHIFT")
+        div.attribute
+            span(translate="TEAM.COLUMN_TOTAL_POWER")
+            div.popover.attribute-explanation
+                span(translate="TEAM.EXPLANATION_COLUMN_TOTAL_POWER")
+

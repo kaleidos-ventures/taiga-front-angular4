@@ -1,0 +1,56 @@
+a.user-avatar(
+    routerLink="/profile",
+    [title]=" user.get('full_name_display')"
+    ) {{ user.get('full_name_display') }}
+    tg-avatar([user]="user")
+
+div.navbar-dropdown.dropdown-user
+    ul
+        li
+            a(
+                routerLink="/profile",
+                [title]="'PROJECT.NAVIGATION.VIEW_PROFILE_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.VIEW_PROFILE")
+        li
+            a(
+                routerLink="/user-settings/user-profile",
+                [title]="'PROJECT.NAVIGATION.EDIT_PROFILE_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.EDIT_PROFILE")
+
+        li.plugin(*ngFor="let plugin of userSettingsPlugins")
+            a(
+                [routerLink]="['/user-settings/contrib/', plugin.slug]",
+                ng-class="{active: plugin.slug == currentPlugin.slug}"
+            )
+                span.title {{ plugin.name }}
+        li
+            a(
+                routerLink="/user-settings/user-change-password",
+                [title]="'PROJECT.NAVIGATION.CHANGE_PASSWORD_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.CHANGE_PASSWORD")
+
+        li
+            a(
+                routerLink="/user-settings/mail-notifications",
+                [title]="'PROJECT.NAVIGATION.NOTIFICATIONS_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.NOTIFICATIONS")
+
+        li(*ngIf="isFeedbackEnabled")
+            a(
+                (click)="sendFeedback()",
+                [title]="'PROJECT.NAVIGATION.FEEDBACK_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.FEEDBACK"
+            )
+        li
+            a(
+                href="https://tree.taiga.io/support/",
+                target="_blank",
+                [title]="'PROJECT.NAVIGATION.HELP_TITLE' | translate",
+                translate="PROJECT.NAVIGATION.HELP"
+            )
+        li
+            a(
+                (click)="onLogoutClick()",
+                [title]="'COMMON.LOGOUT' | translate",
+                translate="COMMON.LOGOUT"
+            )

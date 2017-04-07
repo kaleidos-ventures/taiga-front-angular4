@@ -1,0 +1,30 @@
+button.track-button.like-button(
+    [title]="'PROJECT.LIKE_BUTTON.BUTTON_TITLE' | translate",
+    (mouseover)="isMouseOver = true",
+    (mouseleave)="isMouseOver = false",
+    [class.active]="project.get('is_fan')",
+    [class.is-hover]="project.get('is_fan') && isMouseOver",
+    (click)="toggleLike()"
+)
+    span.track-inner
+        span.track-icon
+            tg-svg(svg-icon="icon-like")
+        span(
+            *ngIf="!project.get('is_fan')",
+            translate="PROJECT.LIKE_BUTTON.LIKE"
+        )
+        span(
+            *ngIf="project.get('is_fan') && !isMouseOver",
+            translate="PROJECT.LIKE_BUTTON.LIKED"
+        )
+        span(
+            *ngIf="project.get('is_fan') && isMouseOver",
+            translate="PROJECT.LIKE_BUTTON.UNLIKE"
+        )
+
+    // tg-loading="loading"
+    div.track-button-counter
+        span(
+            *tgLoading="'like';size:'tiny'",
+            [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_fans\")||0}",
+        ) {{ project.get('total_fans') }}

@@ -1,0 +1,43 @@
+tg-backlog-sprint-header([project]="project", [sprint]="sprint", [(compactSprint)]="compactSprint")
+
+.summary-progress-wrapper
+    tg-progress-bar.sprint-progress-bar([percentage]="100 * sprint.get('closed_points') / sprint.get('total_points')")
+
+div.sprint-table(
+    [class.sprint-empty-wrapper]="!sprint.get('user_stories')?.size",
+    [style.display]="compactSprint ? 'none' : 'block'"
+)
+    div.sprint-empty(*ngIf="!sprint.get('user_stories')?.size")
+        span(tg-class-permission="{'hidden': 'modify_us'}") {{ 'BACKLOG.SPRINTS.WARNING_EMPTY_SPRINT_ANONYMOUS' | translate }}
+        span(tg-class-permission="{'hidden': '!modify_us'}") {{ 'BACKLOG.SPRINTS.WARNING_EMPTY_SPRINT' | translate }}
+
+    div.row.milestone-us-item-row(
+        *ngFor="let us of sprint.get('user_stories')"
+        tg-class-permission="{'readonly': '!modify_us'}"
+    )
+        div.column-us
+            a.us-name.clickable(
+                [routerLink]="['/project', project.get('slug'), 'us', us.get('ref')]",
+                [routeParams]="{'milestone': us.get('milestone')}",
+                [title]="'#' + us.get('ref') + ' ' +  us.get('subject')",
+                [class.closed]="us.get('is_closed')",
+                [class.blocked]="us.get('is_blocked')"
+            )
+                span {{'#' + us.get('ref')}}
+                span {{us.get('subject')}}
+                tg-belong-to-epics(
+                    format="pill",
+                    *ngIf="us.get('epics')",
+                    [epics]="us.get('epics')"
+                )
+        div.column-points.width-1(
+            [class.closed]="us.get('is_closed')",
+            [class.blocked]="us.get('is_blocked')"
+        ) {{ us.get('total_points') }}
+
+a.button-gray(
+    [title]="'BACKLOG.SPRINTS.TITLE_LINK_TASKBOARD' | translate: {\"name\": sprint.name}",
+    [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
+    *tgIfPerm="'view_milestones'"
+)
+    span(translate="BACKLOG.SPRINTS.LINK_TASKBOARD")

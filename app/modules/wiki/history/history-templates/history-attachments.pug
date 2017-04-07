@@ -1,0 +1,38 @@
+//- New attachment added
+.diff-attachments-new(
+    *ngFor="let newAttachment of diff.get('new')"
+)
+    span.key(translate="ACTIVITY.NEW_ATTACHMENT")
+    span.diff {{newAttachment.get('filename')}}
+
+//- Attachment updated
+.diff-attachments-update(
+    *ngFor="let editAttachment of diff.get('changed')"
+)
+    span.key(
+        translate="ACTIVITY.UPDATED_ATTACHMENT",
+        [translateParams]="{filename: editAttachment.get('filename')}"
+    )
+    span.diff(*ngIf="editAttachment.getIn(['changes', 'is_deprecated'])")
+        span(
+            *ngIf="editAttachment.getIn(['changes', 'is_deprecated', 1]) == false",
+            translate="ACTIVITY.BECAME_UNDEPRECATED"
+        )
+        span(
+            *ngIf="editAttachment.getIn(['changes', 'is_deprecated', 1]) == true",
+            translate="ACTIVITY.BECAME_DEPRECATED"
+        )
+    span.diff(*ngIf="editAttachment.getIn(['changes', 'description'])")
+        span(*ngIf="editAttachment.getIn(['changes', 'description', 0]).length") {{editAttachment.getIn(['changes', 'description', 0])}}
+        span(*ngIf="!editAttachment.getIn(['changes', 'description', 0]).length") ...
+        tg-svg(
+            svg-icon="icon-arrow-right"
+        )
+        span {{editAttachment.getIn(['changes', 'description', 1])}}
+
+//- Attachment deleted
+.diff-attachments-deleted(
+    *ngFor="let deletedAttachment of diff.get('deleted')"
+)
+    span.key(translate="ACTIVITY.DELETED_ATTACHMENT")
+    span.diff {{deletedAttachment.get('filename')}}

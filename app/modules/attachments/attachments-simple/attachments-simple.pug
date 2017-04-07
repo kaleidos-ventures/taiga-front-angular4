@@ -1,0 +1,30 @@
+section.attachments
+    .attachments-header
+        h3.attachments-title #[span.attachments-num {{attachments.length}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
+        .add-attach([title]="'ATTACHMENT.ADD' | translate")
+            label.add-attachment-button(for="add-attach")
+                tg-svg(svg-icon="icon-add")
+            input(
+                id="add-attach",
+                type="file",
+                multiple="multiple",
+                (change)="onChangeFile($event)"
+            )
+
+    .attachments-empty(*ngIf="!attachments.length")
+        div(translate="ATTACHMENT.DROP")
+
+    .attachment-body.attachment-list
+        .single-attachment(*ngFor="let attachment of attachments; let idx = index")
+            .attachment-name
+                tg-svg(svg-icon="icon-attachment")
+                span {{attachment.name}}
+            .attachment-size
+                span {{attachment.size | sizeFormat}}
+
+            .attachment-settings
+                a.settings.attachment-delete(
+                    [title]="'COMMON.DELETE' | translate",
+                    (click)="deleteAttachment(idx)"
+                )
+                    tg-svg(svg-icon="icon-trash")

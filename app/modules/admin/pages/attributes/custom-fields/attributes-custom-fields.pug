@@ -1,0 +1,36 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-values")
+
+    tg-admin-attributes-nav([project]="project|async", active="custom-fields")
+
+    section.main.admin-common.admin-attributes
+        header
+            h1
+                tg-main-title([project]="project|async", [sectionName]="'ADMIN.CUSTOM_FIELDS.TITLE' | translate")
+        p.admin-subtitle(translate="ADMIN.CUSTOM_FIELDS.SUBTITLE")
+
+        tg-admin-attributes-custom-fields-editor.admin-attributes-section(
+            type="epics",
+            [name]="'ADMIN.CUSTOM_FIELDS.EPIC_DESCRIPTION' | translate",
+            [project]="project|async"
+        )
+
+        tg-admin-attributes-custom-fields-editor.admin-attributes-section(
+            type="userstories",
+            [name]="'ADMIN.CUSTOM_FIELDS.US_DESCRIPTION' | translate",
+            [project]="project|async"
+        )
+
+        tg-admin-attributes-custom-fields-editor.admin-attributes-section(
+            type="tasks",
+            [name]="'ADMIN.CUSTOM_FIELDS.TASK_DESCRIPTION' | translate",
+            [project]="project|async"
+        )
+
+        tg-admin-attributes-custom-fields-editor.admin-attributes-section(
+            type="issues",
+            [name]="'ADMIN.CUSTOM_FIELDS.ISSUE_DESCRIPTION' | translate",
+            [project]="project|async"
+        )

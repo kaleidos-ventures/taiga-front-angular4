@@ -1,0 +1,17 @@
+form
+    h2.title {{ title }}
+    p
+        span.subtitle {{ subtitle }}
+        span.message {{ message }}
+    div.options
+        a.button-green(
+            [title]="'COMMON.ACCEPT' | translate",
+            (click)="response.emit(true)"
+        )
+            span(translate="COMMON.ACCEPT")
+
+        a.button-red(
+            [title]="'COMMON.CANCEL' | translate",
+            (click)="response.emit(false)"
+        )
+            span(translate="COMMON.CANCEL")

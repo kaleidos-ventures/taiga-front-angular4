@@ -1,0 +1,42 @@
+li.list-itemtype-project
+    .list-itemtype-project-left
+        a.list-itemtype-project-image(
+            href="#"
+            [routerLink]="['/project', project.get('slug')]",
+            [title]="project.get('name')"
+        )
+            tg-project-logo-small([project]="project")
+        .list-itemtype-project-data
+            h2
+                a(
+                    href="#"
+                    [routerLink]="['/project', project.get('slug')]",
+                    [title]="project.get('name')"
+                ) {{project.get('name')}}
+                tg-svg.look-for-people(
+                    *ngIf="project.get('is_looking_for_people')",
+                    svg-icon="icon-recruit",
+                    [svg-title]="project.get('looking_for_people_note')"
+                )
+            p {{ project.get('description').slice(0, 300) }}
+                span(*ngIf="project.get('description').length > 300") ...
+
+    .list-itemtype-project-right.project-statistics
+        span.statistic(
+            [class.active]="project.get('is_fan')",
+            [title]="'PROJECT.FANS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_fans')||0}"
+        )
+            tg-svg(svg-icon="icon-like")
+            span {{project.get('total_fans')}}
+        span.statistic(
+            [class.active]="project.get('is_watcher')",
+            [title]="'PROJECT.WATCHERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_watchers')||0}"
+        )
+            tg-svg(svg-icon="icon-watch")
+            span {{project.get('total_watchers')}}
+        span.statistic(
+            [class.active]="project.get('i_am_member')",
+            [title]="'PROJECT.MEMBERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('members').size||0}"
+        )
+            tg-svg(svg-icon="icon-team")
+            span.statistics-num {{ project.get('members').size }}

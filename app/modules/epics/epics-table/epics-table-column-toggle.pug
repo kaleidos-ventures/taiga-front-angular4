@@ -1,0 +1,15 @@
+label.epics-table-options-vote(
+    [translate]="title",
+    for="switch-sprint"
+)
+div.check
+    input.activate-input(
+        [id]='id',
+        [name]='id',
+        type="checkbox",
+        checked="value",
+        (change)="valueChange.emit(!value)"
+    )
+    div
+    span.check-text.check-yes(translate="COMMON.YES")
+    span.check-text.check-no(translate="COMMON.NO")

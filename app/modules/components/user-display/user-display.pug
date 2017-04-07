@@ -1,0 +1,19 @@
+.user-avatar(*ngIf="!!user && user.get('is_active')")
+    a(
+        [routerLink]="['/profile', user.get('username')]",
+        [title]="user.get('full_name_display')"
+    )
+        tg-avatar([user]="user")
+
+.user-avatar(*ngIf="!user || !user.get('is_active')")
+    tg-avatar([user]="user")
+
+a.user-full-name(
+    *ngIf="!!user && user.get('is_active')",
+    [routerLink]="['/profile', user.get('username')]",
+    [title]="user.get('full_name_display')"
+) {{user.get('full_name_display')}}
+
+span.user-full-name(*ngIf="!!user && !user.get('is_active')") {{user.get('full_name_display')}}
+
+span.user-full-name(*ngIf="!user", translate="COMMON.EXTERNAL_USER")

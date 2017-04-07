@@ -1,0 +1,30 @@
+form([class.hidden]="!visible")
+    div.row.table-main.edition
+        div.project-values-name
+            input(
+                #inputName,
+                name="name",
+                type="text",
+                [value]="value?.get('name')",
+                [placeholder]="'COMMON.FEILDS.NAME' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.project-values-value
+            input(
+                #inputValue,
+                name="value",
+                type="text",
+                [value]="value?.get('value')",
+                [placeholder]="'COMMON.FEILDS.VALUE' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.project-values-settings
+            a.save.e2e-save(href="", [title]="'COMMON.SAVE' | translate")
+                tg-svg(svg-icon="icon-save")
+
+            a.cancel((click)="cancel.emit(value?.get('id'))", [title]="'COMMON.CANCEL' | translate")
+                tg-svg.cancel(svg-icon="icon-close")

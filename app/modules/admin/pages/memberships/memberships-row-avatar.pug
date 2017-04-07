@@ -1,0 +1,13 @@
+.avatar
+    tg-avatar([user]="member")
+    .user-data
+        .name
+            span {{ member.get('full_name') }}
+            tg-svg.owner-badge(
+                *ngIf="member.get('is_owner')",
+                svg-icon="icon-badge",
+                svg-title-translate="COMMON.OWNER"
+            )
+        .data
+            span.email {{ member.get('email') }}
+            span.pending(*ngIf="!member.get('is_user_active')", translate="ADMIN.MEMBERSHIP.STATUS_PENDING")

@@ -1,0 +1,52 @@
+nav.navbar
+    div.nav-left
+        a.logo(
+            *ngIf="!user",
+            href="https://taiga.io/",
+            [title]="'PROJECT.NAVIGATION.HOMEPAGE' | translate"
+        )
+            include ../../assets/svg/logo.svg
+
+        a.logo(
+            routerLink="/",
+            *ngIf="user",
+            href="#",
+            [title]="'PROJECT.NAVIGATION.HOMEPAGE' | translate"
+        )
+            include ../../assets/svg/logo.svg
+
+        a(
+            href="https://tree.taiga.io/support/",
+            target="_blank",
+            [title]="'PROJECT.NAVIGATION.HELP_TITLE' | translate",
+            translate="PROJECT.NAVIGATION.HELP"
+        )
+
+    div.nav-right(*ngIf="!user")
+        a.login(
+            (click)="login.emit()",
+            [title]="'LOGIN_COMMON.ACTION_SIGN_IN' | translate",
+            translate="LOGIN_COMMON.ACTION_SIGN_IN"
+        )
+        a.register(
+            *ngIf="publicRegisterEnabled",
+            routerLink="/register",
+            [title]="'REGISTER_FORM.ACTION_SIGN_UP' | translate",
+            translate="REGISTER_FORM.ACTION_SIGN_UP"
+        )
+
+    div.nav-right(*ngIf="user")
+        a(
+            routerLink="/",
+            [title]="'PROJECT.NAVIGATION.DASHBOARD_TITLE' | translate"
+        )
+            tg-svg(svg-icon="icon-dashboard")
+
+        a(
+            routerLink="/discover",
+            [title]="'PROJECT.NAVIGATION.DISCOVER_TITLE' | translate",
+        )
+            tg-svg(svg-icon="icon-discover")
+
+        tg-dropdown-project-list.topnav-dropdown-wrapper(*ngIf="projects", [projects]="projects")
+        tg-dropdown-user.topnav-dropdown-wrapper([user]="user", (logout)="logout.emit()", (feedback)="feedback.emit()")

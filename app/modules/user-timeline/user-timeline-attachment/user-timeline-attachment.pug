@@ -1,0 +1,19 @@
+div.single-attachment(*ngIf="!isImage")
+    blockquote
+        // TODO: Translate title
+        a(
+            [href]="attachment.get('url')",
+            title="Click to download {{ attachment.get('filename') }}",
+            target="_blank"
+        )
+            tg-svg(svg-icon="icon-attachment")
+            span {{attachment.get('filename')}}
+div.activity-image-attachment(*ngIf="isImage")
+    blockquote
+        // TODO: Translate title
+        a(
+            [href]="attachment.get('url')",
+            title="See {{attachment.get('filename')}}",
+            target="_blank"
+        )
+            img([src]="attachment.get('thumb_url') || attachment.get('url')", [alt]="attachment.get('filename')")

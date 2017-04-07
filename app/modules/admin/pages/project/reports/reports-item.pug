@@ -1,0 +1,32 @@
+section.project-csv(*ngIf="project")
+    div.project-values-title
+        h2 {{section}}
+        a.button.button-gray(
+            [title]="'ADMIN.CSV.DOWNLOAD' | translate",
+            [href]="project.get(field)",
+            *ngIf="project.get(field)",
+            target="_blank"
+        )
+            span(translate="ADMIN.CSV.DOWNLOAD")
+
+    div.csv-regenerate-field
+        div.field-with-options
+            input(
+                type="text",
+                [placeholder]="'ADMIN.CSV.URL_FIELD_PLACEHOLDER' | translate",
+                readonly,
+                [value]="project.get(field)"
+            )
+            div.option-wrapper.select-input-content
+                tg-svg(svg-icon="icon-clipboard")
+
+        a(
+            href="",
+            [title]="'ADMIN.CSV.TITLE_REGENERATE_URL' | translate",
+            (click)="regenerate.emit()"
+        )
+           tg-svg(svg-icon="icon-add", *ngIf="!project.get(field)")
+           span(*ngIf="!project.get(field)", translate="ADMIN.CSV.ACTION_GENERATE_URL")
+
+           tg-svg(svg-icon="icon-reload", *ngIf="project.get(field)")
+           span(*ngIf="project.get(field)", translate="ADMIN.CSV.ACTION_REGENERATE")

@@ -1,0 +1,135 @@
+section.custom-fields-table.basic-table
+    .project-values-title
+        h2 {{ customFieldSectionTitle | translate }}
+        a.button.button-gray.show-add-new.js-add-custom-field-button(
+            href=""
+            [title]="customFieldButtonTitle | translate"
+            translate="ADMIN.CUSTOM_ATTRIBUTES.ADD"
+        )
+
+    .table-header
+        .row
+            .custom-name(translate="COMMON.FIELDS.NAME")
+            .custom-description(translate="COMMON.FIELDS.DESCRIPTION")
+            .custom-field-type(translate="COMMON.FIELDS.TYPE")
+            .custom-options
+
+    .table-body
+        .js-sortable
+            .e2e-item(
+                ng-repeat="attr in customAttributes track by attr.id"
+                tg-bind-scope
+            )
+                form.js-form(tg-bind-scope)
+                    div.row.single-custom-field.js-view-custom-field
+                        tg-svg.e2e-drag(svg-icon="icon-drag")
+                        div.custom-name {{ attr.name }}
+                        div.custom-description {{ attr.description }}
+                        div.custom-field-type(ng-switch on="attr.type")
+                            span(
+                                ng-switch-default
+                                translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT"
+                            )
+                            span(
+                                ng-switch-when="richtext"
+                                translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT"
+                            )
+                            span(
+                                ng-switch-when="multiline"
+                                translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI"
+                            )
+                            span(
+                                ng-switch-when="date"
+                                translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE"
+                            )
+                            span(
+                                ng-switch-when="url"
+                                translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL"
+                            )
+                        .custom-options
+                            .custom-options-wrapper
+                                a.js-edit-custom-field-button(
+                                    href="",
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.EDIT' | translate"
+                                )
+                                    tg-svg(svg-icon="icon-edit")
+
+                                a.js-delete-custom-field-button(
+                                    href="",
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.DELETE' | translate"
+                                )
+                                    tg-svg(svg-icon="icon-trash")
+
+                    div.row.single-custom-field.js-edit-custom-field.hidden
+                        fieldset.custom-name
+                            input(
+                                type="text"
+                                name="name"
+                                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate"
+                                ng-model="attr.name"
+                                data-required="true"
+                                data-maxlength="64"
+                            )
+                        fieldset.custom-description
+                            input(
+                                type="text"
+                                name="description"
+                                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate"
+                                ng-model="attr.description"
+                            )
+                        fieldset.custom-field-type
+                            select(
+                                ng-model="attr.type"
+                                ng-options="type.key as type.name|translate for type in TYPE_CHOICES"
+                            )
+                        fieldset.custom-options
+                            div.custom-options-wrapper
+                                a.js-update-custom-field-button(
+                                    href="",
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.ACTION_UPDATE' | translate"
+                                )
+                                    tg-svg(svg-icon="icon-save")
+
+                                a.js-cancel-edit-custom-field-button(
+                                    href="",
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.ACTION_CANCEL_EDITION' | translate"
+                                )
+                                    tg-svg(svg-icon="icon-close")
+
+        form.row.single-custom-field.js-new-custom-field.hidden
+            fieldset.custom-name
+                input(
+                    type="text"
+                    name="name"
+                    [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate"
+                    ng-model="newAttr.name"
+                    data-required="true"
+                    data-maxlength="64"
+                )
+            fieldset.custom-description
+                input(
+                    type="text"
+                    name="description"
+                    [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate"
+                    ng-model="newAttr.description"
+                )
+            fieldset.custom-field-type
+                select(
+                    ng-model="newAttr.type"
+                    ng-options="type.key as type.name|translate for type in TYPE_CHOICES"
+                )
+                    option(value="", translate="ADMIN.CUSTOM_ATTRIBUTES.FIELD_TYPE_DEFAULT")
+
+            fieldset.custom-options
+                div.custom-options-wrapper
+                    a.js-create-custom-field-button(
+                        href="",
+                        [title]="'ADMIN.CUSTOM_ATTRIBUTES.SAVE_TITLE' | translate"
+                    )
+                        tg-svg(svg-icon="icon-save")
+
+                    a.js-cancel-new-custom-field-button(
+                        href="",
+                        [title]="'ADMIN.CUSTOM_ATTRIBUTES.CANCEL_TITLE' | translate"
+                    )
+                        tg-svg(svg-icon="icon-close")

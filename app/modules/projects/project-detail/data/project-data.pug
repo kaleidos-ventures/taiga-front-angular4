@@ -1,0 +1,38 @@
+div.project-data(*ngIf="project")
+    section.timeline
+        tg-user-timeline(
+            *tgLoading="timeline?.get('items') == null",
+            [timeline]="timeline?.get('items')",
+            [scrollDisabled]="!timeline?.get('has-next')",
+            (needMore)="nextTimelineNeeded.emit([project.get('id'), timeline.get('current-page')])"
+        )
+
+    section.involved-data
+        .looking-for-people(*ngIf="project.get('is_looking_for_people')")
+            img(
+                src="/" + _version + "/images/looking-for-people.png",
+                [title]="'PROJECT.LOOKING_FOR_PEOPLE' | translate"
+            )
+            h3(
+                [class.is-empty]="!project.get('looking_for_people_note')",
+                translate="PROJECT.LOOKING_FOR_PEOPLE"
+            )
+            p(*ngIf="project.get('looking_for_people_note')") {{project.get('looking_for_people_note')}}
+            tg-contact-project-button(
+                *ngIf="project.get('is_contact_activated')",
+                layout="large"
+            )
+
+        h2.title {{"PROJECT.SECTION.TEAM" | translate}}
+        ul.involved-team
+            li(*ngFor="let member of members")
+                a(
+                    [routerLink]="['/profile', member.get('username')]",
+                    [title]="member.get('full_name')"
+                )
+                    tg-avatar([user]="member")
+                    tg-svg(
+                        *ngIf="member.get('id') == project.getIn(['owner', 'id'])",
+                        svg-icon="icon-badge",
+                        svgTitleTranslate="COMMON.OWNER"
+                    )

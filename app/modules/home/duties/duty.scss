@@ -1,9 +1,10 @@
 .working-on,
 .watching {
     margin-bottom: 2rem;
-    .duty-single {
+    tg-duty {
         border-bottom: 1px solid $whitish;
         cursor: pointer;
+        display: block;
         transition: background .2s;
         transition-delay: .2s;
         &:hover {

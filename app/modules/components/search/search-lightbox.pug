@@ -1,0 +1,16 @@
+form((ngSubmit)="submit($event)")
+    h2.title(translate="LIGHTBOX.SEARCH.TITLE")
+    fieldset
+        input(
+            type="text",
+            name="text",
+            id="search-text",
+            (change)="text = $event.target.value",
+            [placeholder]="'LIGHTBOX.SEARCH.PLACEHOLDER_SEARCH' | translate"
+        )
+    fieldset
+        button.button-green.submit-button(
+            type="submit",
+            [title]="' LIGHTBOX.SEARCH.TITLE' | translate",
+            translate="LIGHTBOX.SEARCH.TITLE"
+        )

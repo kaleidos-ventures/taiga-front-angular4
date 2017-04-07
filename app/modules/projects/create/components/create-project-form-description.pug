@@ -1,0 +1,6 @@
+fieldset([formGroup]="form")
+    textarea.e2e-create-project-description(
+        formControlName="value",
+        [placeholder]="'PROJECT.COMMON.PROJECT_DESCRIPTION' | translate",
+    )
+    tg-field-error([control]="form.controls.value")

@@ -1,0 +1,15 @@
+.create-project-action
+    button.trans-button.create-project-action-cancel(
+        type="button",
+        (click)="cancel.emit(true)",
+        [title]="'PROJECT.CREATE.BACK' | translate",
+        translate="PROJECT.CREATE.BACK"
+    )
+    button.button-green.create-project-action-submit.e2e-create-project-action-submit(
+        type="submit",
+        [disabled]="!form.valid"
+    )
+        span(
+            *tgLoading="'creating-project'",
+            translate="PROJECT.CREATE.TITLE"
+        )

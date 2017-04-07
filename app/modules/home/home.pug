@@ -1,0 +1,8 @@
+div.home-wrapper.centered
+    div.duty-summary
+        h1
+            span.green(translate="HOME.DASHBOARD")
+        tg-working-on.dashboard-container([assignedTo]="assignedTo | async", [watching]="watching | async")
+
+    aside.project-list
+        tg-home-project-list([projects]="projects | async")

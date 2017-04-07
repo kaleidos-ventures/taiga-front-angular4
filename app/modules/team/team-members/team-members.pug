@@ -1,0 +1,23 @@
+.row.member(*ngFor="let user of filtered_memberships")
+    .username
+        .avatar
+            tg-avatar([user]="user")
+
+            .avatar-data
+                a.name(
+                    [routerLink]="['/profile', user.get('username')]",
+                    [title]="user.get('full_name_display')"
+                ) {{user.get('full_name_display')}}
+                    tg-svg(
+                        *ngIf="user.get('id') == project.getIn(['owner', 'id'])",
+                        svg-icon="icon-badge",
+                        svg-title-translate="COMMON.OWNER"
+                    )
+
+                span.position {{user.get('role_name')}}
+
+    tg-team-member-stats(
+        [stats]="stats",
+        [userId]="user.get('id')",
+        [project]="project"
+    )

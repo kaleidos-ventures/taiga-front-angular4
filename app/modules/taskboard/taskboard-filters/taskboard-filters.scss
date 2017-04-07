@@ -1,0 +1,40 @@
+.taskboard-filters {
+    .search-in {
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    li {
+        @include font-size(large);
+        @include font-type(text);
+        border-bottom: 1px solid $gray-light;
+        text-transform: uppercase;
+        &:last-child {
+            border-bottom: 0;
+        }
+        .icon {
+            fill: $blackish;
+            opacity: 0;
+            transition: opacity .3s linear;
+        }
+    }
+    a {
+        align-content: center;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0 1rem 1rem;
+        &:hover,
+        &.active {
+            color: $primary;
+            transition: color .3s linear;
+            .icon {
+                fill: currentColor;
+                opacity: 1;
+            }
+        }
+    }
+    .active {
+        opacity: 1;
+        transition: opacity .3s linear;
+    }
+}

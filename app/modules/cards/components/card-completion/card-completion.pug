@@ -1,0 +1,4 @@
+.card-completion
+    .card-completion-bar
+    .card-completion-percentage([style.width]="closedTasksPercent() + '%'")
+    span.card-tooltip tasks {{closedTasks().size}}/{{tasks.size}}

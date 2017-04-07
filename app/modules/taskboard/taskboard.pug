@@ -1,0 +1,50 @@
+tg-lightbox(key="taskboard.assign-to")
+    tg-lightbox-close
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+
+tg-lightbox(key="taskboard.edit")
+    tg-lightbox-close
+    // tg-taskboard-task-edit-lightbox([us]="itemToEdit|async", [project]="project|async")
+
+tg-lightbox(key="taskboard.bulk-create")
+    tg-lightbox-close
+    // tg-bulk-task-create-lightbox((create)="onBulkCreate($event)")
+
+div.wrapper
+    tg-project-menu([project]="project|async", active="backlog")
+
+    section.main.taskboard
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="taskboard",
+            [appliedFilters]="appliedFilters|async",
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
+        )
+        .taskboard-header
+            tg-main-title([project]="project | async", [sectionName]="section")
+
+            .taskboard-actions
+                .zoom-loading(*tgLoading="zoomLoading")
+                tg-taskboard-zoom([value]="(zoom | async).level")
+
+                button.button-filter.e2e-open-filter(
+                    (click)="toggleFiltersOpen()",
+                    [title]="selectedFiltersCount + ('COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate)"
+                )
+                    span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
+                    tg-svg(svg-icon="icon-filters")
+
+        tg-taskboard-sprint-summary([stats]="stats | async", [(showGraph)]="showGraph")
+        tg-taskboard-graph([stats]="stats | async", *ngIf="showGraph")
+        tg-kanban-table(
+            [project]="project | async",
+            [items]="groups | async",
+            [nested]="true",
+            [zoom]="zoom | async",
+            [statuses]="statuses | async",
+            (sorted)="onSorted($event)",
+            tg-taskboard-sortable
+        )

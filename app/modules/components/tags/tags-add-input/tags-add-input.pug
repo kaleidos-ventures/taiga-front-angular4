@@ -1,0 +1,31 @@
+.add-tag-input(
+    novalidate
+    *tgLoading="loadingAddTag"
+)
+    input.tag-input.e2e-add-tag-input(
+        type="text",
+        [placeholder]="'COMMON.TAGS.PLACEHOLDER' | translate",
+        tg-autofocus,
+        [value]="newTag.name",
+        (keyup)="setName($event)"
+    )
+
+    tg-tags-dropdown(
+        *ngIf="newTag.name.length && !disableColorSelection"
+        [colorArray]="colorArray",
+        [tag]="newTag",
+        (selectTag)="addNewTag(name, color)"
+    )
+
+    tg-color-selector(
+        *ngIf="!disableColorSelection",
+        [(ngModel)]="newTag.color",
+        [isColorRequired]="false"
+    )
+
+    tg-svg.save(
+        (show)="newTag.name.length",
+        svg-icon="icon-save",
+        svg-title-translate="COMMON.TAGS.ADD",
+        (click)="addTag()"
+    )

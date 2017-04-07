@@ -1,0 +1,34 @@
+section.admin-submenu(*ngIf="project")
+    nav
+        ul
+            li
+                a(
+                    [class.active]="active == 'details'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-profile', 'details']"
+                )
+                    span.title(translate="ADMIN.PROJECT_PROFILE.PROJECT_DETAILS")
+            li
+                a(
+                    [class.active]="active == 'default-values'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-profile', 'default-values']"
+                )
+                    span.title(translate="ADMIN.PROJECT_DEFAULT_VALUES.TITLE")
+            li
+                a(
+                    [class.active]="active == 'modules'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-profile', 'modules']"
+                )
+                    span.title(translate="ADMIN.MODULES.TITLE")
+            li
+                a(
+                    [class.active]="active == 'export'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-profile', 'export']"
+                )
+
+                    span.title(translate="ADMIN.PROJECT_EXPORT.TITLE")
+            li
+                a(
+                    [class.active]="active == 'reports'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-profile', 'reports']"
+                )
+                    span.title(translate="ADMIN.REPORTS.TITLE")

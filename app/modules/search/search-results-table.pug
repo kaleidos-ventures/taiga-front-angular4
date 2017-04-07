@@ -1,0 +1,111 @@
+ng-container(*ngIf="results")
+    section.search-result-table(*tgLoading="'search-results';size:'big'")
+        ng-container(*ngIf="activeTab === 'issues'")
+            div.search-result-table-container([class.hidden]="!results.get('issues').size")
+                div.search-result-table-header
+                    div.row.title
+                        div.ref(translate="COMMON.FIELDS.REF")
+                        div.user-stories(translate="SEARCH.FILTER_ISSUES")
+                        div.status(translate="COMMON.FIELDS.STATUS")
+                        div.assigned-to(translate="COMMON.FIELDS.ASSIGNED_TO")
+                div.search-result-table-body
+                    div.row.table-main(*ngFor="let issue of results.get('issues')")
+                        div.ref {{ '#' + issue.get('ref') }}
+                        div.user-stories
+                            div.user-story-name
+                                a(
+                                  [routerLink]="['/project', project.get('slug'), 'issue', issue.get('ref')]",
+                                ) {{ issue.get('subject') }}
+                        div.status {{ getIssueStatus(issue) }}
+                        tg-assigned-item.assigned-to([member]="getAssignedTo(issue)")
+
+            div.empty-large([class.hidden]="results.get('issues').size")
+                tg-empty-search-results
+
+        ng-container(*ngIf="activeTab === 'epics'")
+            div.search-result-table-container([class.hidden]="!results.get('epics').size")
+                div.search-result-table-header
+                    div.row.title
+                        div.ref(translate="COMMON.FIELDS.REF")
+                        div.user-stories(translate="SEARCH.FILTER_EPICS")
+                        div.status(translate="COMMON.FIELDS.STATUS")
+                div.search-result-table-body
+                    div.row.table-main(*ngFor="let epic of results.get('epics')")
+                        div.ref {{ '#' + epic.get('ref') }}
+                        div.user-stories
+                            div.user-story-name
+                                a(
+                                  [routerLink]="['/project', project.get('slug'), 'epic', epic.get('ref')]",
+                                ) {{ epic.get('subject') }}
+                        div.status {{ getEpicStatus(epic) }}
+
+            div.empty-large([class.hidden]="results.get('epics').size")
+                tg-empty-search-results
+
+
+        ng-container(*ngIf="activeTab === 'userstories'")
+            div.search-result-table-container([class.hidden]="!results.get('userstories').size")
+                div.search-result-table-header
+                    div.row.title
+                        div.ref(translate="COMMON.FIELDS.REF")
+                        div.user-stories(translate="SEARCH.FILTER_USER_STORIES")
+                        div.sprint(translate="COMMON.FIELDS.SPRINT")
+                        div.status(translate="COMMON.FIELDS.STATUS")
+                        div.points(translate="COMMON.FIELDS.POINTS")
+                div.search-result-table-body
+                    div.row.table-main(*ngFor="let us of results.get('userstories')")
+                        div.ref {{ '#' + us.get('ref') }}
+                        div.user-stories
+                            div.user-story-name
+                                a(
+                                  [routerLink]="['/project', project.get('slug'), 'us', us.get('ref')]",
+                                ) {{ us.get('subject') }}
+                        div.sprint
+                            div.sprint-link
+                                a(
+                                  *ngIf="us.get('milestone_slug')",
+                                  [routerLink]="['/project', project.get('slug'), 'taskboard', us.get('milestone_slug')]",
+                                ) {{ us.get('milestone_name') }}
+                        div.status {{ getUsStatus(us) }}
+                        div.points {{ us.get('total_points') }}
+
+            div.empty-large([class.hidden]="results.get('userstories').size")
+                tg-empty-search-results
+
+        ng-container(*ngIf="activeTab === 'tasks'")
+            div.search-result-table-container([class.hidden]="!results.get('tasks').size")
+                div.search-result-table-header
+                    div.row.title
+                        div.ref(translate="COMMON.FIELDS.REF")
+                        div.user-stories(translate="SEARCH.FILTER_TASKS")
+                        div.status(translate="COMMON.FIELDS.STATUS")
+                        div.assigned-to(translate="COMMON.FIELDS.ASSIGNED_TO")
+                div.search-result-table-body
+                    div.row.table-main(*ngFor="let task of results.get('tasks')")
+                        div.ref {{ '#' + task.get('ref') }}
+                        div.user-stories
+                            div.user-story-name
+                                a(
+                                    [routerLink]="['/project', project.get('slug'), 'task', task.get('ref')]",
+                                ) {{ task.get('subject') }}
+                        div.status {{ getTaskStatus(task) }}
+                        tg-assigned-item.assigned-to([member]="getAssignedTo(task)")
+
+            div.empty-large([class.hidden]="results.get('tasks').size")
+                tg-empty-search-results
+
+        ng-container(*ngIf="activeTab === 'wikipages'")
+            div.search-result-table-container([class.hidden]="!results.get('wikipages').size")
+                div.search-result-table-header
+                    div.row.title
+                        div.user-stories(translate="SEARCH.FILTER_WIKI")
+                div.search-result-table-body
+                    div.row.table-main(*ngFor="let wikipage of results.get('wikipages')")
+                        div.user-stories
+                            div.user-story-name
+                                a(
+                                    [routerLink]="['/project', project.get('slug'), 'wiki', wikipage.get('slug')]",
+                                ) {{ wikipage.get('slug') }}
+
+            div.empty-large([class.hidden]="results.get('wikipages').size")
+                tg-empty-search-results

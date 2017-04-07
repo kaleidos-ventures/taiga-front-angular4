@@ -115,7 +115,7 @@ describe('attributes - status', function() {
         let rows = section.rows();
         let statuses = await adminAttributesHelper.getStatusNames(section.el);
 
-        await utils.common.drag(rows.get(0), rows.get(2));
+        await utils.common.drag(rows.get(0), rows.get(2), 3, 3);
 
         let newStatuses = await adminAttributesHelper.getStatusNames(section.el);
 

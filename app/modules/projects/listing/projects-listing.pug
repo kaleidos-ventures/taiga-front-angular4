@@ -1,0 +1,61 @@
+.project-list-wrapper.centered
+    .project-list-title
+        h1(translate="PROJECTS.MY_PROJECTS")
+        .create-options
+            a.create-project-btn.button-green(
+                routerLink="/project/new",
+                [title]="'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate",
+                translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT",
+            )
+
+    section.project-list-section(
+        tg-sortable,
+        item-selector=".list-itemtype-project",
+        container-selector=".project-list>ul",
+        item-data-field="project-id",
+        (sorted)="reorderProjects($event)"
+    )
+        .project-list
+            ul
+                li.list-itemtype-project(
+                    *ngFor="let project of projects | async",
+                    [attr.data-project-id]="project.get('id')",
+                    [class.blocked-project]="project.get('blocked_code')"
+                )
+                    .list-itemtype-project-left
+
+                        .list-itemtype-project-data-wrapper
+                            a.list-itemtype-project-image(
+                                [routerLink]="['/project', project=project.get('slug')]"
+                                [title]="project.get('name')"
+                            )
+                                tg-project-logo-small([project]="project")
+                            .list-itemtype-project-data
+                                h2
+                                    a.project-title(
+                                        [routerLink]="['/project', project.get('slug')]",
+                                        [title]=" project.get('name')"
+                                    ) {{project.get('name')}}
+                                    tg-svg(
+                                        *ngIf="project.get('is_private')",
+                                        svg-icon="icon-lock",
+                                        svg-title-translate="PROJECT.PRIVATE"
+                                    )
+                                    tg-svg(
+                                        *ngIf="project.get('i_am_owner')",
+                                        svg-icon="icon-badge",
+                                        svg-title-translate="COMMON.OWNER"
+                                    )
+                                    tg-svg(
+                                        *ngIf="project.get('blocked_code')",
+                                        svg-icon="icon-blocked-project",
+                                        svg-title-translate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+                                    )
+
+                                p.project-description {{ project.get('description').slice(0,300) }}
+                                    span(*ngIf="project.get('description').length > 300") ...
+
+                    tg-svg.drag(svg-icon="icon-drag")
+
+        aside.help-area
+            p([innerHTML]="'PROJECT.HELP' | translate")

@@ -32,4 +32,5 @@
     };
 
     window.addDecorator = function() {};
+    window._version = ""
 }());

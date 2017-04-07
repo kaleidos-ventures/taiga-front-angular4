@@ -1,0 +1,9 @@
+ul(class="error-list", *ngIf="control.dirty && control.invalid")
+    li(translate="COMMON.FORM_ERRORS.REQUIRED", *ngIf="control.errors.required")
+    li(translate="CHANGE_PASSWORD.ERROR_PASSWORD_MATCH", *ngIf="control.errors.mismatchedPasswords")
+    li(translate="COMMON.FORM_ERRORS.TYPE_EMAIL", *ngIf="control.errors.normalEmailRule")
+    li(translate="COMMON.FORM_ERRORS.REGEXP", *ngIf="control.errors.regex")
+    li(translate="COMMON.FORM_ERRORS.USERNAME", *ngIf="control.errors.username")
+    li(translate="COMMON.FORM_ERRORS.MAX_LENGTH", [translateParams]="{max: control.errors.maxLength?.requiredMaxLength}", *ngIf="control.errors.maxLength")
+    li(translate="COMMON.FORM_ERRORS.MIN_LENGTH", [translateParams]="{min: control.errors.minLength?.requiredMinLength}", *ngIf="control.errors.minLength")
+    li(*ngFor="let error of control.errors.server") {{ error }}

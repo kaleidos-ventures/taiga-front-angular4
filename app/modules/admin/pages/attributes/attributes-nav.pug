@@ -1,0 +1,51 @@
+section.admin-submenu(*ngIf="project")
+    nav
+        ul
+            li
+                a(
+                    [class.active]="active == 'status'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'status']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.STATUS")
+
+            li
+                a(
+                    [class.active]="active == 'points'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'points']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.POINTS")
+
+            li
+                a(
+                    [class.active]="active == 'priorities'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'priorities']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.PRIORITIES")
+
+            li
+                a(
+                    [class.active]="active == 'severities'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'severities']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.SEVERITIES")
+
+            li
+                a(
+                    [class.active]="active == 'types'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'types']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.TYPES")
+
+            li
+                a(
+                    [class.active]="active == 'custom-fields'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'custom-fields']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.CUSTOM_FIELDS")
+
+            li
+                a(
+                    [class.active]="active == 'tags'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'project-values', 'tags']"
+                )
+                    span.title(translate="ADMIN.SUBMENU_PROJECT_VALUES.TAGS")

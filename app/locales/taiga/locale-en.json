@@ -63,11 +63,12 @@
             "NOT_BLANK": "This value should not be blank.",
             "REQUIRED": "This value is required.",
             "REGEXP": "This value seems to be invalid.",
+            "USERNAME": "Invalid username. Use only letters, numbers, \"_\", \".\" or \"-\".",
             "MIN": "This value should be greater than or equal to %s.",
             "MAX": "This value should be lower than or equal to %s.",
             "RANGE": "This value should be between %s and %s.",
-            "MIN_LENGTH": "This value is too short. It should have %s characters or more.",
-            "MAX_LENGTH": "This value is too long. It should have %s characters or less.",
+            "MIN_LENGTH": "This value is too short. It should have {{min}} characters or more.",
+            "MAX_LENGTH": "This value is too long. It should have {{max}} characters or less.",
             "RANGE_LENGTH": "This value length is invalid. It should be between %s and %s characters long.",
             "MIN_CHECK": "You must select at least %s choices.",
             "MAX_CHECK": "You must select %s choices or less.",
@@ -218,7 +219,7 @@
             "DB_CLICK": "double click to edit",
             "SELECT_LANGUAGE_PLACEHOLDER": "Select Language",
             "SELECT_LANGUAGE_REMOVE_FORMATING": "Remove formatting",
-            "OUTDATED": "Another person has made changes while you were editing. Check the new version on the activiy tab before you save your changes.",
+            "OUTDATED": "Another person has made changes while you were editing. Check the new version on the activity tab before you save your changes.",
             "MARKDOWN_HELP": "Markdown syntax help"
         },
         "PERMISIONS_CATEGORIES": {
@@ -587,7 +588,7 @@
             "TITLE": "Types",
             "SUBTITLE": "Specify the types your issues could be",
             "ISSUE_TITLE": "Issues types",
-            "ACTION_ADD": "Add new {{objName}}"
+            "ACTION_ADD": "Add new type"
         },
         "PROJECT_VALUES_TAGS": {
             "TITLE": "Tags",
@@ -611,7 +612,8 @@
             "REPLACEMENT_ROLE": "All the users with this role will be moved to",
             "WARNING_DELETE_ROLE": "Be careful! All role estimations will be removed",
             "ERROR_DELETE_ALL": "You can't delete all values",
-            "EXTERNAL_USER": "External user"
+            "EXTERNAL_USER": "External user",
+            "NOTE_EXTERNAL_USERS": "<strong>Note:</strong> by External User we mean any anonymous user not belonging to the Taiga platform, including search engines. Please use this role with care."
         },
         "THIRD_PARTIES": {
             "SECRET_KEY": "Secret key",
@@ -1139,6 +1141,7 @@
         "TITLE_DELETE_ACTION": "Delete User Story",
         "LIGHTBOX_TITLE_BLOKING_US": "Blocking us",
         "NOT_ESTIMATED": "Not estimated",
+        "OWNER_US": "This User Story belongs to",
         "TRIBE": {
             "PUBLISH": "Publish as Gig in Taiga Tribe",
             "PUBLISH_INFO": "More info",
@@ -1218,7 +1221,7 @@
         "PENDING_POINTS": "Pending Points",
         "CLOSED_POINTS": "closed",
         "COMPACT_SPRINT": "Compact Sprint",
-        "GO_TO_TASKBOARD": "Go to the taskboard of {{::name}}",
+        "GO_TO_TASKBOARD": "Go to the taskboard of {{name}}",
         "EDIT_SPRINT": "Edit Sprint",
         "TOTAL_POINTS": "total",
         "STATUS_NAME": "Status Name",
@@ -1245,7 +1248,8 @@
         },
         "TABLE": {
             "COLUMN_US": "User Stories",
-            "TITLE_COLUMN_POINTS": "Select view per Role"
+            "TITLE_COLUMN_POINTS": "Select view per Role",
+            "ROLE_TOTAL": "{{role}}/Total"
         },
         "SPRINT_SUMMARY": {
             "TOTAL_POINTS": "total<br />points",
@@ -1540,6 +1544,7 @@
         "EPIC_RELATED_USERSTORY_CREATED": "{{username}} has related the userstory {{related_us_name}} to the epic {{epic_name}} in {{project_name}}",
         "NEW_PROJECT": "{{username}} created the project {{project_name}}",
         "MILESTONE_UPDATED": "{{username}} has updated the sprint {{obj_name}}",
+        "MILESTONE_DELETED": "{{username}} has deleted the sprint {{obj_name}}",
         "US_UPDATED": "{{username}} has updated the attribute \"{{field_name}}\" of the US {{obj_name}}",
         "US_UPDATED_WITH_NEW_VALUE": "{{username}} has updated the attribute \"{{field_name}}\" of the US {{obj_name}} to {{new_value}}",
         "US_UPDATED_POINTS": "{{username}} has updated '{{role_name}}' points of the US {{obj_name}} to {{new_value}}",

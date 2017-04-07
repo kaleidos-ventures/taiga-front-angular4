@@ -1,0 +1,21 @@
+div.wrapper.memberships
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="memberships")
+
+    section.main.admin-membership.admin-common
+        .header-with-actions
+            header
+                tg-main-title([project]="project|async", sectionName="Manage Members")
+                tg-no-more-memberships-explanation(*ngIf="canAddUsers == false", [project]="project")
+
+            .action-buttons
+                button.button-green(
+                    translate="ADMIN.MEMBERSHIPS.ADD_BUTTON",
+                    [title]="'ADMIN.MEMBERSHIPS.ADD_BUTTON_TITLE' | translate",
+                    (click)="addNewMembers()",
+                    (disabled)="!canAddUsers"
+                )
+
+
+        tg-admin-memberships-table([memberships]="memberships|async", [project]="project|async")

@@ -1,0 +1,10 @@
+section.related-tasks(*ngIf="showRelatedTasks()")
+    .related-tasks-header
+        span.related-tasks-title(translate="COMMON.RELATED_TASKS")
+        div(tg-related-task-create-button)
+    .related-tasks-body
+        tg-detail-related-task-row(
+            *ngFor="let task of tasks",
+            [task]="task"
+        )
+        tg-detail-related-task-create-form(*ngIf="openNewRelatedTask")

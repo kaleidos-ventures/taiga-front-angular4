@@ -1,3 +1,13 @@
+scss_files: 'app/**/*.scss'
+exclude:
+  - 'app/**/*.mixin.scss'
+  - 'app/styles/bourbon/**/*.scss'
+  - 'app/styles/dependencies/**/*.scss'
+  - 'app/styles/dependencies/*.scss'
+  - 'app/styles/extras/*.scss'
+  - 'app/styles/shame/*.scss'
+  - 'app/themes/**/*.scss'
+
 linters:
   BorderZero:
     enabled: true

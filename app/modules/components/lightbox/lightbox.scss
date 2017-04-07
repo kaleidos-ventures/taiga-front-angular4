@@ -1,0 +1,519 @@
+.lightbox {
+    @include lightbox;
+    h2 {
+        @include font-size(xlarge);
+        @include font-type(light);
+    }
+}
+
+.lightbox-generic-form {
+    form {
+        flex-basis: 600px;
+        flex-grow: 0;
+        max-width: 600px;
+    }
+
+    fieldset {
+        position: relative;
+    }
+
+    textarea {
+        min-height: 4.5rem;
+        resize: vertical;
+    }
+    label {
+        @include font-size(xsmall);
+        background: $mass-white;
+        border: 1px solid $gray-light;
+        color: $grayer;
+        cursor: pointer;
+        display: block;
+        padding: 7px 30px;
+        transition: all .2s ease-in;
+        &:hover {
+            span {
+                color: $white;
+            }
+        }
+        span {
+            color: $grayer;
+            vertical-align: middle;
+        }
+    }
+
+    .settings {
+        display: flex;
+        justify-content: center;
+        fieldset {
+            margin-right: .5rem;
+            &:hover {
+                color: $white;
+                transition: all .2s ease-in;
+                transition-delay: .2s;
+            }
+            &:last-child {
+                margin: 0;
+            }
+        }
+        .requirement,
+        .iocaine {
+            vertical-align: middle;
+            &:hover {
+                background: $primary-light;
+                border: 1px solid $primary;
+            }
+            svg {
+                @include svg-size(.75rem);
+            }
+        }
+
+        .blocked {
+            &:hover {
+                background: $red-light;
+                border: 1px solid $red;
+            }
+        }
+        .client-requirement,
+        .team-requirement,
+        .iocaine-flag {
+            input:checked+label {
+                background: $primary;
+                border: 1px solid $primary;
+                color: $white;
+
+            }
+        }
+
+        .blocking-flag {
+            label {
+                align-self: stretch;
+                display: block;
+            }
+            input:checked+label {
+                background: $red;
+                border: 1px solid $red;
+                color: $white;
+            }
+        }
+        input {
+            display: none;
+        }
+    }
+    .attachments {
+        margin-bottom: 0;
+    }
+    .attachment-body {
+        max-height: 7.5rem;
+        overflow-y: auto;
+    }
+    .attachment-delete {
+        right: .5rem;
+        svg {
+            fill: $gray-light;
+            height: 1.25rem;
+            width: 1.25rem;
+        }
+        &:hover {
+            svg {
+                fill: $red;
+            }
+        }
+    }
+}
+
+.lightbox-generic-bulk {
+    form {
+        flex-basis: 600px;
+        flex-grow: 0;
+        max-width: 600px;
+    }
+    textarea {
+        max-height: 12rem;
+        min-height: 15rem;
+    }
+}
+
+.lightbox-search {
+    form {
+        flex-basis: 600px;
+        flex-grow: 0;
+        max-width: 600px;
+    }
+    fieldset {
+        margin-bottom: 1rem;
+    }
+}
+.lightbox-sprint-add-edit {
+    form {
+        flex-basis: 600px;
+        flex-flow: 0;
+        max-width: 600px;
+    }
+    .last-sprint-name {
+        @include font-size(small);
+        color: $gray;
+        opacity: 1;
+        position: absolute;
+        right: 1rem;
+        top: .7rem;
+        transition: opacity .3s linear;
+        &.disappear {
+            opacity: 0;
+            transition: opacity .3s linear;
+        }
+    }
+    .dates {
+        margin-bottom: 1rem;
+        div {
+            float: left;
+            margin-right: 1%;
+            position: relative;
+            width: 49%;
+            &:last-child {
+                margin: 0;
+                width: 50%;
+            }
+        }
+    }
+    .delete-sprint {
+        @include font-size(small);
+        color: $gray;
+        float: right;
+        margin: 1rem .25rem 0 0;
+        transition: color .3s linear;
+        .icon {
+            fill: currentColor;
+        }
+        &:hover {
+            color: $red;
+            transition: color .3s linear;
+            .icon {
+                fill: currentColor;
+            }
+        }
+    }
+}
+
+.lightbox-generic-ask {
+    form {
+        flex-basis: 420px;
+        flex-flow: 0;
+        max-width: 420px;
+    }
+    .subtitle,
+    .message {
+        display: block;
+        line-height: 2rem;
+        text-align: center;
+    }
+    .subtitle {
+        @include font-size(large);
+        @include font-type(text);
+        white-space: pre-line;
+    }
+    .options {
+        display: flex;
+        a {
+            padding: 8px 0;
+            text-align: center;
+            width: 100%;
+            &:first-child {
+                margin-right: .5rem;
+            }
+        }
+    }
+}
+
+.lightbox-ask-choice {
+    text-align: center;
+    form {
+        flex-basis: 420px;
+        flex-grow: 0;
+    }
+    .question,
+    .subtitle {
+        display: block;
+        line-height: 1.5rem;
+        text-align: center;
+    }
+    .subtitle {
+        @include font-size(large);
+        @include font-type(text);
+    }
+    .replacement {
+        display: block;
+        span {
+            display: block;
+        }
+    }
+    .choices {
+        margin-bottom: 2rem;
+    }
+    .options {
+        display: flex;
+        a {
+            flex-grow: 1;
+            padding: 8px 0;
+            text-align: center;
+            &:first-child {
+                margin-right: .5rem;
+            }
+        }
+    }
+    .warning {
+        @include font-type(bold);
+    }
+}
+
+.lightbox-delete-account {
+    p {
+        text-align: center;
+    }
+    form {
+        flex-basis: 420px;
+        flex-grow: 0;
+        width: 420px;
+    }
+    .question,
+    .subtitle {
+        display: block;
+        line-height: 2rem;
+        text-align: center;
+    }
+    .newsletter {
+        margin: 1rem 0;
+        text-align: center;
+        input {
+            margin-right: .5rem;
+            +label {
+                @include font-size(small);
+                @include font-type(text);
+            }
+        }
+    }
+    .options {
+        display: flex;
+        a {
+            flex-grow: 1;
+            padding: 8px 0;
+            text-align: center;
+            &:first-child {
+                margin-right: .5rem;
+            }
+        }
+    }
+}
+
+.lightbox-delete-project {
+    form {
+        flex-basis: 420px;
+        flex-grow: 0;
+        width: 420px;
+    }
+    .question,
+    .subtitle {
+        display: block;
+        line-height: 2rem;
+        text-align: center;
+    }
+    .subtitle {
+        @include font-size(large);
+        @include font-type(text);
+    }
+    .options {
+        display: flex;
+        a {
+            flex-grow: 1;
+            padding: 8px 0;
+            text-align: center;
+            &:first-child {
+                margin-right: .5rem;
+            }
+        }
+    }
+}
+
+
+.lightbox-generic-success,
+.lightbox-generic-error,
+.lightbox-generic-loading {
+    section {
+        flex-basis: 500px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 500px;
+    }
+    h2 {
+        line-height: 2rem;
+    }
+    p {
+        text-align: center;
+    }
+}
+
+.lightbox-generic-loading {
+    .spin {
+        margin: 1rem auto;
+        width: 5rem;
+        img {
+            @include loading-spinner;
+            max-height: 100%;
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+    .progress-bar-wrapper {
+        background: darken($whitish, 5%);
+        height: 30px;
+        margin-bottom: 1rem;
+        padding: 3px;
+        position: relative;
+        .bar {
+            background: $primary-light;
+            height: 24px;
+            position: absolute;
+            transition: width .1s linear;
+        }
+        .progress {
+            @include font-type(text);
+            @include font-type(bold);
+            @include font-size(large);
+            background: darken($whitish, 5%);
+            bottom: 35px;
+            color: $gray;
+            padding: .3rem;
+            position: absolute;
+            transition: left .1s linear;
+        }
+    }
+}
+
+.lightbox-create-issue {
+    form {
+        flex-basis: 600px;
+        flex-grow: 0;
+        width: 600px;
+    }
+
+    .fieldset-row {
+        display: flex;
+        fieldset {
+            flex-basis: 100px;
+            flex-grow: 1;
+            margin-right: .5rem;
+            width: 30%;
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    textarea {
+        margin-bottom: 1rem;
+        max-height: 12rem;
+        min-height: 8rem;
+    }
+}
+
+.lightbox-block {
+    .form {
+        flex-basis: 420px;
+        flex-grow: 0;
+        width: 420px;
+    }
+    textarea {
+        margin-bottom: 1rem;
+        max-height: 12rem;
+        min-height: 8rem;
+    }
+}
+
+.lightbox-select-user {
+    .form {
+        flex-basis: 600px;
+        flex-grow: 0;
+        width: 600px;
+    }
+    .user-list-single {
+        &:hover,
+        &.selected {
+            background: rgba(lighten($primary-light, 30%), .3);
+            cursor: pointer;
+        }
+        &:hover {
+            transition: background .3s linear;
+            transition-delay: .2s;
+        }
+    }
+    .more-watchers {
+        @include font-type(text);
+        @include font-size(medium);
+        padding: .5rem;
+        text-align: center;
+    }
+    .submit-button {
+        margin-top: 1rem;
+    }
+    .add-comment {
+        position: relative;
+        text-align: center;
+        .icon-close {
+            cursor: pointer;
+            fill: $gray;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: fill .2s;
+            &:hover {
+                fill: $red-light;
+            }
+            svg {
+                @include svg-size(2rem);
+            }
+        }
+        textarea {
+            margin-top: 1rem;
+        }
+        a {
+            color: $primary;
+        }
+    }
+}
+
+.lightbox-import-error {
+    text-align: center;
+    .content {
+        width: 500px;
+    }
+    h2 {
+        margin-top: 1rem;
+    }
+    .description {
+        a {
+            color: $primary;
+        }
+    }
+    img {
+        height: 5rem;
+    }
+}
+
+.lightbox-leave-project-warning {
+    text-align: center;
+    .icon {
+        fill: $gray-light;
+        height: 3rem;
+        margin-bottom: 1rem;
+        width: 3rem;
+    }
+    .content {
+        width: 500px;
+    }
+}
+
+.lightbox-request-ownership {
+    text-align: center;
+    .content {
+        width: 500px;
+    }
+}

@@ -1,0 +1,14 @@
+ul.tags-dropdown
+    // TODO
+    // *ngFor="let tag of colorArray | filter: tag.name",
+    li(
+        *ngFor="let tag of colorArray",
+        (click)="select.emit({name: tag.get(0), color: tag.get(1)})"
+    )
+        .tags-dropdown-option
+            span.tags-dropdown-name {{tag.get(0)}}
+            span.tags-dropdown-color(
+                *ngIf="tag.get(1)",
+                [style.background]="tag.get(1)",
+                [title]="tag.get(1)"
+            )

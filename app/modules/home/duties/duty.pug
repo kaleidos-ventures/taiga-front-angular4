@@ -1,0 +1,41 @@
+a.list-itemtype-ticket(
+    [href]="duty.get('url')",
+    [title]="duty.get('subject')",
+    [class.blocked]="duty.get('is_blocked')",
+    [class.blocked-project]="duty.getIn(['project', 'blocked_code'])"
+)
+    div.list-itemtype-avatar(*ngIf="type == 'working-on'")
+        tg-project-logo-small([project]="duty.get('project')")
+    div.list-itemtype-avatar(*ngIf="type == 'watching'")
+        tg-avatar(
+            *ngIf="duty.get('assigned_to_extra_info')",
+            [user]="duty.get('assigned_to_extra_info')"
+        )
+        tg-avatar(
+            *ngIf="!duty.get('assigned_to_extra_info')",
+            [user]="false",
+            [title]="'ACTIVITY.VALUES.UNASSIGNED' | translate"
+        )
+    div.list-itemtype-ticket-data
+        p
+            span.ticket-project {{ duty.getIn(['project', 'name']) }}
+
+            span.ticket-type {{ getDutyType() }}
+            span.ticket-status(
+                [style.color]="duty.getIn(['status_extra_info','color'])"
+            ) {{ duty.getIn(['status_extra_info', 'name']) }}
+
+            tg-svg(
+                *ngIf="duty.getIn(['project', 'blocked_code'])"
+                svg-icon="icon-blocked-project",
+                svg-title-translate="PROJECT.BLOCKED_PROJECT.BLOCKED"
+            )
+
+        h2
+            span.ticket-id {{ "#" + duty.get('ref') }}&nbsp;
+            span.ticket-title
+                span.ticket-blocked(
+                    *ngIf="duty.get('is_blocked')",
+                    [title]="duty.get('blocked_note')"
+                ) {{ 'COMMON.BLOCKED' | translate }}
+                span {{ duty.get('subject') }}

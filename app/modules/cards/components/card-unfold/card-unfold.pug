@@ -1,0 +1,9 @@
+.card-unfold.ng-animate-disabled(
+    (click)="fold.emit()"
+    role="button"
+)
+    tg-svg(svg-icon="icon-view-more")
+
+.loading-extra(
+    tg-loading="vm.item.get('loading-extra')"
+)

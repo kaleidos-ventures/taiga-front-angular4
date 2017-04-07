@@ -1,0 +1,24 @@
+form([class.hidden]="!visible")
+    div.row.table-main.edition
+        tg-color-selector.color-column(
+            [initColor]="value?.get('color')",
+            [isColorRequired]="false"
+        )
+
+        div.status-name
+            input(
+                #input,
+                name="name",
+                type="text",
+                [value]="value?.get('name')",
+                [placeholder]="'ADMIN.STATUS.PLACEHOLDER_WRITE_STATUS_NAME' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.options-column
+            a.save.e2e-save(href="", [title]="'COMMON.SAVE' | translate")
+                tg-svg(svg-icon="icon-save")
+
+            a.cancel((click)="cancel.emit(value?.get('id'))", [title]="'COMMON.CANCEL' | translate")
+                tg-svg.cancel(svg-icon="icon-close")

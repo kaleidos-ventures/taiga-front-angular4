@@ -1,0 +1,33 @@
+section.admin-submenu(*ngIf="project")
+    nav
+        ul
+            li.third-parties-webhooks
+                a(
+                    [class.active]="active == 'webhooks'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'third-parties', 'webhooks']"
+                )
+                    span.title Webhooks
+            li
+                a(
+                    [class.active]="active == 'github'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'third-parties', 'github']"
+                )
+                    span.title Github
+            li
+                a(
+                    [class.active]="active == 'gitlab'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'third-parties', 'gitlab']"
+                )
+                    span.title Gitlab
+            li
+                a(
+                    [class.active]="active == 'bitbucket'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'third-parties', 'bitbucket']"
+                )
+                    span.title Bitbucket
+            li
+                a(
+                    [class.active]="active == 'gogs'",
+                    [routerLink]="['/project', project.get('slug'), 'admin', 'third-parties', 'gogs']"
+                )
+                    span.title Gogs

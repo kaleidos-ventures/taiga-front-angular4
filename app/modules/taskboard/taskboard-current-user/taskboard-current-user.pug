@@ -1,0 +1,21 @@
+.row
+    .username
+        .avatar
+            tg-avatar([user]="user")
+
+            .avatar-data
+                .name
+                    span {{ user?.get('full_name_display') }}
+                    tg-svg(
+                        *ngIf="user?.get('id') === project?.get('owner')",
+                        svg-icon="icon-badge",
+                        svg-title-translate="COMMON.OWNER"
+                    )
+
+                .position {{get_role_name()}}
+
+    tg-taskboard-member-stats(
+        [stats]="stats",
+        [userId]="user.get('id')",
+        [project]="project"
+    )

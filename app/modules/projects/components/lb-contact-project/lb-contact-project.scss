@@ -5,9 +5,9 @@
     &-container {
         max-width: 600px;
         text-align: center;
-        width: 90%;
+        width: 600px;
     }
-    &-logo {
+    &-logo img {
         width: 5rem;
     }
     &-title {
@@ -25,5 +25,8 @@
         display: block;
         margin-top: .5rem;
         width: 100%;
+        &:disabled span {
+            color: $blackish;
+        }
     }
 }

@@ -1,0 +1,8 @@
+span {{ tag.name }}
+ng-container(*tgLoading="loadingRemoveTag")
+    tg-svg.icon-close.e2e-delete-tag(
+        *ngIf="canEdit",
+        svg-icon="icon-close",
+        svg-title-translate="COMMON.TAG.DELETE",
+        (click)="delete.emit(tag.name)"
+    )

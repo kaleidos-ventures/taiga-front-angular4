@@ -1,0 +1,44 @@
+//- Read only mode
+.color-selector(*ngIf="!canEdit")
+    .tag-color.disabled.e2e-open-color-selector(
+        [class.empty-color]="!color",
+        [style.background]="color"
+    )
+
+//- Read & Edit mode
+.color-selector(*ngIf="canEdit")
+    .tag-color.e2e-open-color-selector(
+        (click)="toggleColorList()",
+        [class.empty-color]="!color",
+        [style.background]="color"
+    )
+    .color-selector-dropdown(*ngIf="displayColorList")
+        ul.color-selector-dropdown-list.e2e-color-dropdown
+            li.color-selector-option(
+                *ngFor="let color of colorList",
+                [style.background]="color",
+                [title]="color",
+                (click)="onSelectDropdownColor(color)"
+            )
+            li.empty-color(
+                *ngIf="!isColorRequired",
+                (click)="onSelectDropdownColor(null)"
+            )
+        .custom-color-selector
+            .display-custom-color.empty-color(
+                *ngIf="!customColor"
+            )
+            .display-custom-color-wrapper
+                .display-custom-color(
+                    *ngIf="customColor",
+                    [style.background]="customColor",
+                    (click)="onSelectDropdownColor(customColor)"
+                )
+            input.custom-color-input(
+                type="text",
+                maxlength="7",
+                placeholder="Type hex code",
+                [(ngModel)]="customColor",
+                (keydown)="onKeyDown($event)"
+            )
+            // TODO: validate color format

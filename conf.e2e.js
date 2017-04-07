@@ -52,6 +52,7 @@ var config = {
         compileModules: "app/modules/compile-modules/**/*.e2e.js"
     },
     onPrepare: function() {
+        browser.ignoreSynchronization = true;
         // disable by default because performance problems on IE
         // track mouse movements
         // var trackMouse = function() {
@@ -124,7 +125,7 @@ var config = {
         var password = $('input[name="password"]');
         password.sendKeys('123123');
 
-        $('.submit-button').click();
+        $('tg-login-page .submit-button').click();
 
         return browser.driver.wait(function() {
             return utils.common.closeCookies()

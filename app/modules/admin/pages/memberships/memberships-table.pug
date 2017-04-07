@@ -1,0 +1,12 @@
+section.admin-membership-table.basic-table
+    .row.title
+        div.header-member(translate="ADMIN.MEMBERSHIP.COLUMN_MEMBER")
+        div.header-admin(translate="ADMIN.MEMBERSHIP.COLUMN_ADMIN")
+        div.header-role(translate="ADMIN.MEMBERSHIP.COLUMN_ROLE")
+        div.header-status(translate="ADMIN.MEMBERSHIP.COLUMN_STATUS")
+
+    .row(*ngFor="let member of memberships")
+        tg-admin-memberships-row-avatar.row-member([member]="member")
+        tg-admin-memberships-row-admin-checkbox.row-admin([member]="member")
+        tg-admin-memberships-row-role-selector.row-role([member]="member", [roles]="project.get('roles')")
+        tg-admin-memberships-row-actions.row-status([member]="member")

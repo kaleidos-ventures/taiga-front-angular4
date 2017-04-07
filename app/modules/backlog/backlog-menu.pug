@@ -1,0 +1,66 @@
+div.backlog-menu
+    div.backlog-table-options
+        a.menu-button.move-to-current-sprint.move-to-sprint.e2e-move-to-sprint(
+            *ngIf="currentSprint && selectedUserstories.size",
+            [title]="'BACKLOG.MOVE_US_TO_CURRENT_SPRINT' | translate",
+            id="move-to-current-sprint",
+            (click)="addUserstoriesToMilestone(currentSprint)"
+        )
+            tg-svg(svg-icon="icon-move")
+            span.text(translate="BACKLOG.MOVE_US_TO_CURRENT_SPRINT")
+        a.menu-button.move-to-latest-sprint.move-to-sprint.e2e-move-to-sprint(
+            *ngIf="!currentSprint && selectedUserstories.size",
+            [title]="'BACKLOG.MOVE_US_TO_LATEST_SPRINT' | translate",
+            id="move-to-latest-sprint",
+            (click)="addUserstoriesToMilestone(latestSprint)"
+        )
+            tg-svg(svg-icon="icon-move")
+            span.text(translate="BACKLOG.MOVE_US_TO_LATEST_SPRINT")
+        a.menu-button.e2e-open-filter.ng-animate-disabled(
+            *ngIf="!showFilters",
+            (click)="showFiltersChange.emit(true)",
+            [title]="'BACKLOG.FILTERS.TOGGLE' | translate",
+            id="show-filters-button",
+            translate="BACKLOG.FILTERS.SHOW"
+        )
+        a.menu-button.active.e2e-open-filter.ng-animate-disabled(
+            *ngIf="showFilters",
+            (click)="showFiltersChange.emit(false)",
+            [title]="'BACKLOG.FILTERS.HIDE' | translate",
+            id="show-filters-button",
+            translate="BACKLOG.FILTERS.HIDE"
+        )
+        a.menu-button(
+            *ngIf="userstories?.size",
+            [title]="'BACKLOG.TAGS.TOGGLE' | translate",
+            (click)="showTagsChange.emit(!showTags)",
+            id="show-tags",
+            translate="BACKLOG.TAGS.SHOW"
+        )
+        ng-container(*tgIfPerm="'add_milestone'")
+            a.menu-button.velocity-forecasting-btn.ng-animate-disabled.e2e-velocity-forecasting(
+                *ngIf="userstories?.size && displayVelocity ",
+                [title]="'BACKLOG.FORECASTING.TITLE' | translate",
+                translate="BACKLOG.FORECASTING.BACKLOG",
+                (click)="toggleVelocityForecasting()"
+            )
+        ng-container(*tgIfPerm="'add_milestone'")
+            a.menu-button.velocity-forecasting-btn.ng-animate-disabled.e2e-velocity-forecasting(
+                *ngIf="userstories?.size && !displayVelocity && stats.get('speed') > 0",
+                [title]="'BACKLOG.FORECASTING.BACKLOG' | translate",
+                translate="BACKLOG.FORECASTING.TITLE",
+                (click)="toggleVelocityForecasting()"
+            )
+    div.new-us
+        a.button-green(
+            [title]="'US.ADD' | translate",
+            (click)="addNewUs()",
+            *tgIfPerm="'add_us'"
+        )
+            span.text {{'US.ADD' | translate}}
+        a.button-bulk(
+            [title]="'US.ADD_BULK' | translate",
+            (click)="addNewUsBulk()",
+            *tgIfPerm="'add_us'"
+        )
+            tg-svg(svg-icon="icon-bulk")

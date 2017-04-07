@@ -1,0 +1,39 @@
+section.single-project-intro(*ngIf="project")
+    .project-logo(
+        [routerLink]="['/project', project.get('slug')]",
+        [title]="project.get('name')"
+    )
+        tg-project-logo-big([project]="project")
+    .single-project-title-wrapper
+        .intro-options
+            .intro-title
+                h1
+                    span.project-name {{project.get("name")}}
+                tg-svg(
+                    *ngIf="project.get('is_private')",
+                    svg-icon="icon-lock",
+                    svgTitleTranslate="PROJECT.PRIVATE"
+                )
+
+            div.track-buttons-container(*ngIf="user")
+                tg-like-project-button([project]="project")
+                tg-watch-project-button([project]="project")
+                tg-contact-project-button(
+                    *ngIf="project.get('is_contact_activated')"
+                )
+
+            div.track-container(*ngIf="!user")
+                .list-itemtype-track
+                    span.list-itemtype-track-likers(
+                        [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_fans\")||0}"
+                    )
+                        tg-svg(svg-icon="icon-like")
+                        span {{ project.get('total_fans') }}
+
+                    span.list-itemtype-track-watchers(
+                        [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_watchers\")||0}"
+                    )
+                        tg-svg(svg-icon="icon-watch")
+                        span {{ project.get('total_watchers') }}
+
+        p.description {{project.get('description')}}

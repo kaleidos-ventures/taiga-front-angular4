@@ -1,0 +1,41 @@
+nav.history-tabs
+    a.history-tab.e2e-comments-tab(
+        *ngIf="showCommentTab",
+        [title]="COMMENTS.COMMENT",
+        (click)="activeTabChange.emit('comments')",
+        [class.active]="activeTab == 'comments'",
+        translate="COMMENTS.COMMENTS_COUNT",
+        [translateParams]="{comments: commentsNum}"
+    )
+    a.history-tab.e2e-activity-tab(
+        *ngIf="showActivityTab",
+        (click)="activeTabChange.emit('activity')",
+        [class.active]="activeTab == 'activity'",
+        [title]="ACTIVITY.ACTIVITY",
+        translate="ACTIVITY.ACTIVITIES_COUNT",
+        [translateParams]="{activities: activitiesNum}"
+    )
+    a.order-comments(
+        title="Order Comments",
+        (click)="reverseChange.emit(!reverse)",
+        [class.new-first]="top",
+        [class.old-first]="!top",
+        *ngIf="commentsNum > 1 && activeTab == 'comments'"
+    )
+
+        span(
+            translate="COMMENTS.OLDER_FIRST"
+            *ngIf="!reverse"
+        )
+        tg-svg(
+            svg-icon="icon-arrow-up"
+            *ngIf="!reverse"
+        )
+        span(
+            translate="COMMENTS.RECENT_FIRST"
+            *ngIf="reverse"
+        )
+        tg-svg(
+            svg-icon="icon-arrow-up"
+            *ngIf="reverse"
+        )

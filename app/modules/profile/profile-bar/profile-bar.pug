@@ -1,0 +1,25 @@
+section.profile-bar(*ngIf="user")
+    div.profile-image-wrapper([class.is-current-user]="isCurrentUser")
+        tg-avatar.profile-img([user]="user")
+        a.profile-edition(
+            [title]="'USER.PROFILE.EDIT' | translate",
+            routerLink="/user-settings/user-profile",
+            translate="USER.PROFILE.EDIT"
+        )
+    div.profile-data
+        h1([class.not-full-name]="!user.get('full_name')") {{user.get("full_name_display")}}
+        .username @{{user.get("username")}}
+        h2 {{stats?.get('roles').join(", ")}}
+    div.profile-stats
+        div.stat
+            span.stat-number {{stats?.get('total_num_projects')}}
+            span.stat-name(translate="USER.PROFILE.PROJECTS")
+        div.stat
+            span.stat-number {{stats?.get('total_num_closed_userstories')}}
+            span.stat-name(translate="USER.PROFILE.CLOSED_US")
+        div.stat
+            span.stat-number {{stats?.get('total_num_contacts')}}
+            span.stat-name(translate="USER.PROFILE.CONTACTS")
+
+    div.profile-quote(*ngIf="user.get('bio')")
+        span {{user.get("bio").slice(0, 210) }}{{user.get("bio").length < 210 ? '' : '...'}}

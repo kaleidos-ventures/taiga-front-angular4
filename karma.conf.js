@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Wed Apr 15 2015 09:44:14 GMT+0200 (CEST)
 
+var webpackConfig = require('./webpack.config')
+
 // this is needed by theme.service.spec
 module.exports = function(config) {
   var configuration = {
@@ -11,21 +13,24 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai'],
+    frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai', "karma-typescript"],
 
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/bluebird/js/browser/bluebird.js',
+      'node_modules/jquery/dist/jquery.js',
       'karma.app.conf.js',
-      'dist/**/js/libs.js',
-      'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-jquery/chai-jquery.js',
+      'node_modules/angular/angular.js',
+      'node_modules/reflect-metadata/Reflect.js',
       'test-utils.js',
-      'dist/**/js/app.js',
-      'dist/**/js/templates.js',
-      'app/**/*spec.coffee'
+      // 'dist/**/js/app.js',
+      // 'dist/**/js/templates.js',
+      'app/**/*.ts',
+      'node_modules/angular-mocks/angular-mocks.js',
+      // 'app/**/*.spec.ts'
     ],
-
 
     // list of files to exclude
     exclude: [
@@ -35,22 +40,9 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.spec.coffee': ['coffee'],
+      '**/*.ts': ['karma-typescript'],
       'dist/js/app.js': ['sourcemap']
     },
-
-    coffeePreprocessor: {
-      // options passed to the coffee compiler
-      options: {
-        bare: true,
-        sourceMap: true
-      },
-      // transforming the filenames
-      transformPath: function(path) {
-        return path.replace(/\.coffee$/, '.js');
-      }
-    },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

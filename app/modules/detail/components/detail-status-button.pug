@@ -1,0 +1,10 @@
+span.detail-status-inner([class.editable]="canEdit", (click)="openMenu()")
+    span([style.background-color]="status.get('color')")
+        span.e2e-status {{ status.get('name') }}
+        tg-svg(*ngIf="canEdit", svg-icon="icon-arrow-down")
+
+ul.pop-status.popover(*ngIf="openedMenu")
+    li(*ngFor="let st of statuses")
+        a.status(
+            [title]="st.get('name')"
+        ) {{ st.get('name') }}

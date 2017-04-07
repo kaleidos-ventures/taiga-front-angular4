@@ -1,0 +1,33 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-values")
+
+    tg-admin-attributes-nav([project]="project|async", active="status")
+
+    section.main.admin-common.admin-attributes
+        header
+            h1
+                tg-main-title([project]="project|async", [sectionName]="'ADMIN.PROJECT_VALUES_STATUS.TITLE' | translate")
+        p.admin-subtitle(translate="ADMIN.PROJECT_VALUES_STATUS.SUBTITLE")
+
+        tg-admin-attributes-status-editor.admin-attributes-section(
+            type="epic-statuses",
+            [name]="'ADMIN.PROJECT_VALUES_STATUS.EPIC_TITLE' | translate",
+            [project]="project|async"
+        )
+        tg-admin-attributes-status-editor.admin-attributes-section(
+            type="userstory-statuses",
+            [name]="'ADMIN.PROJECT_VALUES_STATUS.US_TITLE' | translate",
+            [project]="project|async"
+        )
+        tg-admin-attributes-status-editor.admin-attributes-section(
+            type="task-statuses",
+            [name]="'ADMIN.PROJECT_VALUES_STATUS.TASK_TITLE' | translate",
+            [project]="project|async"
+        )
+        tg-admin-attributes-status-editor.admin-attributes-section(
+            type="issue-statuses",
+            [name]="'ADMIN.PROJECT_VALUES_STATUS.ISSUE_TITLE' | translate",
+            [project]="project|async"
+        )

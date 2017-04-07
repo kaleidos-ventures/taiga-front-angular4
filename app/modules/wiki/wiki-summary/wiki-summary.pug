@@ -1,0 +1,32 @@
+.summary.wiki-summary(*ngIf="page !== null")
+    .wiki-username-edition
+        .avatar
+            tg-avatar([user]="project.getIn(['members_by_id', page.get('last_modifier')])")
+        .wiki-user-modification
+            span.description(translate="WIKI.SUMMARY.LAST_MODIFICATION")
+            span.username {{ project.getIn(['members_by_id', page.get('last_modifier'), 'full_name_display']) }}
+
+    .wiki-last-modified
+        span.number {{ page.get('modified_date')|momentFormat:('WIKI.DATETIME'|translate)}}
+        span.description([innerHTML]="'WIKI.SUMMARY.LAST_EDIT' | translate")
+
+    .wiki-times-edited
+        span.number {{ page.get('editions') }}
+        span.description([innerHTML]="'WIKI.SUMMARY.TIMES_EDITED' | translate")
+
+    ng-container(*tgIfPerm="'delete_wiki_page'")
+        tg-svg.remove(
+            *ngIf="page.get('id')",
+            [title]="'WIKI.REMOVE' | translate",
+            (click)="onDeleteClicked()",
+            svg-icon="icon-trash"
+        )
+
+tg-lightbox(key="wiki.delete-confirm", *ngIf="page")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'WIKI.DELETE_LIGHTBOX_TITLE' | translate",
+        [subtitle]="'NOTIFICATION.ASK_DELETE' | translate",
+        [message]="page.get('slug')",
+        (response)="onResponse($event)"
+    )

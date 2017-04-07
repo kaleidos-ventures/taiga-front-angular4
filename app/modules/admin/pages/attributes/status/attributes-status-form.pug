@@ -1,0 +1,32 @@
+form([class.hidden]="!visible")
+    div.row.table-main.edition
+        tg-color-selector.color-column(
+            [initColor]="status?.get('color')",
+            [isColorRequired]="false"
+        )
+
+        div.status-name
+            input(
+                #input,
+                name="name",
+                type="text",
+                [value]="status?.get('name')",
+                [placeholder]="'ADMIN.STATUS.PLACEHOLDER_WRITE_STATUS_NAME' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.is-closed-column
+            select(
+                name="is_closed",
+                data-required="true"
+            )
+                option([value]="true", translate="COMMON.YES", [selected]="status?.get('is_closed')")
+                option([value]="false", translate="COMMON.NO", [selected]="!status?.get('is_closed')")
+
+        div.options-column
+            a.save.e2e-save(href="", [title]="'COMMON.SAVE' | translate")
+                tg-svg(svg-icon="icon-save")
+
+            a.cancel((click)="cancel.emit(status?.get('id'))", [title]="'COMMON.CANCEL' | translate")
+                tg-svg.cancel(svg-icon="icon-close")

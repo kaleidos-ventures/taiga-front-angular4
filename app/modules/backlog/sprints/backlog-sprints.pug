@@ -1,0 +1,46 @@
+section.sprints(*ngIf="sprints")
+    header.sprint-header
+        h1
+            span.number(*ngIf="totalSprints()") {{ totalSprints() }}
+            span(translate="BACKLOG.SPRINTS.TITLE")
+
+        ng-container(*tgIfPerm="'add_milestone'")
+            a.add-sprint(
+                [title]="'BACKLOG.SPRINTS.TITLE_ACTION_NEW_SPRINT' | translate",
+                (click)="newSprint()",
+            )
+                tg-svg(svg-icon="icon-add")
+
+    div.empty-small(*ngIf="totalSprints() === 0")
+        img(
+            src="/" + _version + "/images/empty/empty_sprint.png",
+            [alt]="'BACKLOG.SPRINTS.EMPTY' | translate"
+        )
+        p.title(translate="BACKLOG.SPRINTS.EMPTY")
+        a(
+            (click)="addNewSprint()",
+            [title]="'BACKLOG.SPRINTS.TITLE_ACTION_NEW_SPRINT' | translate",
+            translate="BACKLOG.SPRINTS.TEXT_ACTION_NEW_SPRINT",
+            *tgIfPerm="'add_milestone'"
+        )
+
+    tg-backlog-sprint.sprint-open(
+        *ngFor="let sprint of sprints.get('sprints').reverse()",
+        [sprint]="sprint",
+        [project]="project",
+        tg-sprint-sortable
+    )
+
+    ng-container(*ngIf="sprints.get('closed') && sprints.get('closed-sprints').size === 0")
+        a.filter-closed-sprints(
+                (click)="loadClosedSprints()",
+                *tgLoading="loadingClosed"
+            )
+            tg-svg(svg-icon="icon-archive")
+            span.text(translate="BACKLOG.SPRINTS.ACTION_SHOW_CLOSED_SPRINTS")
+
+    tg-backlog-sprint.sprint-closed(
+        *ngFor="let sprint of sprints.get('closed-sprints')",
+        [sprint]="sprint",
+        tg-sprint-sortable
+    )

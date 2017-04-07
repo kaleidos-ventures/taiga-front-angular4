@@ -1,0 +1,18 @@
+div.wrapper
+    div.auth
+        div.auth-container
+            div.logo-svg
+                include ../../../assets/svg/logo-color.svg
+            h1.logo Taiga
+
+            div.change-email-form
+                p
+                    strong(translate="CHANGE_EMAIL_FORM.TITLE")
+                p
+                    span(translate="CHANGE_EMAIL_FORM.SUBTITLE")
+
+                a.button-change-email.button-gray(
+                    [title]="'CHANGE_EMAIL_FORM.ACTION_CHANGE_EMAIL' | translate",
+                    translate="CHANGE_EMAIL_FORM.ACTION_CHANGE_EMAIL",
+                    (click)="changeEmail()"
+                )

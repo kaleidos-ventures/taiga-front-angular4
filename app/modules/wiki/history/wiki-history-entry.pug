@@ -1,0 +1,12 @@
+.activity
+    tg-avatar.activity-avatar([user]="entry.get('user')")
+    .activity-main
+        .activity-data
+            span.activity-creator {{entry.getIn(['user', 'name'])}}
+            span.activity-date {{entry.get('created_at') | momentFormat:'DD MMM YYYY HH:mm'}}
+
+        tg-wiki-history-diff.activity-diff(
+            *ngFor="let key of entry.get('values_diff').keySeq()",
+            [key]='key',
+            [diff]="entry.getIn(['values_diff', key])"
+        )

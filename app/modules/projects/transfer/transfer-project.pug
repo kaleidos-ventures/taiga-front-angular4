@@ -1,0 +1,71 @@
+.transfer-project-wrapper
+    h2.transfer-title(translate="ADMIN.PROJECT_TRANSFER.DO_YOU_ACCEPT_PROJECT_OWNERNSHIP")
+    .transfer-project-detail
+        img.transfer-project-image(
+            tg-project-logo-small-src="project",
+            [alt]="project.get('name')"
+        )
+        .transfer-project-data
+            h3.transfer-project-title {{::vm.project.get("name")}}
+            .transfer-project-statistics
+                span.transfer-project-private(ng-if="vm.project.get('is_private')")
+                    tg-svg(svg-icon="icon-lock")
+                    span(translate="ADMIN.PROJECT_TRANSFER.PRIVATE")
+                span.transfer-project-members
+                    tg-svg(svg-icon="icon-team")
+                    span {{::vm.project.get("total_memberships")}}
+
+    p(
+        translate="ADMIN.PROJECT_TRANSFER.PROPOSE_OWNERSHIP"
+        translate-values="{owner: vm.project.getIn(['owner', 'full_name_display']), project: vm.project.get('name')}"
+    )
+
+    div(ng-if="vm.canBeOwnedByUser.valid")
+
+        p(
+            [translate]="ownerMessage",
+            [translateParams]="{maxProjects: maxProjects, currentProjects: currentProjects}"
+        )
+
+        a.transfer-project-comment-link.ng-animate-disabled(
+            href=""
+            ng-click="vm.addComment()"
+            ng-if="!vm.showAddComment"
+            translate="ADMIN.PROJECT_TRANSFER.ADD_COMMENT"
+        )
+
+        fieldset.transfer-project-comment-form(
+            ng-if="vm.showAddComment"
+            ng-class="{'open': vm.showAddComment}"
+        )
+            .transfer-project-comment-header
+                label.transfer-project-comment-label(
+                    translate="ADMIN.PROJECT_TRANSFER.ADD_COMMENT"
+                )
+                tg-svg(
+                    svg-icon="icon-close"
+                    ng-click="vm.hideComment()"
+                )
+            textarea.transfer-project-comment(
+                name="reason"
+                ng-model="vm.reason"
+            )
+
+        .transfer-project-options
+            a.button.button-gray.e2e-transfer-reject(
+                ng-click="vm.transferReject(vm.token, vm.reason, $event)"
+                href="#"
+                [title]="'ADMIN.PROJECT_TRANSFER.REJECT' | translate"
+                translate="ADMIN.PROJECT_TRANSFER.REJECT"
+                tg-loading="vm.loadingReject"
+            )
+
+            a.button.button-green.e2e-transfer-accept(
+                ng-click="vm.transferAccept(vm.token, vm.reason, $event)"
+                href="#"
+                [title]="'ADMIN.PROJECT_TRANSFER.ACCEPT' | translate"
+                translate="ADMIN.PROJECT_TRANSFER.ACCEPT"
+                tg-loading="vm.loadingAccept"
+            )
+
+    tg-cant-own-project-explanation(ng-if="!vm.canBeOwnedByUser.valid")

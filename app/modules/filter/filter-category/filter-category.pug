@@ -1,0 +1,38 @@
+div
+    a.filters-cat-single.e2e-category(
+        [class.selected]="selectedCategory === category",
+        (click)="selectCategory.emit(category)",
+        [title]="title"
+    )
+        span.title {{title}}
+        tg-svg.ng-animate-disabled(
+            *ngIf="selectedCategory !== category",
+            svg-icon="icon-arrow-right"
+        )
+        tg-svg.ng-animate-disabled(
+            *ngIf="selectedCategory === category",
+            svg-icon="icon-arrow-down"
+        )
+
+    // tg-filter-slide-down
+    .filter-list(
+        *ngIf="selectedCategory === category",
+    )
+        ng-container(*ngFor="let item of items")
+            .single-filter.ng-animate-disabled(
+                *ngIf="(!applied || !applied.contains(item.get('id'))) && !(item.get('count') == 0 && hideEmpty)",
+                (click)="onSelectFilter(category, item)"
+            )
+                span.name(
+                    [style.border-left]="item.get('color') ? '3px solid ' + item.get('color'): ''"
+                ) {{item.get('name')}}
+
+                span.number.e2e-filter-count(
+                    *ngIf="item.get('count') > 0"
+                ) {{item.get('count')}}
+
+                a.remove-filter.e2e-remove-custom-filter(
+                    *ngIf="category === 'custom-filter'",
+                    (click)="$event.stopPropagation(); removeCustomFilter.emit(item.get('id'))",
+                )
+                    tg-svg(svg-icon="icon-trash")

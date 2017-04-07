@@ -1,0 +1,4 @@
+.discover-search
+    tg-discover-search-bar((search)="setFilter($event)", [projectsCount]="projectsCount|async", [withFilters]="true", [filter]="filter", [q]="q")
+
+tg-discover-search-results([projects]="searchResults | async", [order]="order", (orderChange)="setOrder($event)")

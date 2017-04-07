@@ -1,0 +1,41 @@
+/*
+ * Copyright (C) 2014-2017 Taiga Agile LLC <taiga@taiga.io>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * File: project.controller.coffee
+ */
+
+import { Component, Input, OnChanges, Output, EventEmitter } from "@angular/core";
+
+@Component({
+    selector: "tg-project-data",
+    template: require("./project-data.pug"),
+})
+export class ProjectData implements OnChanges {
+    @Input() project: any;
+    @Input() timeline: any;
+    @Output() nextTimelineNeeded: EventEmitter<number[]>;
+    members: any;
+
+    constructor() {
+        this.nextTimelineNeeded = new EventEmitter();
+    }
+
+    ngOnChanges() {
+        if (this.project) {
+            this.members = this.project.get("members").filter((m) => m.get("is_active"));
+        }
+    }
+}

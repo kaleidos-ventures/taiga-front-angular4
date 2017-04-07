@@ -1,0 +1,4 @@
+.assignable-member-single
+    tg-avatar.assignable-member-avatar.avatar([user]="member")
+    .assignable-member-name(*ngIf="member && !photoOnly") {{member.get('full_name_display')}}
+    .assignable-member-name(*ngIf="!member && !photoOnly", translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED")

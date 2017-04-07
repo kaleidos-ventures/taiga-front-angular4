@@ -1,0 +1,50 @@
+div.kanban-table-header
+    div.kanban-table-inner
+        // tg-class-permission="{'readonly': '!modify_task'}")
+        h2.task-colum-name(*ngIf="nested", translate="TASKBOARD.TABLE.COLUMN")
+        h2.task-colum-name(*ngFor="let status of statuses",
+                           [style.border-top-color]="status.get('color')",
+                           [title]="status.get('name')",
+                           [class.vfold]="folds[status.get('id')]")
+            span {{ status.get('name') }}
+            div.options
+                a.option(
+                    (click)='foldStatus(status)',
+                    [title]="'KANBAN.TITLE_ACTION_FOLD' | translate",
+                    [class.hidden]="folds[status.get('id')]"
+                )
+                    tg-svg(svg-icon="icon-fold-column")
+                a.option.hunfold(
+                    (click)='unfoldStatus(status)',
+                    [title]="'KANBAN.TITLE_ACTION_UNFOLD' | translate",
+                    [class.hidden]="!folds[status.get('id')]"
+                )
+                    tg-svg(svg-icon="icon-unfold-column")
+                a.option(
+                    tg-check-permission="add_us",
+                    [title]="'KANBAN.TITLE_ACTION_ADD_US' | translate",
+                    (click)="addNewUs('standard', status.get('id'))",
+                    *ngIf="!status.get('is_archived') && !nested"
+                )
+                    tg-svg.add-action(svg-icon="icon-add")
+
+                a.option(
+                    tg-check-permission="add_us",
+                    [title]="'KANBAN.TITLE_ACTION_ADD_BULK' | translate",
+                    (click)="addNewUs('bulk', status.get('id'))",
+                    *ngIf="!status.get('is_archived') && !nested"
+                )
+                    tg-svg.bulk-action(svg-icon="icon-bulk")
+
+                // tg-kanban-archived-status-header="s")
+                a.option.e2e-archived([title]="title",
+                                      Class="icon-watch",
+                                      (click)="archivedWatch(status)",
+                                      *ngIf="status.get('is_archived') && !archivedWatched[status.get('id')] && !nested")
+                    tg-svg.bulk-action(svg-icon="icon-watch")
+
+                a.option.e2e-archived([title]="title",
+                                      Class="icon-unwatch",
+                                      (click)="archivedUnwatch(status)",
+                                      *ngIf="status.get('is_archived') && archivedWatched[status.get('id')] && !nested")
+                    tg-svg.bulk-action(svg-icon="icon-unwatch")

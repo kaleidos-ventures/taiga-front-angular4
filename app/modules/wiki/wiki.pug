@@ -1,0 +1,16 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="wiki")
+
+    tg-wiki-nav([project]="project|async", [links]="links|async", *ngIf="linksVisible")
+    section.main.wiki
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Wiki")
+
+        tg-wiki-content([page]="page|async", [project]="project|async")
+
+        tg-wiki-summary([page]="page|async", [project]="project|async", (delete)="onDelete($event)", *ngIf="page|async")
+
+        tg-attachments-full([attachments]="pageAttachments|async", *ngIf="page|async")
+
+        tg-wiki-history([historyEntries]="historyEntries|async", *ngIf="page|async")

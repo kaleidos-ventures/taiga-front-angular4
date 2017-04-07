@@ -1,0 +1,24 @@
+tg-lightbox-close
+
+.assigned-to-container
+    h2.title(translate="LIGHTBOX.ASSIGNED_TO.SELECT")
+    input.assign-input(
+        [placeholder]="'LIGHTBOX.ASSIGNED_TO.SEARCH' | translate",
+        type="text",
+        #textInput,
+        (keyup)="onUserFilter(textInput.value)"
+        autofocus
+    )
+    ul.assignable-member-list
+        li.assigned-member(*ngFor="let member of assignedMembersList")
+            tg-assigned-item([member]="member")
+            tg-svg.unassign-epic.e2e-unassign(
+                svg-icon="icon-close",
+                svg-title-translate="COMMON.ASSIGNED_TO.REMOVE_ASSIGNED",
+                (click)="onRemoveAssigned(member.get('id'))"
+            )
+        li.e2e-assigned-to-selector(*ngFor="let member of nonAssignedMembersList.slice(0,6)")
+            tg-assigned-item.assigned-members-option(
+                [member]="member",
+                (click)="onAssignTo(member.get('id'))"
+            )

@@ -1,0 +1,20 @@
+section.webhooks-table.basic-table
+    .table-header
+        .row
+            .webhook-service(translate="COMMON.FIELDS.NAME")
+            .webhook-url(translate="COMMON.FIELDS.URL")
+            .webhook-options
+    .table-body
+        .single-webhook-wrapper(*ngFor="let webhook of webhooks")
+            tg-admin-integrations-webhooks-row([webhook]="webhook")
+            .edition-mode.hidden
+                tg-admin-integrations-webhooks-form([webhook]="webhook")
+
+        tg-admin-integrations-webhooks-form([webhook]="null")
+
+a.help-button(
+    href="https://tree.taiga.io/support/integrations/webhooks/",
+    target="_blank"
+)
+    tg-svg(svg-icon="icon-question")
+    span(translate="ADMIN.HELP")

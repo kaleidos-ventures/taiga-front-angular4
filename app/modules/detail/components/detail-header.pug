@@ -1,0 +1,106 @@
+.detail-title-wrapper.e2e-story-header
+    h2.detail-title-text.ng-animate-disabled(*ngIf="!editMode")
+        span.detail-number {{'#' + item.get('ref')}}
+        span.detail-subject.e2e-title-subject(
+            (click)="editMode = true",
+            *ngIf="canEdit"
+        ) {{item.get('subject')}}
+        span.detail-subject.e2e-title-subject(
+            *ngIf="!canEdit"
+        ) {{item.get('subject')}}
+        a(
+            *ngIf="canEdit",
+            (click)="editMode = true"
+        )
+            tg-svg.detail-edit.e2e-detail-edit(svg-icon="icon-edit")
+
+    .edit-title-wrapper(*ngIf="editMode")
+        input.edit-title-input.e2e-title-input(
+            type="text",
+            [value]="item.get('subject')",
+            maxlength="500",
+            autofocus,
+            required,
+            ng-keydown="vm.onKeyDown($event)"
+        )
+        button.edit-title-button.e2e-title-button(
+            (click)="vm.saveSubject()",
+            tg-loading="vm.loadingSubject"
+        )
+            tg-svg(
+                svg-icon="icon-save"
+            )
+
+//- User Story belongs to epic
+.belong-to-epics-wrapper(*ngIf="item.get('epics')")
+    span(translate="US.OWNER_US")
+    tg-belong-to-epics(
+        *ngIf="item.get('epics')",
+        [epics]="item.get('epics')",
+        format="text"
+    )
+
+ng-container(*tgIfPerm="'view_us'")
+    //- Task belongs to US
+    .task-belongs-to(*ngIf="item.get('user_story_extra_info')")
+        span(translate="TASK.OWNER_US")
+        a(
+            [routerLink]="['/project', project.get('slug'), type, item.getIn(['user_story_extra_info', 'ref'])]"
+            [title]="'TASK.TITLE_LINK_GO_OWNER' | translate"
+        )
+            span.item-ref {{'#' + item.getIn(['user_story_extra_info', 'ref'])}}
+            span {{item.getIn(['user_story_extra_info', 'subject'])}}
+            tg-belong-to-epics(
+                *ngIf="item.getIn(['user_story_extra_info', 'epics'])",
+                [epics]="item.getIn(['user_story_extra_info', 'epics'])",
+                format="pill"
+            )
+
+    //- User Stories generated from issue
+    .item-generated-us(*ngIf="item.get('generated_user_stories')?.size")
+        span(translate="ISSUES.PROMOTED")
+        a(
+            *ngFor="let userstory of item.get('generated_user_stories')",
+            [routerLink]="['/project', project.get('slug'), type, userstory.get('ref')]"
+        ) {{'#' + userstory.ref}} {{userstory.subject}}
+
+//- Issue origin from github
+.issue-external-reference(*ngIf="item.get('external_reference')")
+    span(translate="ISSUES.EXTERNAL_REFERENCE")
+    a(
+        target="_blank",
+        [href]="item.getIn(['external_reference', 1])",
+        [title]="'ISSUES.GO_TO_EXTERNAL_REFERENCE' | translate"
+    )
+        span {{ item.getIn(['external_reference', 1]) }}
+
+//- User Story promoted from issue
+.item-origin-issue(*ngIf="item.get('origin_issue')")
+    span(translate="US.PROMOTED")
+    a(
+        *tgIfPerm="'view_us'",
+        [routerLink]="['/project', project.get('slug'), type, item.getIn(['origin_issue', 'ref'])]",
+        [title]="'US.TITLE_LINK_GO_TO_ISSUE' | translate"
+    )
+        span.item-ref {{'#' + item.getIn(['origin_issue', 'ref'])}}
+        span {{item.getIn(['origin_issue', 'subject'])}}
+
+//- Blocked description
+.block-desc-container(*ngIf="item.get('is_blocked')")
+    span.block-description-title(translate="COMMON.BLOCKED")
+    span.block-description(*ngIf="item.get('blocked_note')") {{item.get('blocked_note')}}
+
+//- Navigation
+.issue-nav
+    a(
+        *ngIf="item.getIn(['neighbors', 'previous'])",
+        [routerLink]="['/project', project.get('slug'), type, item.getIn(['neighbors', 'previous', 'ref'])]",
+        [title]="'COMMON.PREVIOUS' | translate"
+    )
+        tg-svg(svg-icon="icon-arrow-left")
+    a(
+        *ngIf="item.getIn(['neighbors', 'next'])",
+        [routerLink]="['/project', project.get('slug'), type, item.getIn(['neighbors', 'next', 'ref'])]",
+        [title]="'COMMON.NEXT' | translate"
+    )
+        tg-svg(svg-icon="icon-arrow-right")

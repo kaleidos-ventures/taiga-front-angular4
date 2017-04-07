@@ -1,0 +1,97 @@
+.create-epic-container(*ngIf="statuses")
+    h2.title(translate="EPICS.CREATE.TITLE")
+
+    form((ngSubmit)="onSubmit()", [formGroup]="createEpicForm", novalidate)
+        .subject-container
+            .color-selector
+                fieldset
+                    tg-color-selector.color-column(
+                        [isColorRequired]="true",
+                        formControlName="color"
+                    )
+            .subject
+                fieldset
+                    input.e2e-create-epic-subject(
+                        type="text",
+                        name="subject",
+                        formControlName="subject"
+                        tg-auto-select,
+                        [placeholder]="'COMMON.FIELDS.SUBJECT' | translate"
+                    )
+                    tg-field-error([control]="createEpicForm.controls.subject")
+
+        fieldset
+            select.e2e-create-epic-status(
+                id="epic-status",
+                name="status",
+                formControlName="status"
+            )
+                option(
+                    *ngFor="let status of statuses",
+                    [value]="status.get('id')"
+                ) {{ status.get('name') }}
+
+        fieldset.tags-block
+            tg-tags-line(
+                [canEdit]="true",
+                formControlName="tags"
+            )
+        fieldset
+            textarea.e2e-create-epic-description(
+                formControlName="description",
+                [placeholder]="'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate"
+            )
+        fieldset
+            tg-attachments-simple(
+                formControlName="attachments"
+            )
+        .settings
+            fieldset.team-requirement
+                input(
+                    type="checkbox",
+                    name="team_requirement",
+                    id="team-requirement",
+                    formControlName="teamRequirement"
+                )
+                label.requirement.trans-button.e2e-create-epic-team-requirement(
+                    for="team-requirement",
+                    translate="EPICS.CREATE.TEAM_REQUIREMENT"
+                )
+            fieldset.client-requirement
+                input(
+                    type="checkbox",
+                    name="client_requirement",
+                    id="client-requirement",
+                    formControlName="clientRequirement"
+                )
+                label.requirement.trans-button.e2e-create-epic-client-requirement(
+                    for="client-requirement",
+                    translate="EPICS.CREATE.CLIENT_REQUIREMENT"
+                )
+            fieldset
+                input(
+                    type="checkbox",
+                    name="blocked",
+                    id="blocked",
+                    formControlName="blocked"
+                )
+                label.requirement.trans-button.blocked.e2e-create-epic-blocked(
+                    for="blocked",
+                    translate="EPICS.CREATE.BLOCKED"
+                )
+        fieldset(*ngIf="createEpicForm.controls.blocked.value")
+            input.e2e-create-epic-blocked-note(
+                type="text",
+                name="blocked_note",
+                maxlength="140",
+                formControlName="blockedNote",
+                [placeholder]="'EPICS.CREATE.BLOCKED_NOTE_PLACEHOLDER' | translate"
+            )
+        fieldset
+            //tg-loading="vm.loading",
+            button.button-green.create-epic-button.e2e-create-epic-button(type="submit")
+                span(
+                    [title]="'EPICS.CREATE.CREATE_EPIC' | translate",
+                    translate="EPICS.CREATE.CREATE_EPIC",
+                    *tgLoading="'new-epic'",
+                )

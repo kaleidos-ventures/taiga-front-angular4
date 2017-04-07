@@ -1,0 +1,11 @@
+h2.card-title
+    a([routerLink]="['/project', project.get('slug'), 'us', item.get('ref')]",
+      [queryParams]="{'kanban-status': item.get('status')}",
+      title="#{{ item.get('ref') }} {{ item.get('subject') }}")
+        span(*ngIf='zoom.visibility.ref') {{"#" + item.get('ref')}}
+        span.e2e-title(*ngIf='zoom.visibility.subject') {{item.get('subject')}}
+        tg-belong-to-epics(
+            format="pill",
+            *ngIf="item.get('epics')",
+            [epics]="item.get('epics')"
+        )

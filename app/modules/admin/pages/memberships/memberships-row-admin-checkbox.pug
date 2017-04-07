@@ -1,0 +1,5 @@
+.check(*ngIf="!member.get('is_owner')")
+    input(type="checkbox", [checked]="member.get('is_admin')")
+    div
+    span.check-text.check-yes(translate="COMMON.YES")
+    span.check-text.check-no(translate="COMMON.NO")

@@ -1,0 +1,70 @@
+div.menu-secondary.extrabar.wiki-nav
+    header
+        h1.title(translate="WIKI.NAVIGATION.SECTION_NAME")
+
+    ul.wiki-link-container(*ngIf="project")
+        li.wiki-link.fixed-link
+            a.link-title(
+                [routerLink]="['/project', project.get('slug'), 'wiki']",
+                translate="WIKI.NAVIGATION.HOME"
+            )
+
+    ul.sortable.wiki-link-container
+        // tg-class-permission="{'is-sortable': 'add_wiki_link'}"
+        li.wiki-link.e2e-wiki-page-link(
+            *ngFor="let link of links"
+        )
+            // TODO , *ngif="'addWikiLinkPermission"
+            tg-svg.dragger(svg-icon="icon-drag")
+
+            a.link-title(
+                [title]="link.get('title')",
+                [routerLink]="['/project', project?.get('slug'), 'wiki', link.get('href')]"
+            ) {{ link.get('title') }}
+
+            // TODO , *ngif="'deleteWikiLinkPermission"
+            a.remove-wiki-page(
+                [title]="'WIKI.DELETE_LINK_TITLE' | translate",
+                (click)="deleteLink(link)"
+            )
+                tg-svg(svg-icon="icon-trash")
+
+            input.hidden(
+                type="text",
+                [placeholder]="'COMMON.FIELDS.NAME' | translate",
+                [value]="link.get('title')"
+            )
+
+    ul.sortable.wiki-link-container(*ngIf="adding")
+        li.new
+            input(
+                #newLink,
+                type="text",
+                [placeholder]="'COMMON.FIELDS.NAME' | translate",
+                (keyup)="keyupNewLink($event, newLink.value)"
+            )
+    //
+    // // *ngIF="addWikiLinkPermission"
+    a.add-button(
+        [title]="'WIKI.NAVIGATION.ACTION_ADD_LINK' | translate",
+        *ngIf="!adding",
+        (click)="adding = true"
+    )
+        tg-svg(svg-icon="icon-add")
+        span(translate="WIKI.NAVIGATION.ACTION_ADD_LINK")
+
+    ul.wiki-link-container.wiki-all-links(*ngIf="links?.size && project")
+        li.wiki-link.fixed-link
+            a.link-title(
+                [routerLink]="['/project', project?.get('slug'), 'wiki-list']",
+                translate="WIKI.NAVIGATION.ALL_PAGES"
+            )
+
+tg-lightbox(key="wiki.link-delete-confirm", *ngIf="linkToDelete")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'WIKI.DELETE_LINK_TITLE' | translate",
+        [subtitle]="'NOTIFICATION.ASK_DELETE' | translate",
+        [message]="linkToDelete.get('title')",
+        (response)="onDeleteLink($event)"
+    )

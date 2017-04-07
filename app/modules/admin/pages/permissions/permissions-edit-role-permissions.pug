@@ -1,0 +1,28 @@
+.category-config-list
+    .category-config(*ngFor="let category of categories")
+        .resume([class.open-drawer]="category.open", (click)="category.open = !category.open")
+            .resume-title([translate]="category.name")
+            .summary-role
+                .count {{ category.activePermissions }}/{{ category.permissions.length }}
+
+                .role-summary-single(
+                    [class.active]="permission.active",
+                    *ngFor="let permission of category.permissions",
+                    [title]="permission.name | translate"
+                )
+
+            tg-svg(svg-icon="icon-arrow-right")
+
+        .category-items([class.open]="category.open")
+            .items-container
+                .category-item(*ngFor="let permission of category.permissions")
+                    span([translate]="permission.name")
+                    .check
+                        input(
+                            type="checkbox",
+                            [disabled]="!permission.editable",
+                            [checked]="permission.active"
+                        )
+                        div
+                        span.check-text.check-yes(translate="COMMON.YES")
+                        span.check-text.check-no(translate="COMMON.NO")

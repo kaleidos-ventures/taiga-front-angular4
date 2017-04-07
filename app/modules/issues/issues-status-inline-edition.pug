@@ -1,0 +1,23 @@
+a.issue-status(
+    [title]="'ISSUES.TABLE.TITLE_ACTION_CHANGE_STATUS' | translate",
+    [style.color]="_statuses.getIn([statusId, 'color'])"
+)
+    span.issue-status-bind(
+        [title]="_statuses.getIn([statusId, 'name'])",
+        (click)="showMenu = !showMenu"
+    ) {{ _statuses.getIn([statusId, 'name']) }}
+
+    tg-svg(
+        *tgIfPerm="'modify_issue'",
+        (click)="showMenu = !showMenu",
+        svg-icon="icon-arrow-down"
+    )
+
+    ul.popover.pop-status(
+        *tgIfPerm="'modify_issue'",
+        [class.hidden]="!showMenu"
+    )
+        li(*ngFor="let status of statuses")
+            a.status(
+                [title]="status.get('name')"
+            ) {{ status.get('name') }}

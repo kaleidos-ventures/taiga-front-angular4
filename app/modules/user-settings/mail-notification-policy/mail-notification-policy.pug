@@ -1,0 +1,48 @@
+.policy-table-row
+    .policy-table-project
+        span {{ policy.get('project_name') }}
+
+    .policy-table-all
+        fieldset
+            input(
+                type="radio",
+                name="policy-{{ policy.get('id') }}",
+                id="policy-all-{{ policy.get('id') }}",
+                value="2",
+                (click)="changedLevel.emit(2)",
+                [checked]="policy.get('notify_level') === 2"
+            )
+            label(
+                for="policy-all-{{ policy.get('id') }}",
+                translate="USER_SETTINGS.NOTIFICATIONS.OPTION_ALL"
+            )
+
+    .policy-table-involved
+        fieldset
+            input(
+                type="radio",
+                name="policy-{{ policy.get('id') }}",
+                id="policy-involved-{{ policy.get('id') }}",
+                value="1",
+                (click)="changedLevel.emit(1)",
+                [checked]="policy.get('notify_level') === 1"
+            )
+            label(
+                for="policy-involved-{{ policy.get('id') }}",
+                translate="USER_SETTINGS.NOTIFICATIONS.OPTION_INVOLVED"
+            )
+
+    .policy-table-none
+        fieldset
+            input(
+                type="radio",
+                name="policy-{{ policy.get('id') }}",
+                id="policy-none-{{ policy.get('id') }}",
+                value="3",
+                (click)="changedLevel.emit(3)",
+                [checked]="policy.get('notify_level') === 3"
+            )
+            label(
+                for="policy-none-{{ policy.get('id') }}",
+                translate="USER_SETTINGS.NOTIFICATIONS.OPTION_NONE"
+            )

@@ -1,0 +1,24 @@
+tg-lightbox(key="auth.password-recover")
+    section
+        h2.title(translate="FORGOT_PASSWORD_FORM.SUCCESS_TITLE")
+        p.message(translate="FORGOT_PASSWORD_FORM.SUCCESS_TEXT")
+        .options
+            a.button-green((click)="closeLightbox()")
+                span(translate="COMMON.ACCEPT")
+
+tg-lightbox(key="auth.password-recover-from-recovery")
+    section
+        h2.message([innerHTML]="'CHANGE_PASSWORD_RECOVERY_FORM.SUCCESS' | translate")
+        .options
+            a.button-green((click)="closeLightbox()")
+                span(translate="COMMON.ACCEPT")
+
+div.wrapper
+    div.auth
+        div.auth-container
+            div.logo-svg
+                include ../../../assets/svg/logo-color.svg
+            h1.logo Taiga
+            h2.tagline(translate="COMMON.TAG_LINE_2")
+
+            tg-login-form((login)="login($event)")

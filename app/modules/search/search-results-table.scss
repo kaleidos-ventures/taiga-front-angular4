@@ -1,0 +1,104 @@
+tg-search-results-table {
+    border-top: 1px solid $whitish;
+
+    tg-assigned-item {
+        .assignable-member-single {
+            padding: 0;
+        }
+        .assignable-member-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 80px;
+        }
+    }
+
+    .row {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: .5rem;
+
+        .ref {
+            flex-basis: 30px;
+            flex-grow: 1;
+            padding: 0 1rem;
+        }
+        .user-stories {
+            flex-basis: 300px;
+            flex-grow: 10;
+            flex-shrink: 1;
+        }
+        .status,
+        .points,
+        .sprint {
+            flex-basis: 150px;
+            flex-grow: 0;
+            padding: 0 1rem;
+            text-align: center;
+        }
+        .assigned-to {
+            flex-basis: 150px;
+            flex-grow: 0;
+            padding: 0 1rem;
+        }
+    }
+    .row-selected {
+        background: lighten($primary, 60%);
+        transition: background .2s ease-in;
+    }
+
+      // TODO: refactor xaviju
+    .user-story-name {
+        input {
+            vertical-align: top;
+        }
+        span {
+            display: inline-block;
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .icon {
+            @include font-size(medium);
+            color: $gray-light;
+            &:hover {
+                color: $grayer;
+                transition: color .3s linear;
+            }
+        }
+    }
+    .table-main {
+        @include font-size(small);
+        border-bottom: 1px solid $whitish;
+    }
+    .status,
+    .points,
+    .sprint {
+        position: relative;
+    }
+    .avatar {
+        align-items: center;
+        display: flex;
+        img {
+            width: 35px;
+        }
+        .avatar-caption {
+            display: block;
+            margin-left: .5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 80px;
+        }
+    }
+
+    .search-result-table-header {
+        @include font-type(bold);
+    }
+
+    .loading-spinner {
+        margin: 30px auto;
+    }
+}

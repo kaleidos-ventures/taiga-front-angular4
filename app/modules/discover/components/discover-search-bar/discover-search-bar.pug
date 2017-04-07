@@ -1,0 +1,47 @@
+div.discover-header
+    div.discover-header-inner
+
+        h1.title(translate='DISCOVER.DISCOVER_TITLE')
+
+        p.project-number(
+            *ngIf="projectsCount",
+        ) {{ 'DISCOVER.DISCOVER_SUBTITLE' | translate | messageformat:{projects: projectsCount} }}
+        form((submit)="search.emit({filter: filter, q: qField.value}) && false")
+            div.searchbox
+                input(
+                    #qField,
+                    name="search",
+                    type="text",
+                    [placeholder]="'DISCOVER.SEARCH.INPUT_PLACEHOLDER' | translate",
+                    [value]="q"
+                )
+                tg-svg.search-button(
+                    (click)="submitFilter()",
+                    svg-icon="icon-search",
+                    svg-title-translate="DISCOVER.SEARCH.ACTION_TITLE"
+                )
+
+            fieldset.searchbox-filters(*ngIf="withFilters")
+                label(
+                    for="filter-all",
+                    [class.active]="filter == 'all'",
+                    (click)="search.emit({filter: 'all', q: q})"
+                ) {{ 'DISCOVER.FILTERS.ALL' | translate }}
+
+                label(
+                    for="filter-kanban",
+                    [class.active]="filter == 'kanban'",
+                    (click)="search.emit({filter: 'kanban', q: q})"
+                ) {{ 'DISCOVER.FILTERS.KANBAN' | translate }}
+
+                label(
+                    for="filter-scrum",
+                    [class.active]="filter == 'scrum'",
+                    (click)="search.emit({filter: 'scrum', q: q})"
+                ) {{ 'DISCOVER.FILTERS.SCRUM' | translate }}
+
+                label(
+                    for="filter-people",
+                    [class.active]="filter == 'people'",
+                    (click)="search.emit({filter: 'people', q: q})"
+                ) {{ 'DISCOVER.FILTERS.PEOPLE' | translate }}

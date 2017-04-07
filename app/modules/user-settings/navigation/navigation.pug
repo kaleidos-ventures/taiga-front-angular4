@@ -1,0 +1,30 @@
+section.admin-menu
+    nav
+        ul
+            li#usersettingsmenu-user-profile
+                a(
+                    routerLink="/user-settings/user-profile",
+                    [class.active]="active == 'user-profile'",
+                    [title]="'USER_SETTINGS.MENU.USER_PROFILE' | translate"
+                )
+                    span.title(translate="USER_SETTINGS.MENU.USER_PROFILE")
+            li#usersettingsmenu-change-password
+                a(
+                    routerLink="/user-settings/user-change-password",
+                    [class.active]="active == 'change-password'",
+                    [title]="'USER_SETTINGS.MENU.CHANGE_PASSWORD' | translate"
+                )
+                    span.title(translate="USER_SETTINGS.MENU.CHANGE_PASSWORD")
+            li#usersettingsmenu-mail-notifications
+                a(
+                    routerLink="/user-settings/mail-notifications",
+                    [class.active]="active == 'mail-notifications'",
+                    [title]="'USER_SETTINGS.MENU.EMAIL_NOTIFICATIONS' | translate"
+                )
+                    span.title(translate="USER_SETTINGS.MENU.EMAIL_NOTIFICATIONS")
+            li#usersettings-contrib(*ngFor="let plugin of userSettingsPlugins")
+                a(
+                    [routerLink]="['/user-settings/contrib/', plugin.slug]",
+                    [class.active]="plugin.slug == currentPlugin.slug"
+                )
+                    span.title {{ plugin.name }}

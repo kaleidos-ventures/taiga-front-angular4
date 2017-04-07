@@ -1,0 +1,3 @@
+{ 
+  "validateAttributeSeparator": {"separator": ", ", "multiLineSeparator": ",\n    "}
+}

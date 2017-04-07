@@ -6,11 +6,9 @@ var transition = 600;
 
 notifications.success = {};
 notifications.success.open = function() {
-    var el = $('.notification-message-success');
-
     return browser
         .wait(function() {
-            return common.hasClass(el, 'active');
+            return common.hasClass($('.notification-message-success'), 'active');
         }, 6000, "notification success open")
         .then(function(active) {
             return browser.sleep(transition).then(function() {

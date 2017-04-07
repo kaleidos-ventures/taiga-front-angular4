@@ -1,0 +1,30 @@
+tg-sprint-add-edit-lightbox {
+    .ask {
+        flex-basis: 420px;
+        flex-flow: 0;
+        max-width: 420px;
+
+        .subtitle,
+        .message {
+            display: block;
+            line-height: 2rem;
+            text-align: center;
+        }
+        .subtitle {
+            @include font-size(large);
+            @include font-type(text);
+            white-space: pre-line;
+        }
+        .options {
+            display: flex;
+            a {
+                padding: 8px 0;
+                text-align: center;
+                width: 100%;
+            }
+            a:first-child {
+                margin-right: .5rem;
+            }
+        }
+    }
+}

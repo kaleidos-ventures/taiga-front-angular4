@@ -1,0 +1,139 @@
+// div.lightbox.lightbox-block(
+//     tg-lb-block,
+//     [title]="'US.LIGHTBOX_TITLE_BLOKING_US' | translate",
+//     ng-model="us"
+// )
+// div.lightbox.lightbox-select-user(tg-lb-assignedto)
+// div.lightbox.lightbox-select-user(tg-lb-watchers)
+
+div.wrapper(*ngIf="project && us")
+    tg-project-menu([project]="project", active="backlog-kanban")
+
+    div.main.us-detail
+        div.us-detail-header.header-with-actions
+            tg-main-title([project]="project", [sectionName]="'US.SECTION_NAME' | translate")
+
+            .action-buttons
+                ng-container(*tgIfPerm="'view_milestones'")
+                    a.button-gray(
+                        *ngIf="sprint && project.get('is_backlog_activated')",
+                        [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
+                        [title]="'US.TITLE_LINK_TASKBOARD' | translate",
+                        translate="US.LINK_TASKBOARD"
+                    )
+
+        section.us-story-main-data
+            header
+                tg-detail-vote-button.upvote-btn(
+                    [item]="us",
+                    [user]="user",
+                    (upvote)="onUpvote",
+                    (downvote)="onDownvote",
+                )
+                tg-detail-header.detail-header-container(
+                    [item]="us",
+                    [project]="project",
+                    [canEdit]="canEdit",
+                    [class.blocked]="us.get('is_blocked')",
+                    *ngIf="project && us",
+                    type="us"
+                )
+
+            .subheader
+                tg-tags-line.tags-block(
+                    *ngIf="us && project",
+                    [tags]="us.get('tags')",
+                    [canEdit]="canEdit"
+                )
+                tg-detail-created-by-display.ticket-created-by(
+                    *ngIf="us.get('owner_extra_info')",
+                    [user]="us.get('owner_extra_info')",
+                    [date]="us.get('created_date')"
+                )
+
+        section.duty-content
+            tg-wysiwyg(
+                [text]="us.get('description')",
+                [project]="project",
+                mode="markdown",
+                [canEdit]="canEdit",
+            )
+
+        // Custom Fields
+        tg-detail-custom-attributes-values(
+            [attrs]="project.get('userstory_custom_attributes')",
+            [values]="customAttributesValues",
+            [canEdit]="canEdit",
+        )
+
+        tg-detail-related-tasks([tasks]="tasks")
+
+        tg-attachments-full(
+            *ngIf="attachments",
+            [attachments]="attachments",
+        )
+
+        tg-history-section(
+            *ngIf="us",
+            type="us",
+            name="us",
+            [id]="us.get('id')",
+            [projectId]="project.get('id')"
+        )
+
+    sidebar.menu-secondary.sidebar.ticket-data
+
+        section.ticket-header
+            tg-detail-status-display.ticket-title([item]="us")
+            tg-detail-status-button.detail-status(
+                [status]="us.get('status_extra_info')",
+                [statuses]="project.get('us_statuses')",
+                canEdit="canEdit"
+            )
+            tg-detail-tribe-linked(
+                *ngIf="us.get('tribe_gig')",
+                [item]="us",
+            )
+
+        tg-detail-us-estimation.ticket-estimation(
+            [item]="us",
+            [points]="project.get('points')",
+            [roles]="project.get('roles')",
+            [canEdit]="canEdit",
+        )
+
+        tg-assigned-item.ticket-assigned-to(
+            [member]="us.get('assigned_to_extra_info')",
+        )
+
+        section.ticket-watch-buttons
+            tg-watch-button.ticket-watch(
+                [item]="us",
+                data-environment="ticket",
+                (watch)="onWatch($event)",
+                (unwatch)="onUnwatch($event)"
+            )
+            tg-detail-watchers.ticket-watchers(
+                [item]="us",
+                [members]="project.get('members_by_id')",
+                [canEdit]="canEdit",
+                [logged]="!!user"
+            )
+
+        section.ticket-to-tribe(*ngIf="tribeEnabled && !us.get('tribe_gig')")
+            tg-tribe-button([usId]="us.get('id')", [project-slug]="project.get('slug')")
+            a.tribe-more-info(
+                [title]="'US.TRIBE.PUBLISH_TITLE' | translate",
+                (click)="onTribeInfo()",
+                translate="US.TRIBE.PUBLISH_INFO"
+            )
+
+        section.ticket-detail-settings
+            tg-detail-team-requirement([item]="us", [canEdit]="canEdit")
+            tg-detail-client-requirement([item]="us", [canEdit]="canEdit")
+            tg-detail-block(
+                *tgIfPerm="'modify_us'",
+                [canEdit]="canEdit",
+                [item]="us"
+            )
+            tg-delete-button(*tgIfPerm="'delete_us'")

@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "baseUrl": "types",
+        "typeRoots": ["types"],
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [ "es2016", "dom" ],
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "compileOnSave": false
+}

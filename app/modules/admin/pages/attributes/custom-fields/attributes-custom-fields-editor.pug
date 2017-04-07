@@ -1,0 +1,45 @@
+tg-lightbox([key]="'admin.delete-custom-field-' + type")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingItem?.get('name')",
+        (response)="confirmDelete($event)"
+    )
+
+section.custom-fields-table.basic-table
+    div.project-values-title
+        h2 {{ name }}
+        a.button.button-gray.show-add-new(
+            [title]="'ADMIN.CUSTOM_ATTRIBUTES.ADD' | translate",
+            (click)="newStatusOpen = true"
+        )
+            span(translate="ADMIN.CUSTOM_ATTRIBUTES.ADD")
+
+    div.table-header
+        div.row
+            .custom-name(translate="COMMON.FIELDS.NAME")
+            .custom-description(translate="COMMON.FIELDS.DESCRIPTION")
+            .custom-field-type(translate="COMMON.FIELDS.TYPE")
+            .custom-options
+
+    div.table-body
+        div.sortable
+            div(*ngFor="let value of values")
+                tg-admin-attributes-custom-fields-row(
+                    [value]="value",
+                    [type]="type",
+                    *ngIf="!editing[value.get('id')]",
+                    (edit)="editing[value.get('id')]=true",
+                    (delete)="deleteItem(value)"
+                )
+                tg-admin-attributes-custom-fields-form(
+                    [value]="value",
+                    [visible]="editing[value.get('id')]",
+                    (cancel)="editing[$event]=false"
+                )
+
+        tg-admin-attributes-custom-fields-form(
+            [value]="null",
+            [visible]="newStatusOpen",
+            (cancel)="newStatusOpen=false"
+        )

@@ -1,0 +1,58 @@
+form([class.hidden]="!visible")
+    div.row.single-custom-field.edition
+        div.custom-name
+            input(
+                #nameInput,
+                name="name",
+                type="text",
+                [value]="value?.get('name')",
+                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.custom-description
+            input(
+                #descriptionInput,
+                name="description",
+                type="text",
+                [value]="value?.get('description')",
+                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate",
+                data-required="true",
+                data-maxlength="255"
+            )
+
+        div.custom-field-type
+            select
+                option(
+                    [selected]="value?.get('type') == 'text'",
+                    value="text",
+                    translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT"
+                )
+                option(
+                    [selected]="value?.get('type') == 'richtext'",
+                    value="richtext",
+                    translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT"
+                )
+                option(
+                    [selected]="value?.get('type') == 'multiline'",
+                    value="multiline",
+                    translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI"
+                )
+                option(
+                    [selected]="value?.get('type') == 'date'",
+                    value="date",
+                    translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE"
+                )
+                option(
+                    [selected]="value?.get('type') == 'url'",
+                    value="url",
+                    translate="ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL"
+                )
+
+        div.custom-options
+            a.save.e2e-save(href="", [title]="'COMMON.SAVE' | translate")
+                tg-svg(svg-icon="icon-save")
+
+            a.cancel((click)="cancel.emit(value?.get('id'))", [title]="'COMMON.CANCEL' | translate")
+                tg-svg.cancel(svg-icon="icon-close")

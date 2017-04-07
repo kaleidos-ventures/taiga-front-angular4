@@ -1,0 +1,21 @@
+ul.points-per-role
+    li.ticket-role-points.total(
+        *ngFor="let role of computableRoles",
+        [class.clickable]="editable",
+        [title]="role.get('name')",
+        (click)="openRole(role.get('id'))"
+    )
+        span.points
+            | {{ getRolePoints(role.get('id')) }}
+            tg-svg(svg-icon="icon-arrow-down")
+        span.role(tg-loading="role.get('id')") {{ role.get('name') }}
+        tg-us-estimation-points-popover.popover(
+            *ngIf="roleOpen == role.get('id')",
+            [points]="points",
+            [selected]="0",
+            (select)="onPointsSelect(role.get('id'), $event)"
+        )
+
+    li.ticket-role-points.total
+        span.points {{ totalPoints() }}
+        span.role(translate="US.TOTAL_POINTS")

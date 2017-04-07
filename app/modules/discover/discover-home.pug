@@ -1,0 +1,18 @@
+section.discover
+    header
+        tg-discover-search-bar((search)="onSearch($event)", [projectsCount]="projectsCount|async", q="")
+
+    section.highlighted
+        tg-most-liked(
+            [projects]="mostLikedProjects | async",
+            (orderChange)="onMostLikedOrder($event)",
+            [order]="likedOrder"
+        )
+        tg-most-active(
+            [projects]="mostActiveProjects | async",
+            (orderChange)="onMostActiveOrder($event)",
+            [order]="activeOrder"
+        )
+
+    section.featured-projects
+        tg-featured-projects([projects]="featuredProjects | async")

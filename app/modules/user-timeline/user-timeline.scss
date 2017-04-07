@@ -1,0 +1,118 @@
+.profile-timeline {
+    border-top: 1px solid $whitish;
+    .spinner {
+        padding: 10px;
+    }
+    .activity-item {
+        border-bottom: 1px solid $whitish;
+        padding: 1rem .5rem 1rem 0;
+        position: relative;
+        p {
+            margin-bottom: 0;
+        }
+        a,
+        .username {
+            color: $primary;
+            &:first-child {
+                @include font-type(bold);
+                color: $gray;
+            }
+        }
+        a:hover {
+            color: $primary-light;
+        }
+        blockquote {
+            line-height: 1.4rem;
+            margin-bottom: 0;
+            margin-left: calc(35px + 1rem);
+            margin-top: .5rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: pre-line;
+        }
+        img {
+            max-height: 640px;
+            max-width: 640px;
+        }
+        .activity-info {
+            align-items: center;
+            color: $gray-light;
+            display: flex;
+            margin-right: 130px;
+        }
+        .activity-date {
+            color: $gray-light;
+            font-size: .75rem;
+            position: absolute;
+            right: .5rem;
+            top: 1.2rem;
+        }
+        .profile-contact-picture,
+        .profile-member-picture {
+            border-radius: .1rem;
+            flex-basis: 2rem;
+            flex-shrink: 0;
+            margin-right: 1rem;
+            vertical-align: center;
+            width: 2rem;
+            img {
+                width: 100%;
+            }
+        }
+        .new-color {
+            border-radius: 50%;
+            display: inline-block;
+            height: 1rem;
+            margin-left: .2rem;
+            position: relative;
+            top: .1rem;
+            width: 1rem;
+        }
+    }
+    .activity-member-view {
+        display: flex;
+        margin-bottom: .5rem;
+        margin-left: calc(35px + 1rem);
+        margin-top: .5rem;
+        .profile-member-picture {
+            flex-basis: 3rem;
+            width: 3rem;
+        }
+        .activity-member-info {
+            flex: 1;
+        }
+        a {
+            @include font-type(bold);
+        }
+        p {
+            color: $gray-light;
+        }
+    }
+    .single-attachment {
+        border: 0;
+        padding: 0;
+        span {
+            @include font-type(text);
+            @include font-size(medium);
+            display: inline-block;
+            max-width: 95%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: sub;
+            white-space: nowrap;
+        }
+        .icon {
+            fill: $grayer;
+            margin-right: .5rem;
+        }
+    }
+    .spin {
+        margin: 10% auto;
+        width: 3rem;
+        img {
+            @include loading-spinner;
+            max-height: 3rem;
+            max-width: 3rem;
+        }
+    }
+}

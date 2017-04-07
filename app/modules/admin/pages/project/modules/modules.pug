@@ -1,0 +1,13 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="project-profile")
+
+    tg-admin-subnav-project([project]="project|async", active="modules")
+
+    section.main.admin-functionalities
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Modules")
+
+        tg-admin-modules-form([project]="project|async")

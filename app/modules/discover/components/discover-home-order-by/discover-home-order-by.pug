@@ -1,0 +1,16 @@
+.filter-highlighted((mouseleave)="isOpen = false")
+    a.current-filter(
+        (click)="isOpen = true",
+        [ngSwitch]="order"
+    )
+        span(*ngSwitchCase="'week'", translate="DISCOVER.FILTERS.WEEK")
+        span(*ngSwitchCase="'month'", translate="DISCOVER.FILTERS.MONTH")
+        span(*ngSwitchCase="'year'", translate="DISCOVER.FILTERS.YEAR")
+        span(*ngSwitchCase="'all'", translate="DISCOVER.FILTERS.ALL_TIME")
+        tg-svg(svg-icon="icon-arrow-down")
+
+    ul.filter-list(*ngIf="isOpen")
+        li((click)="orderBy('week')" translate="DISCOVER.FILTERS.WEEK")
+        li((click)="orderBy('month')" translate="DISCOVER.FILTERS.MONTH")
+        li((click)="orderBy('year')" translate="DISCOVER.FILTERS.YEAR")
+        li((click)="orderBy('all')" translate="DISCOVER.FILTERS.ALL_TIME")
