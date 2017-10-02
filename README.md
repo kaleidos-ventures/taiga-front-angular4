@@ -1,6 +1,6 @@
 # Taiga Front #
 
-![Kaleidos Project](http://kaleidos.net/static/img/badge.svg "Kaleidos Project")
+![Kaleidos Project](http://kaleidos.net/static/img/badge.png "Kaleidos Project")
 [![Managed with Taiga.io](https://img.shields.io/badge/managed%20with-TAIGA.io-709f14.svg)](https://tree.taiga.io/project/taiga/ "Managed with Taiga.io")
 [![Build Status](https://img.shields.io/travis/taigaio/taiga-front.svg)](https://travis-ci.org/taigaio/taiga-front "Build Status")
 
@@ -124,13 +124,13 @@ sass -v             # should return Sass 3.3.8 (Maptastic Maple)
 
 Complete process for all OS at: http://sass-lang.com/install
 
-**Node + Gulp**
+**Node + yarn**
 
 We recommend using [nvm](https://github.com/creationix/nvm) to manage different node versions
 ```
-npm install -g gulp
-npm install
-gulp
+npm install -g yarn
+yarn install
+npm run dev
 ```
 
 And go in your browser to: http://localhost:9001/
