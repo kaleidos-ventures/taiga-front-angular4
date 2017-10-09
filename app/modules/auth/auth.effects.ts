@@ -28,7 +28,9 @@ export class AuthEffects {
         .do((user) => {
             if (user) {
                 this.storage.set("userInfo", user.toJS());
-                this.storage.set("token", user.get('auth_token'));
+                if (user.get('auth_token')) {
+                    this.storage.set("token", user.get('auth_token'));
+                }
             } else {
                 this.storage.set("userInfo", null);
                 this.storage.set("token", null);
