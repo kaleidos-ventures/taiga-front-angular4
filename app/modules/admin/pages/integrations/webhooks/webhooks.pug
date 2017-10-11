@@ -10,9 +10,17 @@ div.wrapper
             h1
                 tg-main-title([project]="project|async", sectionName="Webhooks")
             .action-buttons
-                a.button-green.hidden.add-webhook(
+                a.button-green.add-webhook(
+                    *ngIf="!(adding|async)",
+                    (click)="onAddClicked()",
                     [title]="'ADMIN.WEBHOOKS.ADD_NEW' | translate",
                     translate="ADMIN.WEBHOOKS.ADD_NEW"
                 )
 
-        tg-admin-integrations-webhooks-editor([webhooks]="webhooks|async")
+        tg-admin-integrations-webhooks-editor(
+            [webhooks]="webhooks|async",
+            [webhooksLogs]="webhooksLogs|async",
+            (save)="onSaveWebhook($event)",
+            [editing]="editing|async",
+            [adding]="adding|async"
+        )

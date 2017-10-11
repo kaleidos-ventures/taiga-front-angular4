@@ -181,6 +181,7 @@ const api_urls = {
 
     // Webhooks
     "webhooks": "/webhooks",
+    "webhook": "/webhooks/%s",
     "webhooks-test": "/webhooks/%s/test",
     "webhooklogs": "/webhooklogs",
     "webhooklogs-resend": "/webhooklogs/%s/resend",

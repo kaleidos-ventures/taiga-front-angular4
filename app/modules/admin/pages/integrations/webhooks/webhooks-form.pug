@@ -1,9 +1,9 @@
-form.row
+form.row((ngSubmit)="onSubmit()", [formGroup]="form", novalidate)
     fieldset.webhook-service
         input(
             type="text",
             name="name",
-            data-required="true",
+            formControlName="name",
             [value]="webhook?.get('name')",
             [placeholder]="'ADMIN.WEBHOOKS.TYPE_NAME' | translate"
         )
@@ -14,26 +14,28 @@ form.row
                     type="text",
                     name="url",
                     data-type="url",
+                    formControlName="url",
                     [placeholder]="'ADMIN.WEBHOOKS.TYPE_PAYLOAD_URL' | translate",
-                    data-required="true",
                     [value]="webhook?.get('url')"
                 )
             fieldset
                 input(
                     type="text",
                     name="key",
+                    formControlName="key",
                     [placeholder]="'ADMIN.WEBHOOKS.TYPE_SERVICE_SECRET' | translate",
-                    data-required="true",
                     [value]="webhook?.get('key')"
                 )
     .webhook-options
         a.edit-existing(
-            href="",
-            [title]="'ADMIN.WEBHOOKS.SAVE' | translate"
+            [title]="'ADMIN.WEBHOOKS.SAVE' | translate",
+            (click)="onSubmit()",
+            *tgLoading="'saving-webhook-'+webhook?.get('id')"
         )
             tg-svg(svg-icon="icon-save")
         a.cancel-existing(
-            href="",
-            [title]="'ADMIN.WEBHOOKS.CANCEL' | translate"
+            *ngIf="!hideCancel",
+            [title]="'ADMIN.WEBHOOKS.CANCEL' | translate",
+            (click)="onCancel()",
         )
             tg-svg(svg-icon="icon-close")

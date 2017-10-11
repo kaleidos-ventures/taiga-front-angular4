@@ -1,0 +1,62 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="admin")
+
+    tg-admin-nav([project]="project|async", active="integrations")
+
+    tg-admin-integrations-nav([project]="project|async", [active]="type")
+
+    section.main.admin-third-parties.admin-common
+        header
+            h1
+                tg-main-title([project]="project|async", [sectionName]="section")
+
+        form((ngSubmit)="onSubmit()", [formGroup]="form", novalidate)
+            div(*tgLoading="'loading-third-party';size:'big'")
+                fieldset
+                    label(for="secret-key", translate="ADMIN.THIRD_PARTIES.SECRET_KEY")
+                    input(
+                        id="secret-key",
+                        type="text",
+                        formControlName="secretKey",
+                        [placeholder]="'ADMIN.THIRD_PARTIES.SECRET_KEY' | translate"
+                    )
+
+                fieldset
+                    .select-input-text(tg-select-input-text)
+                        div
+                            label(for="payload-url", translate="ADMIN.THIRD_PARTIES.PAYLOAD_URL")
+                            .field-with-option
+                                input(
+                                    #webhookUrlInput
+                                    id="payload-url",
+                                    type="text",
+                                    formControlName="webhookUrl",
+                                    readonly="readonly",
+                                    [placeholder]="'ADMIN.THIRD_PARTIES.PAYLOAD_URL' | translate"
+                                )
+                                .option-wrapper.select-input-content((click)="webhookUrlInput.select(); copyLabel = true")
+                                    tg-svg(svg-icon="icon-clipboard")
+                            .help-copy(translate="COMMON.COPY_TO_CLIPBOARD", [class.visible]="copyLabel")
+
+                fieldset(*ngIf="type === 'bitbucket' || type === 'gitlab'")
+                    label(for="valid-origin-ips", translate="ADMIN.THIRD_PARTIES.VALID_IPS")
+                    input(
+                        id="valid-origin-ips",
+                        type="text",
+                        formControlName="validIps",
+                        [placeholder]="'ADMIN.BITBUCKET.INFO_VERIFYING_IP' | translate"
+                    )
+
+                button.button-green.submit-button(type="submit")
+                    span(
+                        *tgLoading="'storing-third-party'",
+                        [title]="'COMMON.SAVE' | translate",
+                        translate="COMMON.SAVE",
+                    )
+
+        a.help-button(
+            href="https://tree.taiga.io/support/integrations/{{type}}-integration/",
+            target="_blank"
+        )
+            tg-svg(svg-icon="icon-question")
+            span(translate="ADMIN.HELP")

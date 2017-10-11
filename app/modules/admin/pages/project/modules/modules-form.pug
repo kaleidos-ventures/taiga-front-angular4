@@ -1,4 +1,4 @@
-form.module-container(*ngIf="project")
+form.module-container(*ngIf="project", [formGroup]="null")
     .module.module-epics([class.active]="project.get('is_epics_activated')")
         .module-icon
             tg-svg(svg-icon="icon-epics")

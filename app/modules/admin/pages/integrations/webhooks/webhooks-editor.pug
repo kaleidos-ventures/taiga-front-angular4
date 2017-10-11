@@ -6,11 +6,11 @@ section.webhooks-table.basic-table
             .webhook-options
     .table-body
         .single-webhook-wrapper(*ngFor="let webhook of webhooks")
-            tg-admin-integrations-webhooks-row([webhook]="webhook")
-            .edition-mode.hidden
-                tg-admin-integrations-webhooks-form([webhook]="webhook")
+            tg-admin-integrations-webhooks-row([webhook]="webhook", [class.hidden]="editing.get(webhook.get('id'), false)", [webhookLog]="webhooksLogs.get(webhook.get('id'))")
+            .edition-mode([class.hidden]="!editing.get(webhook.get('id'), false)")
+                tg-admin-integrations-webhooks-form([webhook]="webhook", (save)="save.emit($event)")
 
-        tg-admin-integrations-webhooks-form([webhook]="null")
+        tg-admin-integrations-webhooks-form([webhook]="null", *ngIf="adding", (save)="save.emit($event)", [hideCancel]="!webhooks || !webhooks.size")
 
 a.help-button(
     href="https://tree.taiga.io/support/integrations/webhooks/",

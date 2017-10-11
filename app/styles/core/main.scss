@@ -58,7 +58,6 @@
 @import '../modules/admin/default-values';
 @import '../modules/admin/project-csv';
 @import '../modules/admin/project-values';
-@import '../modules/admin/third-parties';
 @import '../modules/auth/cancel-account';
 @import '../modules/auth/change-password-from-recovery';
 @import '../modules/auth/forgot-form';
@@ -186,4 +185,5 @@
 @import '../../modules/user-timeline/user-timeline';
 @import '../../modules/wiki/history/wiki-history';
 @import '../../modules/search/search-results-table';
+@import '../../modules/admin/pages/integrations/third-parties/third-parties';
 @import 'custom';

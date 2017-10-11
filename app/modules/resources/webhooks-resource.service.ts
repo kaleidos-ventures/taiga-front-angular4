@@ -31,8 +31,24 @@ export class WebhooksResource {
         return this.http.get(url, {"project": projectId});
     }
 
+    create(projectId, data) {
+        const url = this.urls.resolve("webhooks");
+        data['project'] = projectId;
+        return this.http.post(url, data);
+    }
+
+    update(webhookId, data) {
+        const url = this.urls.resolve("webhook", webhookId);
+        return this.http.put(url, data);
+    }
+
     test(webhookId) {
         const url = this.urls.resolve("webhooks-test", webhookId);
         return this.http.post(url);
+    }
+
+    delete(webhookId) {
+        const url = this.urls.resolve("webhook", webhookId);
+        return this.http.delete(url);
     }
 }

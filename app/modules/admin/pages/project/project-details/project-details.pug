@@ -10,8 +10,9 @@ div.wrapper
             h1
                 tg-main-title([project]="project|async", sectionName="Admin")
 
-        form
-            .project-details-image(tg-project-logo)
+        form([formGroup]="null")
+            //tg-project-logo
+            .project-details-image()
                 fieldset.image-container
                     img.image(
                         tg-project-logo-big-src="project._attrs",
@@ -48,7 +49,6 @@ div.wrapper
                         name="name",
                         [placeholder]="'ADMIN.PROJECT_PROFILE.PROJECT_NAME' | translate",
                         id="project-name",
-                        ng-model="project.name",
                         data-required="true",
                         maxlength="45"
                     )
@@ -59,7 +59,6 @@ div.wrapper
                         name="description",
                         [placeholder]="'ADMIN.PROJECT_PROFILE.DESCRIPTION' | translate",
                         id="project-description",
-                        ng-model="project.description",
                         data-required="true"
                     )
                 fieldset
@@ -97,7 +96,6 @@ div.wrapper
                         div.check
                             input(
                                 type="checkbox",
-                                ng-model="project.is_looking_for_people"
                             )
                             div
                             span.check-text.check-yes(translate="COMMON.YES")
@@ -108,7 +106,6 @@ div.wrapper
                         input(
                             type="text",
                             maxlength="200",
-                            ng-model="project.looking_for_people_note",
                             [placeholder]="'ADMIN.PROJECT_PROFILE.RECRUITING_PLACEHOLDER' | translate"
                         )
 
@@ -118,7 +115,6 @@ div.wrapper
                         div.check
                             input(
                                 type="checkbox",
-                                ng-model="project.is_contact_activated"
                             )
                             div
                             span.check-text.check-yes(translate="COMMON.YES")
@@ -134,7 +130,6 @@ div.wrapper
                                 type="radio",
                                 id="private-project",
                                 name="privacy-project",
-                                ng-model="project.is_private",
                                 ng-value="false"
                             )
                             label.trans-button(for="private-project") {{ 'ADMIN.PROJECT_PROFILE.PUBLIC_PROJECT' | translate }}
@@ -145,7 +140,6 @@ div.wrapper
                                 type="radio",
                                 id="public-project",
                                 name="privacy-project",
-                                ng-model="project.is_private",
                                 ng-value="true"
                             )
                             label.trans-button(for="public-project") {{'ADMIN.PROJECT_PROFILE.PRIVATE_PROJECT' | translate }}

@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -7,4 +7,13 @@ import * as Immutable from "immutable";
 })
 export class AdminIntegrationsWebhooksEditor {
     @Input() webhooks: Immutable.List<any>;
+    @Input() editing: Immutable.Map<number, boolean>;
+    @Input() webhooksLogs: Immutable.Map<number, any>;
+    @Input() adding: boolean;
+    @Output() save: EventEmitter<any>;
+    show: any = {};
+
+    constructor() {
+        this.save = new EventEmitter();
+    }
 }

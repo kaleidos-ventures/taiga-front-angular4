@@ -24,3 +24,102 @@ export class SetAdminWebhooksAction implements Action {
 
   constructor(public payload: Immutable.List<any>) { }
 }
+
+export class FetchAdminThirdPartyAction implements Action {
+  readonly type = "FETCH_ADMIN_THIRD_PARTY";
+  public payload: any;
+
+  constructor(projectId: number, type: string) {
+      this.payload = {projectId, type}
+  }
+}
+
+export class SetAdminThirdPartyAction implements Action {
+  readonly type = "SET_ADMIN_THIRD_PARTY";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
+export class StoreAdminThirdPartyAction implements Action {
+  readonly type = "STORE_ADMIN_THIRD_PARTY";
+  public payload: any;
+
+  constructor(projectId: number, type: string, data: any) {
+      this.payload = {projectId, type, data}
+  }
+}
+
+export class CreateWebhookAction implements Action {
+  readonly type = "CREATE_WEBHOOK";
+  public payload: any;
+
+  constructor(projectId: number, data: any) {
+      this.payload = {projectId, data}
+  }
+}
+
+export class UpdateWebhookAction implements Action {
+  readonly type = "UPDATE_WEBHOOK";
+  public payload: any;
+
+  constructor(projectId: number, webhookId: number, data: any) {
+      this.payload = {projectId, webhookId, data}
+  }
+}
+
+export class TestWebhookAction implements Action {
+  readonly type = "TEST_WEBHOOK";
+  public payload: any;
+
+  constructor(projectId: number, webhookId: number) {
+      this.payload = {projectId, webhookId}
+  }
+}
+
+export class DeleteWebhookAction implements Action {
+  readonly type = "DELETE_WEBHOOK";
+  public payload: any;
+
+  constructor(projectId: number, webhookId: number) {
+      this.payload = {projectId, webhookId}
+  }
+}
+
+export class SetWebhookEditAction implements Action {
+  readonly type = "SET_WEBHOOK_EDIT";
+  public payload: any;
+
+  constructor(id: number, active: boolean) {
+      this.payload = {id, active}
+  }
+}
+
+export class SetWebhookAddingAction implements Action {
+  readonly type = "SET_WEBHOOK_ADDING";
+
+  constructor(public payload: boolean) {}
+}
+
+export class SetWebhookLogAction implements Action {
+  readonly type = "SET_WEBHOOK_LOG";
+  public payload: any;
+
+  constructor(id: number, log: Immutable.List<any>) {
+      this.payload = {id, log}
+  }
+}
+
+export class AddWebhookLogEntryAction implements Action {
+  readonly type = "ADD_WEBHOOK_LOG_ENTRY";
+  public payload: any;
+
+  constructor(id: number, log: Immutable.List<any>) {
+      this.payload = {id, log}
+  }
+}
+
+export class FetchWebhookLogAction implements Action {
+  readonly type = "FETCH_WEBHOOK_LOG";
+
+  constructor(public payload: number) {}
+}

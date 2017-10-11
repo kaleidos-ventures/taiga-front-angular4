@@ -1,6 +1,6 @@
 import {CommonModule} from "@angular/common";
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
@@ -66,6 +66,7 @@ import {AdminIntegrationsWebhooksPage} from "./pages/integrations/webhooks/webho
 import {AdminIntegrationsWebhooksEditor} from "./pages/integrations/webhooks/webhooks-editor.component";
 import {AdminIntegrationsWebhooksRow} from "./pages/integrations/webhooks/webhooks-row.component";
 import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webhooks-form.component";
+import {AdminIntegrationsThirdPartiesPage} from "./pages/integrations/third-parties/third-parties.component";
 
 @NgModule({
     declarations: [
@@ -120,6 +121,7 @@ import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webho
         AdminIntegrationsWebhooksEditor,
         AdminIntegrationsWebhooksRow,
         AdminIntegrationsWebhooksForm,
+        AdminIntegrationsThirdPartiesPage,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -137,7 +139,7 @@ import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webho
         TgAttachmentsModule,
         TgServicesModule,
         TgPipesModule,
-        FormsModule,
+        ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
@@ -159,6 +161,7 @@ import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webho
             { path: "project/:slug/admin/project-values/points", component: AdminAttributesPointsPage },
             { path: "project/:slug/admin/third-parties", redirectTo: "project/:slug/admin/third-parties/webhooks"},
             { path: "project/:slug/admin/third-parties/webhooks", component: AdminIntegrationsWebhooksPage},
+            { path: "project/:slug/admin/third-parties/:type", component: AdminIntegrationsThirdPartiesPage},
         ]),
         EffectsModule.forFeature([AdminEffects]),
     ],

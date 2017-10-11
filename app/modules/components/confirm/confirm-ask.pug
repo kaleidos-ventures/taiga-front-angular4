@@ -8,7 +8,7 @@ form
             [title]="'COMMON.ACCEPT' | translate",
             (click)="response.emit(true)"
         )
-            span(translate="COMMON.ACCEPT")
+            span(translate="COMMON.ACCEPT", *tgLoading="loading")
 
         a.button-red(
             [title]="'COMMON.CANCEL' | translate",

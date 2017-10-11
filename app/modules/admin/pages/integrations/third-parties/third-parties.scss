@@ -1,0 +1,49 @@
+.admin-third-parties {
+    form {
+        margin: 1rem 0;
+        max-width: 700px;
+        width: 100%;
+    }
+    input,
+    textarea {
+        @include font-type(text);
+    }
+    fieldset {
+        margin-bottom: 1rem;
+    }
+    label {
+        @include font-type(text);
+        display: block;
+        margin-bottom: .2rem;
+    }
+    textarea {
+        height: 10rem;
+    }
+    .submit-button {
+        color: $white;
+        display: block;
+        text-align: center;
+    }
+    .select-input-text {
+        .field-with-option {
+            display: flex;
+        }
+        .option-wrapper {
+            align-items: center;
+            border: 1px solid $gray-light;
+            border-left: 0;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            padding: 0 1rem;
+        }
+        .help-copy {
+            @include font-size(small);
+            opacity: 0;
+            &.visible {
+                opacity: 1;
+                transition: opacity .2s linear;
+            }
+        }
+    }
+}

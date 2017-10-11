@@ -33,4 +33,11 @@ export class ModulesResource {
             return response;
         });
     }
+
+    store(projectId, module, data) {
+        const url = this.urls.resolve("project-modules", projectId)
+        let newData = {}
+        newData[module] = data;
+        return this.http.patch(url, newData);
+    }
 }
