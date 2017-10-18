@@ -1,5 +1,8 @@
 import {Component, Input, OnChanges} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../app.store";
 import * as Immutable from "immutable";
+import * as actions from "../../admin.actions";
 import * as _ from "lodash";
 
 @Component({
@@ -10,6 +13,9 @@ export class AdminEditRolePermissions implements OnChanges {
     @Input() role: Immutable.Map<string, any>;
     @Input() project: Immutable.Map<string, any>;
     categories: any[] = [];
+    openCategories: any = {};
+
+    constructor(private store: Store<IState>) {}
 
     ngOnChanges(changes) {
         if (this.project && this.role) {
@@ -121,4 +127,9 @@ export class AdminEditRolePermissions implements OnChanges {
 
         return setActivePermissionsPerCategory(categories);
     };
+
+    togglePermission(event, permission) {
+        $(event.target).prop('checked', this.role.get('permissions').find((p) => p == permission) !== undefined);
+        this.store.dispatch(new actions.ToggleRolePermissionAction(this.role, permission));
+    }
 }

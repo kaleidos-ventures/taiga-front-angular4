@@ -123,3 +123,9 @@ export class DuplicateProjectAction implements Action {
       this.payload = {projectId, name, description, isPrivate, users};
   };
 }
+
+export class SetRoleAction implements Action {
+  readonly type = "SET_ROLE";
+
+  constructor(public payload: Immutable.Map<string, any>) {}
+}

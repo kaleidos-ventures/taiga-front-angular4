@@ -12,7 +12,9 @@ import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./admin.actions";
 import {AddNotificationMessageAction} from "../common/common.actions";
 import {wrapLoading} from "../utils/effects";
-import {genericErrorManagement} from "../utils/effects";
+import {genericErrorManagement, genericSuccessManagement} from "../utils/effects";
+import {SetRoleAction, FetchCurrentProjectAction} from "../projects/projects.actions";
+import {CloseLightboxAction} from "../../app.actions";
 
 @Injectable()
 export class AdminEffects {
@@ -124,6 +126,73 @@ export class AdminEffects {
               return new actions.SetWebhookLogAction(webhookId, result.data);
           });
         });
+
+    @Effect()
+    createRole$: Observable<Action> = this.actions$
+        .ofType("CREATE_ROLE")
+        .map(toPayload)
+        .switchMap(wrapLoading(`creating-role`, ({projectSlug, newRole}) => {
+          return this.rs.roles.create(newRole).map((result) => {
+              return new FetchCurrentProjectAction(projectSlug);
+          }).catch(genericErrorManagement);
+        }));
+
+    @Effect()
+    deleteRole$: Observable<Action> = this.actions$
+        .ofType("DELETE_ROLE")
+        .map(toPayload)
+        .switchMap(wrapLoading(`deleting-role`, ({projectSlug, roleId, newRoleId}) => {
+          return this.rs.roles.delete(roleId, newRoleId).flatMap((result) => {
+              return Observable.from([
+                  new CloseLightboxAction(),
+                  new FetchCurrentProjectAction(projectSlug),
+              ])
+          }).catch(genericErrorManagement);
+        }));
+
+    @Effect()
+    updateRoleName$: Observable<Action> = this.actions$
+        .ofType("UPDATE_ROLE_NAME")
+        .map(toPayload)
+        .switchMap(wrapLoading(`updating-role-name`, ({roleId, name}) => {
+          return this.rs.roles.updateName(roleId, name).map((result) => {
+              return new SetRoleAction(result.data)
+          }).catch(genericErrorManagement);
+        }));
+
+    @Effect()
+    updateRolePermissions$: Observable<Action> = this.actions$
+        .ofType("TOGGLE_ROLE_PERMISSION")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return wrapLoading(`toggling-role-permission-${payload.permission}`, ({role, permission}) => {
+              let permissions = role.get('permissions').toJS()
+              let idx = permissions.indexOf(permission)
+              if (idx === -1) {
+                  permissions.push(permission)
+              } else {
+                  permissions.splice(idx, 1);
+              }
+
+              return this.rs.roles.updatePermissions(role.get('id'), permissions).map((result) => {
+                  return new SetRoleAction(result.data)
+              }).catch(genericErrorManagement);
+          })(payload)
+        });
+
+    @Effect()
+    updateRoleComputable$: Observable<Action> = this.actions$
+        .ofType("UPDATE_ROLE_COMPUTABLE")
+        .map(toPayload)
+        .switchMap(wrapLoading(`updating-role-computable`, ({roleId, computable}) => {
+          return this.rs.roles.updateComputable(roleId, computable).flatMap((result) => {
+              return Observable.from([
+                  genericSuccessManagement(),
+                  new CloseLightboxAction(),
+                  new SetRoleAction(result.data)
+              ]);
+          }).catch(genericErrorManagement);
+        }));
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

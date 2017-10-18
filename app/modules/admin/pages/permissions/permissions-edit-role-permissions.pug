@@ -1,6 +1,6 @@
 .category-config-list
     .category-config(*ngFor="let category of categories")
-        .resume([class.open-drawer]="category.open", (click)="category.open = !category.open")
+        .resume([class.open-drawer]="openCategories[category.name]", (click)="openCategories[category.name] = !openCategories[category.name]")
             .resume-title([translate]="category.name")
             .summary-role
                 .count {{ category.activePermissions }}/{{ category.permissions.length }}
@@ -13,15 +13,17 @@
 
             tg-svg(svg-icon="icon-arrow-right")
 
-        .category-items([class.open]="category.open")
+        .category-items([class.open]="openCategories[category.name]")
             .items-container
                 .category-item(*ngFor="let permission of category.permissions")
                     span([translate]="permission.name")
                     .check
+                        span.loading(*tgLoading="'toggling-role-permission-'+permission.key")
                         input(
                             type="checkbox",
                             [disabled]="!permission.editable",
-                            [checked]="permission.active"
+                            [checked]="permission.active",
+                            (change)="togglePermission($event, permission.key)"
                         )
                         div
                         span.check-text.check-yes(translate="COMMON.YES")

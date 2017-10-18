@@ -28,6 +28,7 @@ import {AdminReportsItem} from "./pages/project/reports/reports-item.component";
 import {AdminPermissionsPage} from "./pages/permissions/permissions.component";
 import {AdminEditRole} from "./pages/permissions/permissions-edit-role.component";
 import {AdminEditRolePermissions} from "./pages/permissions/permissions-edit-role-permissions.component";
+import {AdminPermissionsRolesDeleteLightbox} from "./pages/permissions/permissions-roles-delete-lightbox.component"
 import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component";
 
 import {AdminMembershipsPage} from "./pages/memberships/memberships.component";
@@ -81,6 +82,7 @@ import {AdminIntegrationsThirdPartiesPage} from "./pages/integrations/third-part
         AdminPermissionsPage,
         AdminEditRole,
         AdminEditRolePermissions,
+        AdminPermissionsRolesDeleteLightbox,
         AdminRolesNav,
         AdminNav,
         AdminSubnavProject,

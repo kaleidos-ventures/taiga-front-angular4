@@ -1,0 +1,9 @@
+tg-confirm-ask-choice(
+    [title]="'ADMIN.ROLES.TITLE_DELETE_ROLE' | translate",
+    [subtitle]="role.get('name')",
+    [replacementMessage]="'ADMIN.ROLES.REPLACEMENT_ROLE' | translate",
+    [warningMessage]="'ADMIN.ROLES.WARNING_DELETE_ROLE' | translate",
+    [options]="filterRoles(project.get('roles'))",
+    [loading]="'deleting-role'",
+    (response)="onDeleteConfirm($event)"
+)

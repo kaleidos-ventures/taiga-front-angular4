@@ -12,8 +12,12 @@ div.wrapper
             .action-buttons(*ngIf="!currentRole?.get('external_user')")
                 a.button-red.delete-role(
                     [title]="'COMMON.DELETE' | translate",
-                    (click)="deleteRole(currentRole)"
+                    (click)="onDeleteRole(currentRole)"
                 )
                     span(translate="COMMON.DELETE")
 
         tg-admin-edit-role([role]="currentRole", [noEstimableRoles]="noEstimableRoles", [project]="project|async")
+
+tg-lightbox(key="roles.delete-role", *ngIf="currentRole")
+    tg-lightbox-close
+    tg-permissions-roles-delete-lightbox([role]="currentRole", [project]="project|async")

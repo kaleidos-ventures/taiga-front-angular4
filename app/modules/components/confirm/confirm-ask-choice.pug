@@ -1,16 +1,18 @@
 form
     h2.title {{ title }}
     p.subtitle {{ subtitle }}
-    p.replacement {{ replacementMessage }}
+    p.replacement(*ngIf="replacementMessage") {{ replacementMessage }}
     select(#replacement)
         option([value]="option.get('id')", *ngFor="let option of options") {{option.get('name')}}
+
+    p.warning(*ngIf="warningMessage") {{ warningMessage }}
 
     div.options
         a.button-green(
             [title]="'COMMON.ACCEPT' | translate",
             (click)="response.emit(replacement.value)"
         )
-            span(translate="COMMON.ACCEPT")
+            span(translate="COMMON.ACCEPT", *tgLoading="loading")
 
         a.button-red(
             [title]="'COMMON.CANCEL' | translate",

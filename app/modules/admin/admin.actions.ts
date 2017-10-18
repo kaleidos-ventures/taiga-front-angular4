@@ -123,3 +123,48 @@ export class FetchWebhookLogAction implements Action {
 
   constructor(public payload: number) {}
 }
+
+export class CreateRoleAction implements Action {
+  readonly type = "CREATE_ROLE";
+  public payload: any;
+
+  constructor(projectSlug: string, newRole: any) {
+      this.payload = {projectSlug, newRole}
+  }
+}
+
+export class DeleteRoleAction implements Action {
+  readonly type = "DELETE_ROLE";
+  public payload: any;
+
+  constructor(projectSlug: string, roleId: string, newRoleId) {
+      this.payload = {projectSlug, roleId, newRoleId}
+  }
+}
+
+export class UpdateRoleNameAction implements Action {
+  readonly type = "UPDATE_ROLE_NAME";
+  public payload: any;
+
+  constructor(roleId: string, name: string) {
+      this.payload = {roleId, name}
+  }
+}
+
+export class ToggleRolePermissionAction implements Action {
+  readonly type = "TOGGLE_ROLE_PERMISSION";
+  public payload: any;
+
+  constructor(role: Immutable.Map<string,any>, permission: string) {
+      this.payload = {role, permission}
+  }
+}
+
+export class UpdateRoleComputableAction implements Action {
+  readonly type = "UPDATE_ROLE_COMPUTABLE";
+  public payload: any;
+
+  constructor(roleId: string, computable: boolean) {
+      this.payload = {roleId, computable}
+  }
+}

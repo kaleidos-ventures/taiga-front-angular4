@@ -31,12 +31,37 @@ export class RolesResource {
     constructor(private http: HttpService,
                 private urls: UrlsService) {}
     get(id) {
-        const url = this.urls.resolve("roles", id);
+        const url = this.urls.resolve("role", id);
         return this.http.get(url);
     }
 
     list(projectId) {
         const url = this.urls.resolve("roles");
         return this.http.get(url, {project: projectId});
+    }
+
+    create(newRole) {
+        const url = this.urls.resolve("roles");
+        return this.http.post(url, newRole);
+    }
+
+    delete(roleId, newRoleId) {
+        const url = this.urls.resolve("role", roleId) + "?moveTo=" + newRoleId;
+        return this.http.delete(url);
+    }
+
+    updateName(roleId, name) {
+        const url = this.urls.resolve("role", roleId);
+        return this.http.patch(url, {name: name});
+    }
+
+    updatePermissions(roleId, permissions) {
+        const url = this.urls.resolve("role", roleId);
+        return this.http.patch(url, {permissions: permissions});
+    }
+
+    updateComputable(roleId, computable) {
+        const url = this.urls.resolve("role", roleId);
+        return this.http.patch(url, {computable: computable});
     }
 }

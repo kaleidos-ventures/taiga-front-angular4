@@ -57,6 +57,14 @@ export const projectsReducer = (state, action) => {
             return state.updateIn(["timeline", "items"], (current) => current.concat(action.payload.timeline))
                         .setIn(["timeline", "has-next"], action.payload.hasNext)
                         .setIn(["timeline", "current-page"], action.payload.currentPage);
+        case "SET_ROLE":
+            return state.updateIn(["current-project", "roles"], (roles) => {
+                let idx = roles.findKey((r) => r.get('id') == action.payload.get('id'))
+                if (idx !== undefined) {
+                    return roles.set(idx, action.payload);
+                }
+                return roles;
+            });
         default:
             return state;
     }

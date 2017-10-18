@@ -11,6 +11,9 @@ export class ConfirmAskChoice {
     @Input() subtitle: string = "";
     @Input() message: string = "";
     @Input() options: Immutable.List<any>;
+    @Input() loading: string = "";
+    @Input() replacementMessage: string = "";
+    @Input() warningMessage: string = "";
     @Output() response: EventEmitter<number>;
 
     constructor() {

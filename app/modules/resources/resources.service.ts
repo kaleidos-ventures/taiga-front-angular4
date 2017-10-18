@@ -68,6 +68,7 @@ const api_urls = {
 
     // Roles & Permissions
     "roles": "/roles",
+    "role": "/roles/%s",
 
     // Resolver
     "resolver": "/resolver",
