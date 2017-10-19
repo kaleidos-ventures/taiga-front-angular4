@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UniversalValidators } from "ngx-validators";
 import * as actions from "../../admin.actions";
 import {CloseLightboxAction, OpenLightboxAction} from "../../../../app.actions";
-import * as $ from "jquery";
 
 @Component({
     selector: "tg-admin-edit-role",
