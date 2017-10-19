@@ -168,3 +168,30 @@ export class UpdateRoleComputableAction implements Action {
       this.payload = {roleId, computable}
   }
 }
+
+export class UpdateStateAction implements Action {
+  readonly type = "UPDATE_STATE";
+  public payload: any;
+
+  constructor(type: string, data: any) {
+      this.payload = {type, data}
+  }
+}
+
+export class CreateStateAction implements Action {
+  readonly type = "CREATE_STATE";
+  public payload: any;
+
+  constructor(projectId: number, type: string, data: any) {
+      this.payload = {projectId, type, data}
+  }
+}
+
+export class SetEditingStateAction implements Action {
+  readonly type = "SET_EDITING_STATE";
+  public payload: any;
+
+  constructor(type: string, id: number, value: boolean) {
+      this.payload = {type, id, value}
+  }
+}

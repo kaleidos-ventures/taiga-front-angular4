@@ -7,6 +7,12 @@ export const adminInitialState = {
     "webhooks-editing": {},
     "webhooks-adding": true,
     "webhooks-logs": {},
+    "editing-state": {
+        "epic-statuses": {},
+        "userstory-statuses": {},
+        "task-statuses": {},
+        "issue-statuses": {},
+    }
 };
 
 export const adminReducer = (state, action) => {
@@ -26,6 +32,8 @@ export const adminReducer = (state, action) => {
             return state.setIn(["webhooks-editing", action.payload.id], action.payload.active);
         case "SET_WEBHOOK_ADDING":
             return state.set("webhooks-adding", action.payload);
+        case "SET_EDITING_STATE":
+            return state.setIn(["editing-state", action.payload.type, action.payload.id], action.payload.value);
         default:
             return state;
     }

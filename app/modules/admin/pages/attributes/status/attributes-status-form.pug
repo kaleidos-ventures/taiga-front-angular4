@@ -1,8 +1,8 @@
-form([class.hidden]="!visible", [formGroup]="null")
+form([class.hidden]="!visible", [formGroup]="form", (onSubmit)="onSubmit()")
     div.row.table-main.edition
         tg-color-selector.color-column(
-            [initColor]="status?.get('color')",
-            [isColorRequired]="false"
+            [isColorRequired]="true",
+            formControlName="color"
         )
 
         div.status-name
@@ -10,23 +10,49 @@ form([class.hidden]="!visible", [formGroup]="null")
                 #input,
                 name="name",
                 type="text",
-                [value]="status?.get('name')",
+                formControlName="name",
                 [placeholder]="'ADMIN.STATUS.PLACEHOLDER_WRITE_STATUS_NAME' | translate",
-                data-required="true",
-                data-maxlength="255"
             )
 
         div.is-closed-column
             select(
                 name="is_closed",
-                data-required="true"
+                formControlName="is_closed"
             )
-                option([value]="true", translate="COMMON.YES", [selected]="status?.get('is_closed')")
-                option([value]="false", translate="COMMON.NO", [selected]="!status?.get('is_closed')")
+                option([value]="true", translate="COMMON.YES")
+                option([value]="false", translate="COMMON.NO")
+
+        div.is-archived-column(*ngIf="type === 'userstory-statuses'")
+            select(
+                name="is_archived",
+                formControlName="is_archived"
+            )
+                option([value]="true", translate="COMMON.YES")
+                option([value]="false", translate="COMMON.NO")
+
+        div.status-wip-limit(*ngIf="type === 'userstory-statuses'")
+            input(
+                name="wip_limit",
+                type="text",
+                formControlName="wip_limit",
+                [placeholder]="'ADMIN.US_STATUS.WIP_LIMIT_COLUMN' | translate",
+            )
 
         div.options-column
-            a.save.e2e-save(href="", [title]="'COMMON.SAVE' | translate")
-                tg-svg(svg-icon="icon-save")
+            a.save.e2e-save(
+                [title]="'COMMON.SAVE' | translate",
+                (click)="onSubmit()",
+            )
+                ng-container(*ngIf="status")
+                    tg-svg(
+                        svg-icon="icon-save",
+                        *tgLoading="'updating-state-'+type+'-'+status.get('id')"
+                    )
+                ng-container(*ngIf="!status")
+                    tg-svg(
+                        svg-icon="icon-save",
+                        *tgLoading="'creating-state-'+type"
+                    )
 
-            a.cancel((click)="cancel.emit(status?.get('id'))", [title]="'COMMON.CANCEL' | translate")
+            a.cancel((click)="onCancel()", [title]="'COMMON.CANCEL' | translate")
                 tg-svg.cancel(svg-icon="icon-close")

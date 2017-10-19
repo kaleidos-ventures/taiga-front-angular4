@@ -194,5 +194,35 @@ export class AdminEffects {
           }).catch(genericErrorManagement);
         }));
 
+    @Effect()
+    updateState$: Observable<Action> = this.actions$
+        .ofType("UPDATE_STATE")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return wrapLoading(`updating-state-${payload.type}-${payload.data.id}`, ({type, data}) => {
+            return this.rs.state.update(type, data).flatMap((result) => {
+                return Observable.from([
+                    genericSuccessManagement(),
+                    new actions.SetEditingStateAction(type, result.data.get('id'), false)
+                ]);
+            }).catch(genericErrorManagement);
+          })(payload);
+        });
+
+    @Effect()
+    createState$: Observable<Action> = this.actions$
+        .ofType("CREATE_STATE")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return wrapLoading(`creating-state-${payload.type}`, ({projectId, type, data}) => {
+            return this.rs.state.create(projectId, type, data).flatMap((result) => {
+                return Observable.from([
+                    genericSuccessManagement(),
+                    new actions.SetEditingStateAction(type, null, false)
+                ]);
+            }).catch(genericErrorManagement);
+          })(payload);
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

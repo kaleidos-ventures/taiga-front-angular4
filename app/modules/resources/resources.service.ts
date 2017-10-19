@@ -31,6 +31,7 @@ import {UserResource} from "./user-resource.service";
 import {UsersResource} from "./users-resource.service";
 import {UserstoriesResource} from "./userstories-resource.service";
 import {FeedbackResource} from "./feedback-resource.service";
+import {StateResource} from "./state-resource.service";
 
 const api_urls = {
     // Auth
@@ -277,6 +278,7 @@ export class ResourcesService {
                 public user: UserResource,
                 public users: UsersResource,
                 public userstories: UserstoriesResource,
+                public state: StateResource,
                 private urls: UrlsService) {
         this.urls.update(api_urls);
     }

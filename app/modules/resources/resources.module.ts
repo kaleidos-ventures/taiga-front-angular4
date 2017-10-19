@@ -29,6 +29,7 @@ import {UserResource} from "./user-resource.service";
 import {UsersResource} from "./users-resource.service";
 import {UserstoriesResource} from "./userstories-resource.service";
 import {WikiResource} from "./wiki-resource.service";
+import {StateResource} from "./state-resource.service";
 
 import {ResourcesService} from "./resources.service";
 
@@ -66,6 +67,7 @@ import {ResourcesService} from "./resources.service";
         UserResource,
         UsersResource,
         UserstoriesResource,
+        StateResource,
     ],
 })
 export class ResourcesModule {}

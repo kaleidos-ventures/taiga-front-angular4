@@ -2,6 +2,7 @@ import {Component, Input, OnChanges} from "@angular/core";
 import {IState} from "../../../../../app.store";
 import {OpenLightboxAction, CloseLightboxAction} from "../../../../../app.actions";
 import {Store} from "@ngrx/store";
+import * as actions from "../../../admin.actions";
 import * as Immutable from "immutable";
 
 @Component({
@@ -12,8 +13,8 @@ export class AdminAttributesStatusEditor implements OnChanges {
     @Input() type: string;
     @Input() name: string;
     @Input() project: Immutable.Map<string, any>;
+    @Input() editing: Immutable.Map<string, any>;
     values: Immutable.List<any>;
-    editing: any = {};
     deletingStatus: Immutable.Map<string, any>;
 
     constructor(private store: Store<IState>) {}
@@ -45,5 +46,9 @@ export class AdminAttributesStatusEditor implements OnChanges {
 
     confirmDelete(response) {
         this.store.dispatch(new CloseLightboxAction())
+    }
+
+    onNew() {
+        this.store.dispatch(new actions.SetEditingStateAction(this.type, null, true));
     }
 }

@@ -13,7 +13,7 @@ section.colors-table.admin-status-table
         h2 {{ name }}
         a.button.button-gray.show-add-new(
             [title]="'ADMIN.US_STATUS.ACTION_ADD_STATUS' | translate",
-            (click)="newStatusOpen = true"
+            (click)="onNew()"
         )
             span(translate="ADMIN.US_STATUS.ACTION_ADD_STATUS")
 
@@ -33,18 +33,19 @@ section.colors-table.admin-status-table
                 tg-admin-attributes-status-row(
                     [status]="value",
                     [type]="type",
-                    *ngIf="!editing[value.get('id')]",
-                    (edit)="editing[value.get('id')]=true",
+                    [visible]="!editing?.getIn([type, value.get('id')])",
                     (delete)="deleteStatus(value)"
                 )
                 tg-admin-attributes-status-form(
                     [status]="value",
-                    [visible]="editing[value.get('id')]",
-                    (cancel)="editing[$event]=false"
+                    [type]="type",
+                    [project]="project",
+                    [visible]="editing?.getIn([type, value.get('id')])",
                 )
 
         tg-admin-attributes-status-form(
             [status]="null",
-            [visible]="newStatusOpen",
-            (cancel)="newStatusOpen=false"
+            [type]="type",
+            [visible]="editing?.getIn([type, null])",
+            [project]="project",
         )
